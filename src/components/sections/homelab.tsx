@@ -21,12 +21,12 @@ export function Homelab({ t }: { t: Dictionary["homelab"] }) {
             </div>
             <dl className="space-y-4 p-6 font-mono text-sm">
               {t.specs.map((spec) => (
-                <div key={spec.label} className="flex items-start gap-3">
-                  <HomelabGlyph name={spec.icon} className="mt-0.5 shrink-0 text-accent-to" width={18} height={18} />
-                  <div>
-                    <dt className="text-xs uppercase tracking-wider text-muted">{spec.label}</dt>
-                    <dd className="mt-0.5">{spec.value}</dd>
-                  </div>
+                <div key={spec.label} className="grid grid-cols-[18px_1fr] gap-x-3">
+                  <dt className="col-span-2 flex items-center gap-3 text-xs uppercase tracking-wider text-muted">
+                    <HomelabGlyph name={spec.icon} className="shrink-0 text-accent-to" width={18} height={18} />
+                    {spec.label}
+                  </dt>
+                  <dd className="col-start-2 mt-0.5">{spec.value}</dd>
                 </div>
               ))}
             </dl>
