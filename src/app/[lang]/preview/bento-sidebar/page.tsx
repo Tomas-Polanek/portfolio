@@ -18,6 +18,8 @@ import { ProjectTile } from "../bento/_components/project-tile";
 import { s } from "../bento/_components/styles";
 import { bs, sectionsLabel, styleName } from "./_components/classes";
 import { CompactBar } from "./_components/compact-bar";
+import { Pi5Sketch } from "./_components/pi5-sketch";
+import { PragueMap } from "./_components/prague-map";
 import { SectionNav } from "./_components/section-nav";
 import { ThemeButton } from "../bento/_components/theme-button";
 
@@ -298,22 +300,24 @@ export default async function BentoSidebarPreview() {
 
               {/* Location */}
               <div
-                className={`${s.tile} ${s.lift} ${s.aLoc} relative flex min-h-44 flex-col overflow-hidden p-5 sm:p-6`}
+                className={`${s.tile} ${s.lift} ${s.aLoc} relative flex min-h-60 flex-col overflow-hidden p-5 sm:p-6`}
               >
-                <span className={s.mapGrid} aria-hidden="true" />
-                <span
-                  className="absolute top-[40%] left-[70%] -translate-x-1/2 -translate-y-1/2"
-                  aria-hidden="true"
-                >
-                  <span className={`${s.pin} block`} />
-                </span>
+                <PragueMap pinLabel="Praha 4" />
                 <p className={`${s.eyebrow} relative`}>{c.basedIn}</p>
                 <p className="relative mt-auto text-4xl font-semibold tracking-tight">
                   {city}
                 </p>
                 <p className={`${s.faint} relative mt-1 font-mono text-xs`}>
-                  50.08° N · 14.44° E
+                  50.04° N · 14.44° E
                 </p>
+                <a
+                  href="https://www.openstreetmap.org/copyright"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={bs.mapCredit}
+                >
+                  © OpenStreetMap
+                </a>
               </div>
 
               {/* About */}
@@ -363,43 +367,47 @@ export default async function BentoSidebarPreview() {
               {/* Homelab teaser */}
               <a
                 href="#homelab"
-                className={`${s.tile} ${s.lift} ${s.aLab} group flex flex-col p-5 sm:p-6`}
+                className={`${s.tile} ${s.lift} ${s.aLab} ${bs.labTile} group relative p-5 sm:p-6`}
               >
-                <div className="flex items-center justify-between">
-                  <span className={s.iconWell}>
-                    <HomelabGlyph name="pi" />
-                  </span>
-                  <span
-                    className={`${s.faint} transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5`}
-                  >
-                    <ArrowIcon />
-                  </span>
-                </div>
-                <p className={`${s.eyebrow} mt-6`}>{c.homelabTeaser}</p>
-                <p className="mt-1.5 text-xl font-semibold tracking-tight">
-                  {hardware}
-                </p>
-                <ul className="mt-3 flex flex-wrap gap-1.5">
-                  {hardwareSpecs.map((spec) => (
-                    <li key={spec} className={`${s.chip} ${s.chipMono}`}>
-                      {spec}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-auto pt-6">
-                  <ul className="flex gap-1.5" aria-hidden="true">
-                    {t.homelab.services.map((svc) => (
-                      <li
-                        key={svc.name}
-                        className={`${s.iconWell} size-8! rounded-lg!`}
-                      >
-                        <HomelabGlyph name={svc.icon} width={15} height={15} />
-                      </li>
-                    ))}
-                  </ul>
-                  <p className={`${s.muted} mt-3 text-sm`}>
-                    {c.servicesCount(t.homelab.services.length)}
-                  </p>
+                <span
+                  className={`${s.faint} absolute top-5 right-5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:top-6 sm:right-6`}
+                >
+                  <ArrowIcon />
+                </span>
+                <div className={bs.labBody}>
+                  <Pi5Sketch />
+                  <div className={bs.labText}>
+                    <p className={`${s.eyebrow} mt-4`}>{c.homelabTeaser}</p>
+                    <p className="mt-1.5 text-xl font-semibold tracking-tight">
+                      {hardware}
+                    </p>
+                    <ul className="mt-3 flex flex-wrap gap-1.5">
+                      {hardwareSpecs.map((spec) => (
+                        <li key={spec} className={`${s.chip} ${s.chipMono}`}>
+                          {spec}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-auto pt-6">
+                      <ul className="flex gap-1.5" aria-hidden="true">
+                        {t.homelab.services.map((svc) => (
+                          <li
+                            key={svc.name}
+                            className={`${s.iconWell} size-8! rounded-lg!`}
+                          >
+                            <HomelabGlyph
+                              name={svc.icon}
+                              width={15}
+                              height={15}
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                      <p className={`${s.muted} mt-3 text-sm`}>
+                        {c.servicesCount(t.homelab.services.length)}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </a>
 

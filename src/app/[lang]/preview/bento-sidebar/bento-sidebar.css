@@ -201,9 +201,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
       "about about"
-      "study loc"
+      "study gh"
+      "loc loc"
       "skills skills"
-      "lab gh";
+      "lab lab";
   }
 }
 
@@ -262,5 +263,192 @@
     .bs-projGrid .bn-wideInner .bn-coverImage {
       object-position: left top;
     }
+  }
+}
+
+/* ---------- Location tile: Prague city boundary (data in _components/prague-outline.ts) ---------- */
+.bs-map {
+  position: absolute;
+  top: 1.1rem;
+  right: 1.1rem;
+  width: min(58%, 210px);
+  pointer-events: none;
+}
+
+.bs-map svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bs-map path {
+  fill: rgb(160 80 255 / 0.08);
+  stroke: url(#bs-prague-grad);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+[data-theme="light"] .bs-map path {
+  fill: rgb(160 80 255 / 0.06);
+}
+
+.bs-mapPin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.bs-mapPinLabel {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 0.5rem);
+  transform: translateY(-50%);
+  white-space: nowrap;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--tile);
+  padding: 0.05rem 0.4rem;
+  font-family: var(--font-geist-mono);
+  font-size: 0.66rem;
+  color: var(--fg);
+}
+
+.bs-mapCredit {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.7rem;
+  font-size: 0.62rem;
+  color: var(--faint);
+}
+
+.bs-mapCredit:hover {
+  color: var(--fg);
+  text-decoration: underline;
+}
+
+/* ---------- Homelab teaser: Raspberry Pi 5 sketch in CSS 3D ---------- */
+.bn-tile.bs-labTile {
+  display: flex;
+  container-type: inline-size;
+}
+
+.bs-labBody,
+.bs-labText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+/* Full-width tile (2-column bento): sketch left, text right. */
+@container (min-width: 420px) {
+  .bs-labBody {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .bs-labBody > * {
+    flex: 1 1 0;
+  }
+  .bs-labText {
+    align-self: stretch;
+  }
+}
+
+.bs-pi {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10.5rem;
+  margin-top: -0.25rem;
+  perspective: 900px;
+}
+
+.bs-piStage {
+  position: relative;
+  width: min(88%, 250px);
+  aspect-ratio: 92 / 62;
+  transform-style: preserve-3d;
+  transform: rotateX(54deg) rotateZ(-32deg);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.bn-lift:hover .bs-piStage,
+.bn-lift:focus-visible .bs-piStage {
+  transform: rotateX(30deg) rotateZ(-16deg);
+}
+
+.bs-piStage > svg,
+.bs-piShadow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.bs-piShadow {
+  border-radius: 12px;
+  background: rgb(0 0 0 / 0.55);
+  filter: blur(14px);
+  transform: translateZ(-24px);
+}
+
+[data-theme="light"] .bs-piShadow {
+  background: rgb(60 40 120 / 0.2);
+}
+
+.bs-piBase {
+  transform: translateZ(-4px);
+}
+
+.bs-piBase path {
+  fill: var(--line-strong);
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.bs-piTop {
+  color: color-mix(in srgb, var(--fg) 72%, transparent);
+}
+
+.bs-piTop :is(rect, circle, path, line) {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+
+.bs-piTop .bs-piBoard {
+  fill: var(--tile-2);
+  stroke: url(#bs-pi-grad);
+  stroke-width: 1.3;
+}
+
+.bs-piTop .bs-piFaint {
+  opacity: 0.5;
+}
+
+.bs-piTop .bs-piFill {
+  fill: currentColor;
+  stroke: none;
+}
+
+.bs-piTop .bs-piAccent {
+  stroke: url(#bs-pi-grad);
+}
+
+.bs-piLabel {
+  fill: var(--faint);
+  font-family: var(--font-geist-mono);
+  font-size: 2.1px;
+  letter-spacing: 0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bn-lift:hover .bs-piStage,
+  .bn-lift:focus-visible .bs-piStage {
+    transform: rotateX(54deg) rotateZ(-32deg);
   }
 }
