@@ -1,5 +1,6 @@
 import type { Dictionary } from "@/content/cs";
-import { projects } from "@/content/projects";
+import Image from "next/image";
+import { projectImages, projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { getRepoInfo } from "@/lib/github";
 import type { Locale } from "@/lib/locales";
@@ -17,12 +18,24 @@ export async function Projects({ t, locale }: { t: Dictionary["projects"]; local
           const info = infos[i];
           const { title, description } = t.items[repo];
           const codeUrl = info?.url ?? `${site.links.github}/${repo}`;
+          const image = projectImages[repo];
           return (
             <article
               key={repo}
               data-reveal
-              className="glass gradient-border lift flex flex-col rounded-2xl p-6"
+              className="glass gradient-border lift group flex flex-col rounded-2xl p-6"
             >
+              {image && (
+                <div className="relative -mx-6 -mt-6 mb-5 aspect-[16/10] overflow-hidden rounded-t-2xl border-b border-line">
+                  <Image
+                    src={image}
+                    alt={`${title} – ${t.screenshot}`}
+                    fill
+                    sizes="(min-width: 1024px) 350px, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover object-top transition duration-500 group-hover:scale-[1.03]"
+                  />
+                </div>
+              )}
               <div className="flex items-start justify-between gap-3">
                 <h3 className="text-gradient text-lg font-bold leading-snug">{title}</h3>
                 <div className="flex shrink-0 gap-2">

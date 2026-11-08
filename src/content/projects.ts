@@ -13,3 +13,8 @@ export const projects = [
 ] as const;
 
 export type ProjectRepo = (typeof projects)[number]["repo"];
+
+/** Screenshots in public/projects/, shown at the top of the card (cropped to 16:10 from the top). */
+export const projectImages: Partial<Record<ProjectRepo, string>> = {
+  "The-Fridge-Notebook": "/projects/The-Fridge-Notebook.png",
+};

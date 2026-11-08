@@ -167,6 +167,7 @@ section[id] {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1; /* stay above positioned children such as project screenshots */
   padding: 1px;
   border-radius: inherit;
   background: linear-gradient(135deg, var(--accent-a), var(--accent-b), rgb(255 255 255 / 0.1));

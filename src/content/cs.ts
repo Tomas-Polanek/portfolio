@@ -78,6 +78,7 @@ export const cs = {
     stars: "Hvězdičky",
     forkOf: "Fork z",
     allOnGithub: "Všechny projekty na GitHubu",
+    screenshot: "náhled aplikace",
     items: {
       "ask-your-pdfs": {
         title: "Ask Your PDFs",

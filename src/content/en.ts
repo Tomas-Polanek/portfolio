@@ -65,6 +65,7 @@ export const en: Dictionary = {
     stars: "Stars",
     forkOf: "Fork of",
     allOnGithub: "All projects on GitHub",
+    screenshot: "app screenshot",
     items: {
       "ask-your-pdfs": {
         title: "Ask Your PDFs",
