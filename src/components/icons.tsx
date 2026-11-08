@@ -1,4 +1,5 @@
-import type { SVGProps } from "react";
+import type { ReactNode, SVGProps } from "react";
+import type { HomelabIcon } from "@/content/cs";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -114,4 +115,69 @@ export function ForkIcon(props: IconProps) {
       <path d="M6 7v2a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V7M12 12v5" />
     </Stroke>
   );
+}
+
+const homelabPaths: Record<HomelabIcon, ReactNode> = {
+  pi: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M7 9h4v4H7zM14 9h3M14 12h3M7 5V3M11 5V3M15 5V3" />
+    </>
+  ),
+  terminal: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="m7 9 3 3-3 3M13 15h4" />
+    </>
+  ),
+  docker: (
+    <>
+      <path d="M3 12h16.5a2.5 2.5 0 0 0 1.5-2.2 3 3 0 0 1-2.4-.7C18 13.5 14 18 9 18c-3.5 0-5.5-2.5-6-6Z" />
+      <path d="M6 9h3v3H6zM9 9h3v3H9zM12 9h3v3h-3zM9 6h3v3H9z" />
+    </>
+  ),
+  dns: (
+    <>
+      <path d="M12 3 4 6v6c0 4.5 3.4 8.2 8 9 4.6-.8 8-4.5 8-9V6l-8-3Z" />
+      <path d="m9 12 2 2 4-4" />
+    </>
+  ),
+  media: (
+    <>
+      <rect x="3" y="5" width="18" height="12" rx="2" />
+      <path d="m10 8.5 4.5 2.5-4.5 2.5v-5ZM8 21h8M12 17v4" />
+    </>
+  ),
+  vpn: (
+    <>
+      <rect x="5" y="11" width="14" height="10" rx="2" />
+      <path d="M8 11V7a4 4 0 0 1 8 0v4M12 15v2" />
+    </>
+  ),
+  monitoring: <path d="M3 12h4l3-8 4 16 3-8h4" />,
+  os: (
+    <>
+      <rect x="3" y="4" width="18" height="12" rx="2" />
+      <path d="M8 20h8M12 16v4M7 8h2M7 11h5" />
+    </>
+  ),
+  storage: (
+    <>
+      <path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" />
+      <path d="M10 3v4M13 3v4M9 13h6" />
+    </>
+  ),
+  dashboard: (
+    <>
+      <rect x="3" y="3" width="8" height="8" rx="1.5" />
+      <rect x="13" y="3" width="8" height="5" rx="1.5" />
+      <rect x="13" y="10" width="8" height="11" rx="1.5" />
+      <rect x="3" y="13" width="8" height="8" rx="1.5" />
+    </>
+  ),
+  update: <path d="M20 11a8 8 0 0 0-14.9-3M4 4v4h4M4 13a8 8 0 0 0 14.9 3M20 20v-4h-4" />,
+};
+
+export function HomelabGlyph({ name, ...props }: IconProps & { name: HomelabIcon }) {
+  return <Stroke {...props}>{homelabPaths[name]}</Stroke>;
 }

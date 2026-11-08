@@ -1,5 +1,18 @@
 import type { ProjectRepo } from "./projects";
 
+export type HomelabIcon =
+  | "pi"
+  | "os"
+  | "storage"
+  | "terminal"
+  | "docker"
+  | "dns"
+  | "media"
+  | "vpn"
+  | "monitoring"
+  | "dashboard"
+  | "update";
+
 export const cs = {
   meta: {
     title: "Tomáš Polánek | Portfolio",
@@ -98,6 +111,60 @@ export const cs = {
           "Můj první krok v Pythonu – jednoduchá skákací hra v pygame-ce s pohybem, gravitací a kolizemi s okraji okna.",
       },
     } satisfies Record<ProjectRepo, { title: string; description: string }>,
+  },
+  homelab: {
+    title: "Linux & Homelab",
+    intro:
+      "Doma provozuji vlastní homelab na Raspberry Pi 5. Spravuji ho čistě z terminálu přes SSH, bez grafického rozhraní – je to moje hřiště pro Linux, sítě a provoz služeb v kontejnerech.",
+    specsTitle: "Sestava",
+    specs: [
+      { icon: "pi" as HomelabIcon, label: "Hardware", value: "Raspberry Pi 5 · 8 GB RAM · 4 jádra" },
+      { icon: "os" as HomelabIcon, label: "Systém", value: "Debian 13 (trixie) · ARM64" },
+      { icon: "storage" as HomelabIcon, label: "Úložiště", value: "microSD 32 GB" },
+      { icon: "terminal" as HomelabIcon, label: "Správa", value: "Headless, jen SSH a terminál" },
+      { icon: "docker" as HomelabIcon, label: "Kontejnery", value: "Docker" },
+    ],
+    servicesTitle: "Co na něm běží",
+    services: [
+      {
+        icon: "dns" as HomelabIcon,
+        name: "AdGuard Home",
+        description: "DNS server, který blokuje reklamy a trackery pro všechna zařízení v domácí síti.",
+      },
+      {
+        icon: "media" as HomelabIcon,
+        name: "Jellyfin",
+        description: "Media server pro streamování vlastních filmů a seriálů na všechna zařízení.",
+      },
+      {
+        icon: "vpn" as HomelabIcon,
+        name: "Tailscale",
+        description: "VPN postavená na WireGuardu – k homelabu se bezpečně připojím odkudkoliv, bez otevírání portů na routeru.",
+      },
+      {
+        icon: "monitoring" as HomelabIcon,
+        name: "Uptime Kuma",
+        description: "Hlídá dostupnost všech služeb a ukazuje historii výpadků.",
+      },
+      {
+        icon: "dashboard" as HomelabIcon,
+        name: "Portainer",
+        description: "Webové rozhraní pro správu Docker kontejnerů, image a volumes.",
+      },
+      {
+        icon: "update" as HomelabIcon,
+        name: "Watchtower",
+        description: "Automaticky aktualizuje běžící kontejnery na nové verze image.",
+      },
+    ],
+    learnedTitle: "Co mě to naučilo",
+    learned: [
+      "Správa Linuxu (Debian) čistě z příkazové řádky",
+      "Provoz a aktualizace služeb v Docker kontejnerech",
+      "Jak funguje DNS a domácí síť",
+      "Bezpečný vzdálený přístup přes WireGuard / Tailscale",
+      "Monitoring dostupnosti a řešení výpadků",
+    ],
   },
   footer: {
     builtWith: "Postaveno v Next.js a Tailwind CSS",

@@ -99,6 +99,60 @@ export const en: Dictionary = {
       },
     },
   },
+  homelab: {
+    title: "Linux & Homelab",
+    intro:
+      "I run my own homelab on a Raspberry Pi 5 at home. I manage it purely from the terminal over SSH, with no GUI – it's my playground for Linux, networking and running containerised services.",
+    specsTitle: "Setup",
+    specs: [
+      { icon: "pi", label: "Hardware", value: "Raspberry Pi 5 · 8 GB RAM · 4 cores" },
+      { icon: "os", label: "OS", value: "Debian 13 (trixie) · ARM64" },
+      { icon: "storage", label: "Storage", value: "32 GB microSD" },
+      { icon: "terminal", label: "Management", value: "Headless, SSH and terminal only" },
+      { icon: "docker", label: "Containers", value: "Docker" },
+    ],
+    servicesTitle: "What it runs",
+    services: [
+      {
+        icon: "dns",
+        name: "AdGuard Home",
+        description: "A DNS server that blocks ads and trackers for every device on the home network.",
+      },
+      {
+        icon: "media",
+        name: "Jellyfin",
+        description: "A media server streaming my own movies and shows to every device.",
+      },
+      {
+        icon: "vpn",
+        name: "Tailscale",
+        description: "A WireGuard-based VPN – I reach the homelab securely from anywhere without opening router ports.",
+      },
+      {
+        icon: "monitoring",
+        name: "Uptime Kuma",
+        description: "Monitors the availability of every service and keeps an outage history.",
+      },
+      {
+        icon: "dashboard",
+        name: "Portainer",
+        description: "A web UI for managing Docker containers, images and volumes.",
+      },
+      {
+        icon: "update",
+        name: "Watchtower",
+        description: "Automatically updates running containers to new image versions.",
+      },
+    ],
+    learnedTitle: "What it taught me",
+    learned: [
+      "Managing Linux (Debian) purely from the command line",
+      "Running and updating services in Docker containers",
+      "How DNS and a home network work",
+      "Secure remote access with WireGuard / Tailscale",
+      "Uptime monitoring and troubleshooting outages",
+    ],
+  },
   footer: {
     builtWith: "Built with Next.js and Tailwind CSS",
     backToTop: "Back to top",
