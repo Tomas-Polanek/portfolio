@@ -1,4 +1,5 @@
 import { RevealObserver } from "@/components/reveal-observer";
+import { Hero } from "@/components/sections/hero";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { site } from "@/content/site";
@@ -21,6 +22,7 @@ export default async function Home() {
       />
 
       <main className="mx-auto w-[calc(100%-2rem)] max-w-[1100px]">
+        <Hero t={t.hero} />
       </main>
 
       <SiteFooter t={t.footer} />
