@@ -183,6 +183,14 @@ export const cs = {
       "Linux, Docker a provoz vlastních služeb",
     ],
   },
+  contact: {
+    title: "Pojďme se spojit",
+    subtitle: "Napiš mi e-mail nebo mě najdi na sítích.",
+    email: { title: "E-mail" },
+    linkedin: { title: "LinkedIn", sub: "Profesní profil" },
+    github: { title: "GitHub", sub: "Projekty a kód" },
+    instagram: { title: "Instagram", sub: "Osobní" },
+  },
   footer: {
     builtWith: "Postaveno v Next.js a Tailwind CSS",
     backToTop: "Nahoru",

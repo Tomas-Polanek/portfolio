@@ -170,6 +170,14 @@ export const en: Dictionary = {
       "Linux, Docker and self-hosting",
     ],
   },
+  contact: {
+    title: "Let's connect",
+    subtitle: "Send me an email or find me on social media.",
+    email: { title: "Email" },
+    linkedin: { title: "LinkedIn", sub: "Professional profile" },
+    github: { title: "GitHub", sub: "Projects & code" },
+    instagram: { title: "Instagram", sub: "Personal" },
+  },
   footer: {
     builtWith: "Built with Next.js and Tailwind CSS",
     backToTop: "Back to top",
