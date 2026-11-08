@@ -119,7 +119,11 @@ export const cs = {
     specs: [
       { icon: "pi" as HomelabIcon, label: "Hardware", value: "Raspberry Pi 5 · 8 GB RAM · 4 jádra" },
       { icon: "os" as HomelabIcon, label: "Systém", value: "Debian 13 (trixie) · ARM64" },
-      { icon: "storage" as HomelabIcon, label: "Úložiště", value: "microSD 32 GB" },
+      {
+        icon: "storage" as HomelabIcon,
+        label: "Úložiště",
+        value: "NVMe SSD Samsung 990 PRO 1 TB · microSD 32 GB (systém)",
+      },
       { icon: "terminal" as HomelabIcon, label: "Správa", value: "Headless, jen SSH a terminál" },
       { icon: "docker" as HomelabIcon, label: "Kontejnery", value: "Docker" },
     ],

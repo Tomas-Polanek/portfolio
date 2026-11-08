@@ -106,7 +106,7 @@ export const en: Dictionary = {
     specs: [
       { icon: "pi", label: "Hardware", value: "Raspberry Pi 5 · 8 GB RAM · 4 cores" },
       { icon: "os", label: "OS", value: "Debian 13 (trixie) · ARM64" },
-      { icon: "storage", label: "Storage", value: "32 GB microSD" },
+      { icon: "storage", label: "Storage", value: "1 TB Samsung 990 PRO NVMe SSD · 32 GB microSD (system)" },
       { icon: "terminal", label: "Management", value: "Headless, SSH and terminal only" },
       { icon: "docker", label: "Containers", value: "Docker" },
     ],
