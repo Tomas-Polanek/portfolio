@@ -1,26 +1,284 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* =========================
+   THEME TOKENS
+   Dark "galaxy" is the default; the inline script in the layout
+   switches <html data-theme> to "light" before first paint.
+========================= */
+:root,
+[data-theme="dark"] {
+  --bg: #0b0f1a;
+  --bg-glow: #1b1f2a;
+  --fg: #eaeaea;
+  --muted: rgb(234 234 234 / 0.72);
+  --card: rgb(255 255 255 / 0.04);
+  --card-hover: rgb(255 255 255 / 0.07);
+  --chip: rgb(255 255 255 / 0.03);
+  --border: rgb(255 255 255 / 0.1);
+  --header: rgb(10 12 20 / 0.55);
+  --header-scrolled: rgb(10 12 20 / 0.75);
+  --shadow: 0 22px 70px rgb(0 0 0 / 0.55);
+  --accent-from: #a050ff;
+  --accent-to: #50b4ff;
+  --accent-a: rgb(160 80 255 / 0.55);
+  --accent-b: rgb(80 180 255 / 0.35);
+  --blob-a: rgb(160 80 255 / 0.18);
+  --blob-b: rgb(80 180 255 / 0.16);
+  --blob-c: rgb(255 255 255 / 0.05);
+  --star: rgb(255 255 255 / 0.85);
+  --star-opacity: 0.45;
+  --glow: 0 0 14px rgb(80 180 255 / 0.35), 0 0 32px rgb(160 80 255 / 0.18);
+  --ring-glow: 0 0 18px rgb(80 180 255 / 0.25), 0 0 24px rgb(160 80 255 / 0.15);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f4f5fb;
+  --bg-glow: #ffffff;
+  --fg: #151a2b;
+  --muted: rgb(21 26 43 / 0.7);
+  --card: rgb(255 255 255 / 0.6);
+  --card-hover: rgb(255 255 255 / 0.85);
+  --chip: rgb(255 255 255 / 0.7);
+  --border: rgb(21 26 43 / 0.1);
+  --header: rgb(255 255 255 / 0.6);
+  --header-scrolled: rgb(255 255 255 / 0.85);
+  --shadow: 0 22px 60px rgb(60 40 120 / 0.14);
+  --accent-from: #8434f0;
+  --accent-to: #1f86d6;
+  --accent-a: rgb(132 52 240 / 0.45);
+  --accent-b: rgb(31 134 214 / 0.35);
+  --blob-a: rgb(160 80 255 / 0.16);
+  --blob-b: rgb(80 180 255 / 0.16);
+  --blob-c: rgb(255 255 255 / 0.4);
+  --star: rgb(70 50 140 / 0.55);
+  --star-opacity: 0.2;
+  --glow: none;
+  --ring-glow: 0 0 18px rgb(31 134 214 / 0.18), 0 0 24px rgb(132 52 240 / 0.12);
+  color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-card-hover: var(--card-hover);
+  --color-chip: var(--chip);
+  --color-line: var(--border);
+  --color-accent-from: var(--accent-from);
+  --color-accent-to: var(--accent-to);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --shadow-glass: var(--shadow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* =========================
+   BASE
+========================= */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: var(--fg);
+  line-height: 1.6;
+  background: radial-gradient(1200px 600px at 20% 10%, var(--bg-glow) 0%, var(--bg) 60%) fixed;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Starfield */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(1px 1px at 10% 20%, var(--star) 99%, transparent 100%),
+    radial-gradient(1px 1px at 30% 80%, var(--star) 99%, transparent 100%),
+    radial-gradient(1px 1px at 70% 30%, var(--star) 99%, transparent 100%),
+    radial-gradient(1px 1px at 90% 60%, var(--star) 99%, transparent 100%),
+    radial-gradient(2px 2px at 40% 40%, var(--star) 99%, transparent 100%),
+    radial-gradient(2px 2px at 80% 10%, var(--star) 99%, transparent 100%);
+  background-size: 700px 700px, 900px 900px, 800px 800px, 1100px 1100px, 1200px 1200px, 1400px 1400px;
+  opacity: var(--star-opacity);
+}
+
+/* Nebula blobs */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(600px 320px at 20% 15%, var(--blob-a), transparent 60%),
+    radial-gradient(700px 380px at 75% 25%, var(--blob-b), transparent 60%),
+    radial-gradient(900px 520px at 55% 80%, var(--blob-c), transparent 65%);
+  filter: blur(18px);
+  opacity: 0.9;
+}
+
+section[id] {
+  scroll-margin-top: 110px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-to);
+  outline-offset: 3px;
+}
+
+/* =========================
+   REUSABLE PIECES
+   In the components layer so Tailwind utilities (hidden, px-*, …) override them.
+========================= */
+@layer components {
+.text-gradient {
+  background: linear-gradient(90deg, var(--accent-from), var(--accent-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-glow {
+  text-shadow: var(--glow);
+}
+
+.glass {
+  background: var(--card);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+/* Gradient hairline border drawn with a masked pseudo-element. */
+.gradient-border {
+  position: relative;
+  isolation: isolate;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--accent-a), var(--accent-b), rgb(255 255 255 / 0.1));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.lift {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.lift:hover {
+  transform: translateY(-4px);
+  background-color: var(--card-hover);
+  box-shadow: var(--shadow);
+}
+
+.lift:hover::before {
+  opacity: 0.85;
+}
+
+/* Pill link with a gradient ring on hover / when active. */
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--fg);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent-from), var(--accent-to));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link[aria-current="true"] {
+  box-shadow: var(--ring-glow);
+  transform: translateY(-1px);
+}
+
+.nav-link:hover::before {
+  opacity: 0.85;
+}
+
+.nav-link[aria-current="true"] {
+  background: var(--card);
+}
+
+.nav-link[aria-current="true"]::before {
+  opacity: 0.95;
+}
+}
+
+/* Theme toggle icons follow the theme attribute, so no hydration mismatch. */
+[data-theme="dark"] .icon-sun,
+[data-theme="light"] .icon-moon {
+  display: none;
+}
+
+/* =========================
+   REVEAL ON SCROLL
+   Hidden only when JS is running (html.js is set by the inline script).
+========================= */
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  filter: blur(6px);
+  transition: opacity 0.65s ease, transform 0.65s ease, filter 0.65s ease;
+}
+
+html.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
