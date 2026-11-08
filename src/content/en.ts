@@ -66,7 +66,13 @@ export const en: Dictionary = {
     forkOf: "Fork of",
     allOnGithub: "All projects on GitHub",
     screenshot: "app screenshot",
+    teamInProgress: "Team school project · in progress",
     items: {
+      "Sport-slot": {
+        title: "SportSlot",
+        description:
+          "A sports venue booking system we build as a team at university: find a venue, pick a time slot, book it and leave a review. Next.js frontend, an API gateway and five microservices on PostgreSQL, with GitHub Actions CI and code review via pull requests. My role: frontend developer, also involved in analysis, planning and testing.",
+      },
       "ask-your-pdfs": {
         title: "Ask Your PDFs",
         description:
