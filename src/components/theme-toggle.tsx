@@ -8,7 +8,7 @@ export function ThemeToggle({ label }: { label: string }) {
     const next = root.dataset.theme === "light" ? "dark" : "light";
     root.dataset.theme = next;
     try {
-      localStorage.setItem("theme", next);
+      localStorage.setItem("theme", next); // read back by applyStoredTheme (src/lib/theme.ts)
     } catch {
       // Storage unavailable (private mode): the choice lasts for this page only.
     }
