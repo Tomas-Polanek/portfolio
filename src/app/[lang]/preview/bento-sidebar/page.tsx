@@ -17,7 +17,9 @@ import { getCopy } from "../bento/_components/copy";
 import { ProjectTile } from "../bento/_components/project-tile";
 import { s } from "../bento/_components/styles";
 import { bs, sectionsLabel, styleName } from "./_components/classes";
-import { SidePanel } from "./_components/side-panel";
+import { CompactBar } from "./_components/compact-bar";
+import { SectionNav } from "./_components/section-nav";
+import { ThemeButton } from "../bento/_components/theme-button";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
@@ -167,23 +169,107 @@ export default async function BentoSidebarPreview() {
     },
   ];
 
+  const contactLinks = [
+    {
+      href: site.links.github,
+      label: t.contact.github.title,
+      Icon: GitHubIcon,
+    },
+    {
+      href: site.links.linkedin,
+      label: t.contact.linkedin.title,
+      Icon: LinkedInIcon,
+    },
+    {
+      href: site.links.instagram,
+      label: t.contact.instagram.title,
+      Icon: InstagramIcon,
+    },
+    {
+      href: `mailto:${site.email}`,
+      label: `${t.contact.email.title}: ${site.email}`,
+      Icon: MailIcon,
+    },
+  ];
+  const languageHref = `/${other}/preview/bento-sidebar`;
+
   return (
     <div className={s.root} id="top">
       <div className={bs.layout}>
-        <SidePanel
+        {/* Left column: intro block (< lg) / sticky full-height column (≥ lg) */}
+        <header id="intro" className={bs.column}>
+          <div>
+            <div className="flex items-center gap-3">
+              <span className={s.monogram} aria-hidden="true">
+                TP
+              </span>
+              <ThemeButton label={t.theme.toggle} className={s.iconBtn} />
+              <a
+                href={languageHref}
+                hrefLang={other}
+                lang={other}
+                aria-label={t.language.switchLabel}
+                title={t.language.switchLabel}
+                className={s.iconBtn}
+              >
+                {t.language.switchShort}
+              </a>
+            </div>
+            <h1 className="mt-10 text-[2.6rem] leading-[1.05] font-semibold tracking-[-0.035em] sm:text-5xl xl:text-[3.5rem]">
+              {site.name}
+            </h1>
+            <p
+              className={`${s.gradText} mt-3 text-lg font-semibold tracking-tight sm:text-xl`}
+            >
+              {t.hero.role}
+            </p>
+            <div className="mt-4 max-w-sm space-y-2">
+              {t.hero.lines.map((line) => (
+                <p key={line} className={`${s.muted} leading-relaxed`}>
+                  {line}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <SectionNav
+            items={nav}
+            label={sectionsLabel[locale]}
+            endId="page-end"
+          />
+
+          <ul className="mt-7 flex gap-2.5 lg:mt-0">
+            {contactLinks.map(({ href, label, Icon }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  {...(href.startsWith("mailto:")
+                    ? {}
+                    : { target: "_blank", rel: "noopener noreferrer" })}
+                  aria-label={label}
+                  title={label}
+                  className={s.iconBtn}
+                >
+                  <Icon width={17} height={17} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </header>
+
+        <CompactBar
           name={site.name}
-          role={t.hero.role}
           items={nav}
           navLabel={sectionsLabel[locale]}
           themeLabel={t.theme.toggle}
           menuLabels={{ open: t.nav.openMenu, close: t.nav.closeMenu }}
           language={{
-            href: `/${other}/preview/bento-sidebar`,
+            href: languageHref,
             lang: other,
             label: t.language.switchLabel,
             short: t.language.switchShort,
           }}
-          startId="intro"
+          watchId="intro"
           endId="page-end"
         />
 
@@ -191,47 +277,6 @@ export default async function BentoSidebarPreview() {
           <main>
             {/* ================= HERO BENTO ================= */}
             <div className={bs.heroGrid}>
-              {/* Intro */}
-              <section
-                id="intro"
-                className={`${s.tile} ${s.aIntro} flex flex-col overflow-hidden p-6 sm:p-9 xl:p-10`}
-                aria-labelledby="intro-title"
-              >
-                <span className={s.orb} aria-hidden="true" />
-                <p className={s.eyebrow}>
-                  <span className={s.dot} /> {site.name}
-                </p>
-                <h1
-                  id="intro-title"
-                  className="relative mt-5 text-[2.6rem] leading-[1.02] font-semibold tracking-[-0.035em] text-balance sm:text-6xl 2xl:text-7xl"
-                >
-                  {t.hero.greeting}
-                </h1>
-                <p
-                  className={`${s.gradText} relative mt-3 text-xl font-semibold tracking-tight sm:text-2xl`}
-                >
-                  {t.hero.role}
-                </p>
-                <div className="relative mt-5 max-w-xl space-y-2">
-                  {t.hero.lines.map((line) => (
-                    <p
-                      key={line}
-                      className={`${s.muted} text-base leading-relaxed sm:text-lg`}
-                    >
-                      {line}
-                    </p>
-                  ))}
-                </div>
-                <div className="relative mt-auto flex flex-wrap gap-3 pt-8">
-                  <a href="#projects" className={s.btnSolid}>
-                    {t.hero.ctaProjects}
-                  </a>
-                  <a href="#contact" className={s.btnGhost}>
-                    <MailIcon width={16} height={16} /> {t.hero.ctaContact}
-                  </a>
-                </div>
-              </section>
-
               {/* Studying */}
               <div
                 className={`${s.tile} ${s.lift} ${s.aStudy} flex flex-col p-5 sm:p-6`}
@@ -395,42 +440,13 @@ export default async function BentoSidebarPreview() {
                   )}
                 </p>
               </a>
-
-              {/* Quick contact */}
-              <div
-                className={`${s.tile} ${s.lift} ${s.aMail} flex flex-col p-5 sm:p-6`}
-              >
-                <p className={s.eyebrow}>{c.sayHi}</p>
-                <a
-                  href={`mailto:${site.email}`}
-                  className="mt-3 text-lg font-semibold tracking-tight wrap-anywhere hover:underline sm:text-2xl"
-                >
-                  {site.email}
-                </a>
-                <ul className="mt-auto flex gap-2 pt-5">
-                  {socials.map(({ href, label, Icon }) => (
-                    <li key={label}>
-                      <a
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={label}
-                        title={label}
-                        className={s.iconBtn}
-                      >
-                        <Icon width={17} height={17} />
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
 
             {/* ================= PROJECTS ================= */}
             <section
               id="projects"
               aria-labelledby="projects-title"
-              className="scroll-mt-6 pt-20 sm:pt-28"
+              className="pt-20 sm:pt-28"
             >
               <SectionHeader
                 eyebrow={`02 · ${t.nav.projects}`}
@@ -495,7 +511,7 @@ export default async function BentoSidebarPreview() {
             <section
               id="homelab"
               aria-labelledby="homelab-title"
-              className="scroll-mt-6 pt-20 sm:pt-28"
+              className="pt-20 sm:pt-28"
             >
               <SectionHeader
                 eyebrow={`03 · ${t.nav.homelab}`}
@@ -503,8 +519,8 @@ export default async function BentoSidebarPreview() {
                 intro={t.homelab.intro}
                 id="homelab-title"
               />
-              <div className="grid gap-4 sm:gap-5 xl:grid-cols-2">
-                <div className="flex flex-col gap-4 sm:gap-5">
+              <div className="grid gap-4 sm:gap-5">
+                <div className="flex flex-col gap-4 sm:gap-5 xl:grid xl:grid-cols-2">
                   {/* Specs as a terminal */}
                   <div className={`${s.tile} overflow-hidden`}>
                     <div className={s.terminalBar} aria-hidden="true">
@@ -581,7 +597,7 @@ export default async function BentoSidebarPreview() {
                       {c.servicesCount(t.homelab.services.length)}
                     </span>
                   </div>
-                  <ul className="grid flex-1 gap-4 sm:grid-cols-2 sm:gap-5">
+                  <ul className="grid flex-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
                     {t.homelab.services.map((svc) => (
                       <li
                         key={svc.name}

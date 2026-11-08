@@ -1,12 +1,12 @@
 /* ============================================================
    Bento + panel preview — builds on ../bento/bento.css (bn-*).
    Classes prefixed bs-, see _components/classes.ts.
-   Breakpoints: lg 1024 px = sticky side panel, xl 1280 px = 3-column bento.
+   lg 1024 px = sticky full-height left column, xl 1280 px = 3-column bento.
    ============================================================ */
 .bs-layout {
   margin: 0 auto;
-  max-width: 1480px;
-  padding: 0.5rem 0.75rem 2.5rem;
+  max-width: 1520px;
+  padding: 0 1rem 2.5rem;
 }
 
 .bs-content {
@@ -19,17 +19,20 @@
 
 @media (min-width: 640px) {
   .bs-layout {
-    padding: 0.75rem 1.5rem 2.5rem;
+    padding: 0 1.5rem 2.5rem;
   }
 }
 
 @media (min-width: 1024px) {
   .bs-layout {
     display: grid;
-    grid-template-columns: 300px minmax(0, 1fr);
+    grid-template-columns: min(42%, 440px) minmax(0, 1fr);
     align-items: start;
-    gap: 1.25rem;
-    padding: 2rem 2rem 2.5rem;
+    gap: 3rem;
+    padding: 0 2rem;
+  }
+  .bs-content {
+    padding-top: 3.5rem;
   }
   .bs-layout section[id] {
     scroll-margin-top: 1.5rem;
@@ -38,29 +41,115 @@
 
 @media (min-width: 1280px) {
   .bs-layout {
-    grid-template-columns: 320px minmax(0, 1fr);
-    gap: 1.5rem;
+    gap: 4rem;
+    padding: 0 3rem;
   }
 }
 
-/* ---------- Sticky side panel (≥ lg) ---------- */
-.bn-tile.bs-panel {
-  position: sticky;
-  top: 1.5rem;
+/* ---------- Left column: intro block (< lg), sticky full-height column (≥ lg) ---------- */
+.bs-column {
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 0.25rem 1.5rem;
 }
 
-/* ---------- Compact top bar (< lg) ---------- */
+@media (min-width: 1024px) {
+  .bs-column {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    justify-content: space-between;
+    gap: 2.5rem;
+    padding: 3.5rem 0;
+    scrollbar-width: none;
+  }
+}
+
+/* Vertical section nav */
+.bs-navLink {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.7rem 0.25rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--faint);
+  transition: color 0.2s ease;
+}
+
+.bs-navLine {
+  display: block;
+  height: 1px;
+  width: 2rem;
+  border-radius: 999px;
+  background: var(--faint);
+  opacity: 0.6;
+  transition:
+    width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.bs-navLink:hover,
+.bs-navLink:focus-visible {
+  color: var(--fg);
+}
+
+.bs-navLink:hover .bs-navLine,
+.bs-navLink:focus-visible .bs-navLine {
+  width: 3.5rem;
+  opacity: 1;
+  background: var(--fg);
+}
+
+.bs-navLink[aria-current="true"] {
+  color: var(--fg);
+}
+
+.bs-navLink[aria-current="true"] .bs-navLine {
+  width: 4.5rem;
+  height: 2px;
+  opacity: 1;
+  background: linear-gradient(90deg, var(--brand-a), var(--brand-b));
+}
+
+/* ---------- Compact top bar (< lg), shown once the intro block is gone ---------- */
 .bs-bar {
-  position: sticky;
+  position: fixed;
   top: 0.5rem;
+  left: 0.75rem;
+  right: 0.75rem;
   z-index: 40;
-  margin-bottom: 0.75rem;
   border-radius: 18px;
   border: 1px solid var(--line-strong);
-  background: color-mix(in srgb, var(--tile) 90%, transparent);
-  backdrop-filter: blur(14px) saturate(1.4);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  background: var(--tile);
   box-shadow: var(--shadow);
+  transition:
+    transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.25s ease,
+    visibility 0s;
+}
+
+.bs-bar[data-shown="false"] {
+  transform: translateY(calc(-100% - 1rem));
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    transform 0.3s ease,
+    opacity 0.25s ease,
+    visibility 0s linear 0.3s;
+}
+
+@media (min-width: 640px) {
+  .bs-bar {
+    left: 1.5rem;
+    right: 1.5rem;
+  }
 }
 
 /* Dropdown with the section chips: overlays the page instead of pushing it down. */
@@ -76,26 +165,13 @@
   padding: 0.85rem 0.85rem 1rem;
 }
 
-@media (min-width: 640px) {
-  .bs-bar {
-    margin-bottom: 1.25rem;
-  }
-}
-
 .bn-iconBtn.bs-barBtn {
   flex: none;
   width: 2.25rem;
   height: 2.25rem;
 }
 
-/* ---------- Scrollspy chips ---------- */
-.bn-chip.bs-navChip {
-  transition:
-    background-color 0.2s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
-}
-
+/* Scrollspy chips in the dropdown */
 .bn-chip.bs-navChip[aria-current="true"] {
   border-color: transparent;
   background:
@@ -111,14 +187,12 @@
   gap: 1rem;
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
-    "intro"
+    "about"
     "study"
     "loc"
-    "about"
     "skills"
     "lab"
-    "gh"
-    "mail";
+    "gh";
 }
 
 @media (min-width: 640px) {
@@ -126,12 +200,10 @@
     gap: 1.25rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
-      "intro intro"
-      "study loc"
       "about about"
+      "study loc"
       "skills skills"
-      "lab gh"
-      "lab mail";
+      "lab gh";
   }
 }
 
@@ -139,11 +211,10 @@
   .bs-heroGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-areas:
-      "intro intro study"
-      "intro intro loc"
-      "about about lab"
+      "about about study"
+      "about about loc"
       "skills skills lab"
-      "gh mail mail";
+      "gh gh lab";
   }
 }
 
@@ -161,7 +232,7 @@
   }
 }
 
-/* The side panel narrows the content: stay at 2 columns until xl. */
+/* The left column narrows the content: stay at 2 columns until xl. */
 @media (min-width: 1024px) and (max-width: 1279.98px) {
   .bs-projGrid > .bn-projWide,
   .bs-projGrid > .bn-projNormal {
@@ -174,13 +245,13 @@
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
 
-  /* Wide tiles go side-by-side earlier than in the full-width bento (≈ 575 px at 1280 px). */
+  /* Wide tiles go side-by-side earlier than in the full-width bento. */
   @container (min-width: 520px) {
     .bs-projGrid .bn-wideInner {
       flex-direction: row;
     }
     .bs-projGrid .bn-wideInner .bn-cover {
-      flex: 0 0 52%;
+      flex: 0 0 50%;
       aspect-ratio: auto;
       min-height: 280px;
       margin: 0.5rem 0 0.5rem 0.5rem;
