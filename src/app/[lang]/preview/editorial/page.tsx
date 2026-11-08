@@ -38,7 +38,7 @@ function splitSentence(text: string): [string, string] {
 export default async function EditorialPreview() {
   const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
   const other = locale === "cs" ? "en" : "cs";
-  const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo)));
+  const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo, p.owner)));
   const monthYear = new Intl.DateTimeFormat(locale, { month: "numeric", year: "numeric", timeZone: "UTC" });
   const badge = locale === "cs" ? "Náhled stylu" : "Style preview";
 

@@ -195,7 +195,7 @@ function About({ t }: { t: Dictionary["about"] }) {
 }
 
 async function Projects({ t, locale }: { t: Dictionary["projects"]; locale: Locale }) {
-  const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo)));
+  const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo, p.owner)));
   const monthYear = new Intl.DateTimeFormat(locale, { month: "numeric", year: "numeric", timeZone: "UTC" });
 
   return (

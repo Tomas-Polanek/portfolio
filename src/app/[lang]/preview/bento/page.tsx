@@ -68,7 +68,7 @@ export default async function BentoPreview() {
   const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
   const c = getCopy(locale);
   const other = locale === "cs" ? "en" : "cs";
-  const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo)));
+  const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo, p.owner)));
   const monthYear = new Intl.DateTimeFormat(locale, { month: "numeric", year: "numeric", timeZone: "UTC" });
 
   const study = t.education.items[0];
