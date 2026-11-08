@@ -1,0 +1,195 @@
+/* ============================================================
+   Bento + panel preview — builds on ../bento/bento.css (bn-*).
+   Classes prefixed bs-, see _components/classes.ts.
+   Breakpoints: lg 1024 px = sticky side panel, xl 1280 px = 3-column bento.
+   ============================================================ */
+.bs-layout {
+  margin: 0 auto;
+  max-width: 1480px;
+  padding: 0.5rem 0.75rem 2.5rem;
+}
+
+.bs-content {
+  min-width: 0;
+}
+
+.bs-layout section[id] {
+  scroll-margin-top: 5rem;
+}
+
+@media (min-width: 640px) {
+  .bs-layout {
+    padding: 0.75rem 1.5rem 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .bs-layout {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    align-items: start;
+    gap: 1.25rem;
+    padding: 2rem 2rem 2.5rem;
+  }
+  .bs-layout section[id] {
+    scroll-margin-top: 1.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .bs-layout {
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* ---------- Sticky side panel (≥ lg) ---------- */
+.bn-tile.bs-panel {
+  position: sticky;
+  top: 1.5rem;
+}
+
+/* ---------- Compact top bar (< lg) ---------- */
+.bs-bar {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 40;
+  margin-bottom: 0.75rem;
+  border-radius: 18px;
+  border: 1px solid var(--line-strong);
+  background: color-mix(in srgb, var(--tile) 90%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: var(--shadow);
+}
+
+/* Dropdown with the section chips: overlays the page instead of pushing it down. */
+.bs-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  border-radius: 18px;
+  border: 1px solid var(--line-strong);
+  background: var(--tile);
+  box-shadow: var(--shadow-hover);
+  padding: 0.85rem 0.85rem 1rem;
+}
+
+@media (min-width: 640px) {
+  .bs-bar {
+    margin-bottom: 1.25rem;
+  }
+}
+
+.bn-iconBtn.bs-barBtn {
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+/* ---------- Scrollspy chips ---------- */
+.bn-chip.bs-navChip {
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.bn-chip.bs-navChip[aria-current="true"] {
+  border-color: transparent;
+  background:
+    linear-gradient(var(--tile-2), var(--tile-2)) padding-box,
+    linear-gradient(135deg, var(--brand-a), var(--brand-b)) border-box;
+  box-shadow: 0 0 0 3px rgb(160 80 255 / 0.16);
+  font-weight: 600;
+}
+
+/* ---------- Top bento: 1 → 2 → 3 columns, no holes ---------- */
+.bs-heroGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "intro"
+    "study"
+    "loc"
+    "about"
+    "skills"
+    "lab"
+    "gh"
+    "mail";
+}
+
+@media (min-width: 640px) {
+  .bs-heroGrid {
+    gap: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-areas:
+      "intro intro"
+      "study loc"
+      "about about"
+      "skills skills"
+      "lab gh"
+      "lab mail";
+  }
+}
+
+@media (min-width: 1280px) {
+  .bs-heroGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      "intro intro study"
+      "intro intro loc"
+      "about about lab"
+      "skills skills lab"
+      "gh mail mail";
+  }
+}
+
+/* ---------- Projects: 1 → 2 → 6 columns (wide tiles span 4 from xl) ---------- */
+.bs-projGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 640px) {
+  .bs-projGrid {
+    gap: 1.25rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* The side panel narrows the content: stay at 2 columns until xl. */
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .bs-projGrid > .bn-projWide,
+  .bs-projGrid > .bn-projNormal {
+    grid-column: auto;
+  }
+}
+
+@media (min-width: 1280px) {
+  .bs-projGrid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  /* Wide tiles go side-by-side earlier than in the full-width bento (≈ 575 px at 1280 px). */
+  @container (min-width: 520px) {
+    .bs-projGrid .bn-wideInner {
+      flex-direction: row;
+    }
+    .bs-projGrid .bn-wideInner .bn-cover {
+      flex: 0 0 52%;
+      aspect-ratio: auto;
+      min-height: 280px;
+      margin: 0.5rem 0 0.5rem 0.5rem;
+    }
+    .bs-projGrid .bn-wideInner .bn-projectBody {
+      padding: 1.4rem 1.5rem;
+    }
+    .bs-projGrid .bn-wideInner .bn-coverImage {
+      object-position: left top;
+    }
+  }
+}

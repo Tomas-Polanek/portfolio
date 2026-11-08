@@ -13,6 +13,11 @@ const styles = [
     note: { cs: "Dlaždice různých velikostí, velké náhledy projektů.", en: "Tiles of varied sizes, large project screenshots." },
   },
   {
+    slug: "bento-sidebar",
+    name: { cs: "Bento + panel", en: "Bento + panel" },
+    note: { cs: "Bento s pevným levým panelem (jméno, režim, jazyk, menu).", en: "Bento with a sticky left panel (name, theme, language, nav)." },
+  },
+  {
     slug: "editorial",
     name: { cs: "Editorial", en: "Editorial" },
     note: { cs: "Velká typografie, hodně prostoru, světlý základ.", en: "Large typography, lots of whitespace, light-first." },
