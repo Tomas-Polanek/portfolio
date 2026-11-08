@@ -166,6 +166,23 @@ export const cs = {
       "Monitoring dostupnosti a řešení výpadků",
     ],
   },
+  education: {
+    title: "Vzdělání",
+    items: [
+      {
+        period: "od 2025",
+        title: "Softwarové inženýrství",
+        place: "Unicorn University, Praha",
+      },
+    ],
+    learningTitle: "Aktuálně se učím",
+    learning: [
+      "Moderní webový vývoj – React, Next.js a TypeScript",
+      "Backend v Node.js a Pythonu",
+      "Aplikace nad jazykovými modely (RAG, strukturované výstupy)",
+      "Linux, Docker a provoz vlastních služeb",
+    ],
+  },
   footer: {
     builtWith: "Postaveno v Next.js a Tailwind CSS",
     backToTop: "Nahoru",

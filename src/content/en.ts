@@ -153,6 +153,23 @@ export const en: Dictionary = {
       "Uptime monitoring and troubleshooting outages",
     ],
   },
+  education: {
+    title: "Education",
+    items: [
+      {
+        period: "since 2025",
+        title: "Software Engineering",
+        place: "Unicorn University, Prague",
+      },
+    ],
+    learningTitle: "Currently learning",
+    learning: [
+      "Modern web development – React, Next.js and TypeScript",
+      "Backend with Node.js and Python",
+      "Applications built on language models (RAG, structured outputs)",
+      "Linux, Docker and self-hosting",
+    ],
+  },
   footer: {
     builtWith: "Built with Next.js and Tailwind CSS",
     backToTop: "Back to top",

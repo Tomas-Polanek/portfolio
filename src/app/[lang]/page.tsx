@@ -1,5 +1,6 @@
 import { RevealObserver } from "@/components/reveal-observer";
 import { About } from "@/components/sections/about";
+import { Education } from "@/components/sections/education";
 import { Hero } from "@/components/sections/hero";
 import { Homelab } from "@/components/sections/homelab";
 import { Projects } from "@/components/sections/projects";
@@ -20,6 +21,7 @@ export default async function Home() {
           { id: "about", label: t.nav.about },
           { id: "projects", label: t.nav.projects },
           { id: "homelab", label: t.nav.homelab },
+          { id: "education", label: t.nav.education },
         ]}
         githubUrl={site.links.github}
         themeLabel={t.theme.toggle}
@@ -32,6 +34,7 @@ export default async function Home() {
         <About t={t.about} />
         <Projects t={t.projects} locale={locale} />
         <Homelab t={t.homelab} />
+        <Education t={t.education} />
       </main>
 
       <SiteFooter t={t.footer} />
