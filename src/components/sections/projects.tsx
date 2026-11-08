@@ -8,16 +8,16 @@ import { ExternalIcon, ForkIcon, GitHubIcon, StarIcon } from "../icons";
 import { Section } from "../section";
 
 export async function Projects({ t, locale }: { t: Dictionary["projects"]; locale: Locale }) {
-  const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo)));
+  const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo, p.owner)));
   const monthYear = new Intl.DateTimeFormat(locale, { month: "numeric", year: "numeric", timeZone: "UTC" });
 
   return (
     <Section id="projects" title={t.title} subtitle={t.subtitle}>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map(({ repo, tags }, i) => {
+        {projects.map(({ repo, owner, tags, teamInProgress }, i) => {
           const info = infos[i];
           const { title, description } = t.items[repo];
-          const codeUrl = info?.url ?? `${site.links.github}/${repo}`;
+          const codeUrl = info?.url ?? `https://github.com/${owner ?? site.githubUser}/${repo}`;
           const image = projectImages[repo];
           return (
             <article
@@ -59,6 +59,13 @@ export async function Projects({ t, locale }: { t: Dictionary["projects"]; local
                   </a>
                 </div>
               </div>
+
+              {teamInProgress && (
+                <p className="mt-2 inline-flex w-fit items-center gap-1.5 rounded-full border border-line bg-chip px-2.5 py-0.5 text-xs font-medium">
+                  <span className="size-1.5 animate-pulse rounded-full bg-accent-to motion-reduce:animate-none" />
+                  {t.teamInProgress}
+                </p>
+              )}
 
               {info?.forkOf && (
                 <p className="mt-2 inline-flex items-center gap-1.5 text-xs text-muted">

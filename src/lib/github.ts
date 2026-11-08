@@ -25,7 +25,7 @@ type GitHubRepo = {
  * Set GITHUB_TOKEN to lift the 60 requests/hour anonymous limit.
  * Returns null when GitHub is unreachable so the card still renders without stats.
  */
-export async function getRepoInfo(repo: string): Promise<RepoInfo | null> {
+export async function getRepoInfo(repo: string, owner: string = site.githubUser): Promise<RepoInfo | null> {
   "use cache";
   cacheLife("days");
   cacheTag("github");
@@ -37,9 +37,9 @@ export async function getRepoInfo(repo: string): Promise<RepoInfo | null> {
   if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 
   try {
-    const res = await fetch(`https://api.github.com/repos/${site.githubUser}/${repo}`, { headers });
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}`, { headers });
     if (!res.ok) {
-      console.warn(`GitHub API ${res.status} for ${repo}`);
+      console.warn(`GitHub API ${res.status} for ${owner}/${repo}`);
       return null;
     }
     const data = (await res.json()) as GitHubRepo;

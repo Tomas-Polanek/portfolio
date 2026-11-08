@@ -79,7 +79,13 @@ export const cs = {
     forkOf: "Fork z",
     allOnGithub: "Všechny projekty na GitHubu",
     screenshot: "náhled aplikace",
+    teamInProgress: "Týmový školní projekt · ve vývoji",
     items: {
+      "Sport-slot": {
+        title: "SportSlot",
+        description:
+          "Rezervační systém sportovišť, na kterém ve škole pracujeme v týmu: vyhledání sportoviště, výběr termínu, rezervace a hodnocení. Next.js frontend, API gateway a pět mikroslužeb nad PostgreSQL, CI v GitHub Actions s code review přes pull requesty. Moje role: frontend developer, podílím se na analýze, plánování a testování.",
+      },
       "ask-your-pdfs": {
         title: "Ask Your PDFs",
         description:
