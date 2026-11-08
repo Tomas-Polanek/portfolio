@@ -60,7 +60,6 @@ export const cs = {
       "Node.js & Express",
       "Python",
       "FastAPI",
-      "PHP",
       "SQLite",
       "HTML & CSS",
       "Tailwind CSS",
@@ -88,7 +87,7 @@ export const cs = {
       "Jicin-parcel-map": {
         title: "Mapa parcel – Jičín",
         description:
-          "Webová mapa 17 723 katastrálních parcel z otevřených dat ČÚZK. Vlastní PHP backend nad SQLite, klient ve vanilla JS s Leafletem vykresleným do canvasu a zdokumentovaná technická rozhodnutí.",
+          "Webová mapa 17 723 katastrálních parcel z otevřených dat ČÚZK. Data jednorázově importuji do SQLite, tisíce polygonů vykresluje Leaflet do canvasu kvůli plynulosti a každé technické rozhodnutí – včetně volby technologií – je v repozitáři zdokumentované.",
       },
       "The-Fridge-Notebook": {
         title: "The Fridge Notebook",

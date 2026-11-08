@@ -5,9 +5,9 @@
  */
 export const projects = [
   { repo: "ask-your-pdfs", tags: ["Python", "RAG", "ChromaDB", "Gemini", "Streamlit"] },
-  { repo: "Jicin-parcel-map", tags: ["PHP", "SQLite", "Leaflet", "JavaScript", "REST API"] },
   { repo: "The-Fridge-Notebook", tags: ["Python", "FastAPI", "Pydantic", "Gemini", "SQLite", "Docker"] },
   { repo: "SleepTrack", tags: ["React", "Vite", "Tailwind CSS", "Node.js", "Express"] },
+  { repo: "Jicin-parcel-map", tags: ["Leaflet", "Open data", "SQLite", "JavaScript", "PHP"] },
   { repo: "DOD-2026", tags: ["Node.js", "JavaScript", "SQLite", "QR"] },
   { repo: "Jumping-game-in-python", tags: ["Python", "pygame-ce"] },
 ] as const;

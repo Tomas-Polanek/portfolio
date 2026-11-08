@@ -47,7 +47,6 @@ export const en: Dictionary = {
       "Node.js & Express",
       "Python",
       "FastAPI",
-      "PHP",
       "SQLite",
       "HTML & CSS",
       "Tailwind CSS",
@@ -75,7 +74,7 @@ export const en: Dictionary = {
       "Jicin-parcel-map": {
         title: "Jičín Parcel Map",
         description:
-          "A web map of 17,723 cadastral parcels from the Czech open cadastre data (ČÚZK). Custom PHP backend over SQLite, a vanilla JS client with Leaflet rendering to canvas, and documented design decisions.",
+          "A web map of 17,723 cadastral parcels from Czech open cadastre data (ČÚZK). Data is imported once into SQLite, Leaflet renders thousands of polygons to canvas for smooth panning, and every technical decision – including the choice of stack – is documented in the repo.",
       },
       "The-Fridge-Notebook": {
         title: "The Fridge Notebook",
