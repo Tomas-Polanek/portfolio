@@ -16,5 +16,8 @@ export type ProjectRepo = (typeof projects)[number]["repo"];
 
 /** Screenshots in public/projects/, shown at the top of the card (cropped to 16:10 from the top). */
 export const projectImages: Partial<Record<ProjectRepo, string>> = {
-  "The-Fridge-Notebook": "/projects/The-Fridge-Notebook.png",
+  "The-Fridge-Notebook": "/projects/The-Fridge-Notebook.webp",
+  SleepTrack: "/projects/SleepTrack.webp",
+  "Jicin-parcel-map": "/projects/Jicin-parcel-map.webp",
+  "DOD-2026": "/projects/DOD-2026.webp",
 };
