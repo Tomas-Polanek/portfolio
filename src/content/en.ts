@@ -57,6 +57,48 @@ export const en: Dictionary = {
       "Git & GitHub",
     ],
   },
+  projects: {
+    title: "Projects",
+    subtitle: "Selected projects from my GitHub. Stats update automatically.",
+    code: "Code",
+    live: "Live",
+    updated: "Updated",
+    stars: "Stars",
+    forkOf: "Fork of",
+    allOnGithub: "All projects on GitHub",
+    items: {
+      "ask-your-pdfs": {
+        title: "Ask Your PDFs",
+        description:
+          "A RAG app that ingests a folder of PDFs and answers questions with page-level citations. Text is chunked per page, embeddings are stored in Chroma and Gemini answers only from the retrieved passages.",
+      },
+      "Jicin-parcel-map": {
+        title: "Jičín Parcel Map",
+        description:
+          "A web map of 17,723 cadastral parcels from the Czech open cadastre data (ČÚZK). Custom PHP backend over SQLite, a vanilla JS client with Leaflet rendering to canvas, and documented design decisions.",
+      },
+      "The-Fridge-Notebook": {
+        title: "The Fridge Notebook",
+        description:
+          "Tell it what's in your fridge and Gemini suggests three recipes, including the missing ingredients. Structured JSON validated with Pydantic, a CLI plus a FastAPI web UI, SQLite history, tests and Docker.",
+      },
+      SleepTrack: {
+        title: "SleepTrack",
+        description:
+          "A sleep tracking web app – entries, calendar and statistics. React frontend with Vite and Tailwind, Node.js backend with Express and AJV validation.",
+      },
+      "DOD-2026": {
+        title: "UCT Prague Open Day Game",
+        description:
+          "A mobile web game for a university open day: 10 stations with QR codes, choices that shape your score, an organiser dashboard and a leaderboard for the projector. Scoring runs on the server, so it can't be cheated.",
+      },
+      "Jumping-game-in-python": {
+        title: "Jumping Game",
+        description:
+          "My first step in Python – a simple jumping game in pygame-ce with movement, gravity and window-border collisions.",
+      },
+    },
+  },
   footer: {
     builtWith: "Built with Next.js and Tailwind CSS",
     backToTop: "Back to top",

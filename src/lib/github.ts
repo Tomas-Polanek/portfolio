@@ -1,0 +1,58 @@
+import { cacheLife, cacheTag } from "next/cache";
+import { site } from "@/content/site";
+
+export type RepoInfo = {
+  url: string;
+  homepage: string | null;
+  language: string | null;
+  stars: number;
+  pushedAt: string;
+  /** "owner/name" of the upstream repository when this repo is a fork. */
+  forkOf: string | null;
+};
+
+type GitHubRepo = {
+  html_url: string;
+  homepage: string | null;
+  language: string | null;
+  stargazers_count: number;
+  pushed_at: string;
+  parent?: { full_name: string };
+};
+
+/**
+ * Repository metadata, cached for a day (`cacheLife("days")`).
+ * Set GITHUB_TOKEN to lift the 60 requests/hour anonymous limit.
+ * Returns null when GitHub is unreachable so the card still renders without stats.
+ */
+export async function getRepoInfo(repo: string): Promise<RepoInfo | null> {
+  "use cache";
+  cacheLife("days");
+  cacheTag("github");
+
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+  if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${site.githubUser}/${repo}`, { headers });
+    if (!res.ok) {
+      console.warn(`GitHub API ${res.status} for ${repo}`);
+      return null;
+    }
+    const data = (await res.json()) as GitHubRepo;
+    return {
+      url: data.html_url,
+      homepage: data.homepage || null,
+      language: data.language,
+      stars: data.stargazers_count,
+      pushedAt: data.pushed_at,
+      forkOf: data.parent?.full_name ?? null,
+    };
+  } catch (error) {
+    console.warn(`GitHub API unreachable for ${repo}:`, error);
+    return null;
+  }
+}

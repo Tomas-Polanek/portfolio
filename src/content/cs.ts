@@ -1,3 +1,5 @@
+import type { ProjectRepo } from "./projects";
+
 export const cs = {
   meta: {
     title: "Tomáš Polánek | Portfolio",
@@ -54,6 +56,48 @@ export const cs = {
       "Linux",
       "Git & GitHub",
     ],
+  },
+  projects: {
+    title: "Projekty",
+    subtitle: "Vybrané projekty z mého GitHubu. Statistiky se aktualizují automaticky.",
+    code: "Kód",
+    live: "Živě",
+    updated: "Aktualizováno",
+    stars: "Hvězdičky",
+    forkOf: "Fork z",
+    allOnGithub: "Všechny projekty na GitHubu",
+    items: {
+      "ask-your-pdfs": {
+        title: "Ask Your PDFs",
+        description:
+          "RAG aplikace, která načte složku PDF a odpovídá na otázky s citacemi konkrétních stran. Text dělí po stránkách, ukládá embeddingy do Chroma a odpověď generuje Gemini jen z nalezených úryvků.",
+      },
+      "Jicin-parcel-map": {
+        title: "Mapa parcel – Jičín",
+        description:
+          "Webová mapa 17 723 katastrálních parcel z otevřených dat ČÚZK. Vlastní PHP backend nad SQLite, klient ve vanilla JS s Leafletem vykresleným do canvasu a zdokumentovaná technická rozhodnutí.",
+      },
+      "The-Fridge-Notebook": {
+        title: "The Fridge Notebook",
+        description:
+          "Napíšeš, co máš v lednici, a Gemini navrhne tři recepty včetně chybějících surovin. Strukturovaný JSON validovaný Pydanticem, CLI i webové rozhraní na FastAPI, historie v SQLite, testy a Docker.",
+      },
+      SleepTrack: {
+        title: "SleepTrack",
+        description:
+          "Webová aplikace pro sledování spánku – záznamy, kalendář a statistiky. Frontend v Reactu s Vite a Tailwindem, backend v Node.js s Express a validací přes AJV.",
+      },
+      "DOD-2026": {
+        title: "Den otevřených dveří VŠCHT",
+        description:
+          "Mobilní webová hra pro den otevřených dveří: 10 stanovišť s QR kódy, rozhodování ovlivňující skóre, přehled pro organizátory a žebříček na projektor. Body počítá server, takže nejde podvádět.",
+      },
+      "Jumping-game-in-python": {
+        title: "Jumping Game",
+        description:
+          "Můj první krok v Pythonu – jednoduchá skákací hra v pygame-ce s pohybem, gravitací a kolizemi s okraji okna.",
+      },
+    } satisfies Record<ProjectRepo, { title: string; description: string }>,
   },
   footer: {
     builtWith: "Postaveno v Next.js a Tailwind CSS",

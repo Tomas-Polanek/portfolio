@@ -1,6 +1,7 @@
 import { RevealObserver } from "@/components/reveal-observer";
 import { About } from "@/components/sections/about";
 import { Hero } from "@/components/sections/hero";
+import { Projects } from "@/components/sections/projects";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { site } from "@/content/site";
@@ -16,6 +17,7 @@ export default async function Home() {
         brand={site.name}
         links={[
           { id: "about", label: t.nav.about },
+          { id: "projects", label: t.nav.projects },
         ]}
         githubUrl={site.links.github}
         themeLabel={t.theme.toggle}
@@ -26,6 +28,7 @@ export default async function Home() {
       <main className="mx-auto w-[calc(100%-2rem)] max-w-[1100px]">
         <Hero t={t.hero} />
         <About t={t.about} />
+        <Projects t={t.projects} locale={locale} />
       </main>
 
       <SiteFooter t={t.footer} />
