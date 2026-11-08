@@ -1,0 +1,300 @@
+/* "Minimal two-column" preview (global CSS, every class prefixed mn-): calm navy / warm off-white, one accent. */
+.mn-root {
+  --m-bg: #0b1324;
+  --m-fg: #b9c3d3;
+  --m-heading: #eef2f8;
+  --m-muted: #94a3b8;
+  --m-line: rgb(148 163 184 / 0.16);
+  --m-accent: #8ab4ff;
+  --m-accent-soft: rgb(138 180 255 / 0.1);
+  --m-surface: rgb(148 163 184 / 0.06);
+  --m-surface-shadow: inset 0 1px 0 0 rgb(148 163 184 / 0.1), 0 16px 32px -18px rgb(0 0 0 / 0.6);
+  --m-brand: linear-gradient(90deg, #a050ff, #50b4ff);
+  --m-head-bg: rgb(11 19 36 / 0.8);
+  --m-spot: rgb(96 86 255 / 0.11);
+  --m-selection: rgb(138 180 255 / 0.3);
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: clip;
+  background: var(--m-bg);
+  color: var(--m-fg);
+  line-height: 1.65;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+[data-theme="light"] .mn-root {
+  --m-bg: #f7f4ee;
+  --m-fg: #3a4152;
+  --m-heading: #141a29;
+  --m-muted: #5d6474;
+  --m-line: rgb(20 26 41 / 0.12);
+  --m-accent: #4b3fd0;
+  --m-accent-soft: rgb(75 63 208 / 0.09);
+  --m-surface: rgb(255 255 255 / 0.75);
+  --m-surface-shadow: 0 1px 2px rgb(20 26 41 / 0.05), 0 16px 34px -16px rgb(60 50 120 / 0.2);
+  --m-brand: linear-gradient(90deg, #8434f0, #1f86d6);
+  --m-head-bg: rgb(247 244 238 / 0.88);
+  --m-selection: rgb(75 63 208 / 0.18);
+}
+
+.mn-root ::selection {
+  background: var(--m-selection);
+  color: var(--m-heading);
+}
+
+.mn-root :focus-visible {
+  outline: 2px solid var(--m-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.mn-root section[id] {
+  scroll-margin-top: 0;
+}
+
+@media (min-width: 64rem) {
+  .mn-root section[id] {
+    scroll-margin-top: 6rem;
+  }
+}
+
+/* ---------- colour helpers ---------- */
+.mn-heading {
+  color: var(--m-heading);
+}
+
+.mn-muted {
+  color: var(--m-muted);
+}
+
+.mn-accent {
+  color: var(--m-accent);
+}
+
+.mn-line {
+  border-color: var(--m-line);
+}
+
+.mn-link {
+  color: var(--m-heading);
+  transition: color 0.15s ease;
+}
+
+.mn-link:hover,
+.mn-link:focus-visible {
+  color: var(--m-accent);
+}
+
+.mn-icon-link {
+  color: var(--m-muted);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.mn-icon-link:hover,
+.mn-icon-link:focus-visible {
+  color: var(--m-heading);
+  transform: translateY(-2px);
+}
+
+.mn-pill {
+  background: var(--m-accent-soft);
+  color: var(--m-accent);
+}
+
+.mn-brand-rule {
+  background: var(--m-brand);
+}
+
+/* ---------- section headings (sticky on mobile) ---------- */
+.mn-sticky-head {
+  background: var(--m-head-bg);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+@media (min-width: 64rem) {
+  .mn-sticky-head {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* ---------- scrollspy nav ---------- */
+.mn-nav-link {
+  display: flex;
+  align-items: center;
+  padding-block: 0.75rem;
+}
+
+.mn-nav-line {
+  height: 1px;
+  width: 2rem;
+  margin-right: 1rem;
+  background: var(--m-muted);
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.mn-nav-text {
+  color: var(--m-muted);
+  transition: color 0.2s ease;
+}
+
+.mn-nav-link:hover .mn-nav-line,
+.mn-nav-link:focus-visible .mn-nav-line {
+  width: 4rem;
+  background: var(--m-heading);
+}
+
+.mn-nav-link:hover .mn-nav-text,
+.mn-nav-link:focus-visible .mn-nav-text,
+.mn-nav-link[aria-current="true"] .mn-nav-text {
+  color: var(--m-heading);
+}
+
+.mn-nav-link[aria-current="true"] .mn-nav-line {
+  width: 4rem;
+  height: 2px;
+  background: var(--m-brand);
+}
+
+/* ---------- project cards ---------- */
+.mn-card {
+  transition: opacity 0.2s ease;
+}
+
+.mn-card-bg {
+  opacity: 0;
+  background: var(--m-surface);
+  box-shadow: var(--m-surface-shadow);
+  transition: opacity 0.2s ease;
+}
+
+.mn-card-title {
+  color: var(--m-heading);
+  transition: color 0.15s ease;
+}
+
+.mn-arrow {
+  transition: transform 0.18s ease;
+}
+
+.mn-thumb {
+  border: 1px solid var(--m-line);
+  transition: border-color 0.2s ease;
+}
+
+/* Placeholder for projects without a screenshot: index number on a faint brand wash. */
+.mn-tile {
+  background:
+    radial-gradient(120% 90% at 100% 100%, var(--m-accent-soft), transparent 70%),
+    var(--m-surface);
+}
+
+.mn-card:hover .mn-card-title,
+.mn-card:focus-within .mn-card-title {
+  color: var(--m-accent);
+}
+
+.mn-card:hover .mn-arrow,
+.mn-card:focus-within .mn-arrow {
+  transform: translate(3px, -3px);
+}
+
+.mn-card:hover .mn-thumb {
+  border-color: var(--m-accent);
+}
+
+@media (min-width: 64rem) {
+  .mn-card:hover .mn-card-bg,
+  .mn-card:focus-within .mn-card-bg {
+    opacity: 1;
+  }
+
+  .mn-list:hover .mn-card {
+    opacity: 0.5;
+  }
+
+  .mn-list:hover .mn-card:hover {
+    opacity: 1;
+  }
+}
+
+/* ---------- panels ---------- */
+.mn-panel {
+  border: 1px solid var(--m-line);
+  background: var(--m-surface);
+}
+
+.mn-underline {
+  background-image: linear-gradient(var(--m-accent), var(--m-accent));
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.25s ease, color 0.15s ease;
+}
+
+.mn-underline:hover,
+.mn-underline:focus-visible {
+  background-size: 100% 2px;
+}
+
+/* ---------- spotlight ---------- */
+.mn-spotlight {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(600px circle at var(--x, 50%) var(--y, 30%), var(--m-spot), transparent 80%);
+  transition: opacity 0.4s ease;
+}
+
+.mn-spotlight[data-active="true"] {
+  opacity: 1;
+}
+
+[data-theme="light"] .mn-spotlight {
+  display: none;
+}
+
+/* ---------- preview badge ---------- */
+.mn-badge {
+  border: 1px solid var(--m-line);
+  background: var(--m-head-bg);
+  color: var(--m-fg);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.mn-badge:hover,
+.mn-badge:focus-visible {
+  color: var(--m-heading);
+  border-color: var(--m-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mn-spotlight {
+    display: none;
+  }
+
+  .mn-arrow,
+  .mn-nav-line,
+  .mn-card,
+  .mn-card-bg,
+  .mn-icon-link,
+  .mn-underline {
+    transition: none;
+  }
+
+  .mn-card:hover .mn-arrow,
+  .mn-card:focus-within .mn-arrow,
+  .mn-icon-link:hover,
+  .mn-icon-link:focus-visible {
+    transform: none;
+  }
+}
