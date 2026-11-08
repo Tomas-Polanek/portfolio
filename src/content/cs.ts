@@ -195,6 +195,12 @@ export const cs = {
     builtWith: "Postaveno v Next.js a Tailwind CSS",
     backToTop: "Nahoru",
   },
+  notFound: {
+    title: "Stránka nenalezena",
+    heading: "Tahle stránka se ztratila ve vesmíru",
+    text: "Adresa neexistuje nebo byla přesunuta. Zkus to z hlavní stránky.",
+    back: "Zpět na hlavní stránku",
+  },
 };
 
 export type Dictionary = typeof cs;

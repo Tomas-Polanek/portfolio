@@ -182,4 +182,10 @@ export const en: Dictionary = {
     builtWith: "Built with Next.js and Tailwind CSS",
     backToTop: "Back to top",
   },
+  notFound: {
+    title: "Page not found",
+    heading: "This page got lost in space",
+    text: "The address doesn't exist or has moved. Try again from the home page.",
+    back: "Back to the home page",
+  },
 };
