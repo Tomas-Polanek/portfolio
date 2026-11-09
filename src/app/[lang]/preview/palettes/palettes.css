@@ -1,0 +1,11 @@
+/*
+ * liquid-glass-react puts class "glass" on its container, which collides with the old site's global
+ * .glass utility (background + border + blur). Reset it inside the mock-ups so only the library's
+ * own refraction layer shows.
+ */
+.lgm-frame .glass {
+  background: none;
+  border: 0;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}

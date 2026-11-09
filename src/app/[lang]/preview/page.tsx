@@ -48,6 +48,11 @@ export default async function PreviewIndex() {
             <span className="font-semibold">{locale === "cs" ? "Návrhy loga a faviconu" : "Logo and favicon concepts"}</span>
           </a>
         </li>
+        <li>
+          <a href={`/${locale}/preview/palettes`} className="glass block rounded-2xl p-5 transition hover:-translate-y-0.5">
+            <span className="font-semibold">{locale === "cs" ? "Barevné palety s liquid glass" : "Colour palettes with liquid glass"}</span>
+          </a>
+        </li>
       </ul>
     </main>
   );
