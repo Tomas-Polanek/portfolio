@@ -1,4 +1,4 @@
 {
-  "lastRun": "2026-11-09T00:00:00Z",
-  "ignore": ["portfolio", "Tomas-Polanek", "MyWebsite"]
+  "ignore": ["portfolio", "Tomas-Polanek", "MyWebsite"],
+  "extraRepos": ["Sport-slot/Sport-slot"]
 }

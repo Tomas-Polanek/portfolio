@@ -1,17 +1,26 @@
 # Daily check of Tomáš's GitHub projects: Claude Code proposes site updates as one pull request
 # (.claude/skills/project-watch/SKILL.md). Runs on his Claude subscription via the
 # CLAUDE_CODE_OAUTH_TOKEN secret (`claude setup-token`). Run it by hand from the Actions tab too.
+#
+# A gate without AI runs first (.github/scripts/project-watch-gate.sh): Claude only starts when
+# a repository changed since its last run and no proposal is waiting, so quiet days cost no tokens.
 name: Project watch
 
 on:
   schedule:
     - cron: "0 5 * * *" # 06:00 / 07:00 in Prague
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Run Claude even if no repository changed (checks the last 7 days)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
   pull-requests: write
   issues: write
+  actions: read # the gate reads this workflow's past runs
 
 concurrency:
   group: project-watch
@@ -24,17 +33,33 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Gate
+        id: gate
+        if: ${{ !inputs.force }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: bash .github/scripts/project-watch-gate.sh
+
+      - name: Window start
+        id: window
+        if: ${{ inputs.force || steps.gate.outputs.run == 'true' }}
+        run: echo "since=${{ steps.gate.outputs.since || '' }}" >> "$GITHUB_OUTPUT"
+
       - uses: actions/setup-node@v7
+        if: ${{ steps.window.outcome == 'success' }}
         with:
           node-version: 22
           cache: npm
 
       # Commits of a proposal are authored by the Actions bot.
-      - run: |
+      - if: ${{ steps.window.outcome == 'success' }}
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - uses: anthropics/claude-code-action@v1
+      - name: Claude
+        if: ${{ steps.window.outcome == 'success' }}
+        uses: anthropics/claude-code-action@v1
         env:
           # gh inside Claude's shell: list repos, open the PR.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -42,5 +67,6 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # The workflow token instead of the Claude GitHub App, so no app install is needed.
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          prompt: "/project-watch"
+          # Window start from the gate; empty on a forced run (the skill then uses 7 days).
+          prompt: "/project-watch ${{ steps.window.outputs.since }}"
           claude_args: "--max-turns 60"
