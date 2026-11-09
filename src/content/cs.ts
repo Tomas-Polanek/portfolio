@@ -38,7 +38,6 @@ export const cs = {
   },
   hero: {
     role: "Student softwarového vývoje",
-    status: "Otevřený junior příležitostem",
     lines: [
       "Zaměřuji se na webový vývoj a jsem otevřený novým technologiím a nápadům.",
       "Studuji softwarový vývoj v Praze a po večerech ladím svůj homelab.",

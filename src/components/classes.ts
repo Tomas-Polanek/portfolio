@@ -27,7 +27,6 @@ export const s = {
   mapGrid: "bn-mapGrid",
   monogram: "bn-monogram",
   muted: "bn-muted",
-  openDot: "bn-openDot",
   orb: "bn-orb",
   pin: "bn-pin",
   placeholder: "bn-placeholder",
@@ -48,7 +47,7 @@ export const s = {
   zoomHint: "bn-zoomHint",
 } as const;
 
-/** Page layout, side panel, liquid glass, homelab teaser and Pi sketch: src/styles/layout.css (bs-*). */
+/** Page layout, side panel, glass layer, homelab teaser and Pi sketch: src/styles/layout.css (bs-*). */
 export const bs = {
   layout: "bs-layout",
   column: "bs-column",
