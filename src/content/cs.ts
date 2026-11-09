@@ -92,7 +92,6 @@ export const cs = {
     forkOf: "Fork z",
     allOnGithub: "Všechny projekty na GitHubu",
     screenshot: "náhled aplikace",
-    teamInProgress: "Týmový školní projekt · ve vývoji",
     openShot: "Zvětšit náhled",
     closeShot: "Zavřít",
     wip: "Work in progress",

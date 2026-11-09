@@ -3,7 +3,7 @@ type ProjectEntry = {
   tags: readonly string[];
   /** GitHub owner when the repo isn't under site.githubUser (e.g. a team organisation). */
   owner?: string;
-  /** Team project still in development: the card shows a "team project · in progress" badge. */
+  /** Team project still in development: "Work in progress" badge + "team school project" line. */
   teamInProgress?: boolean;
 };
 

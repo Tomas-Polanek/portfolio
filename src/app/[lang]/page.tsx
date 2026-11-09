@@ -47,7 +47,7 @@ export default async function Home() {
         <div className={bs.content}>
           <main>
             <Overview t={t} locale={locale} />
-            <Projects t={t.projects} locale={locale} />
+            <Projects t={t.projects} nav={t.nav.projects} locale={locale} />
             <Homelab t={t.homelab} />
             <Education t={t.education} />
             <Contact t={t.contact} />

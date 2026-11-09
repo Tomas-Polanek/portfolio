@@ -77,7 +77,6 @@ export const en: Dictionary = {
     forkOf: "Fork of",
     allOnGithub: "All projects on GitHub",
     screenshot: "app screenshot",
-    teamInProgress: "Team school project · in progress",
     openShot: "Enlarge screenshot",
     closeShot: "Close",
     wip: "Work in progress",
