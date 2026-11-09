@@ -30,10 +30,7 @@
   --shadow-hover:
     inset 0 1px 0 rgb(255 255 255 / 0.06), 0 2px 4px rgb(0 0 0 / 0.6), 0 16px 36px -8px rgb(0 0 0 / 0.7),
     0 36px 70px -24px rgb(80 60 160 / 0.35);
-  --cover-a: rgb(160 80 255 / 0.5);
-  --cover-b: rgb(80 180 255 / 0.38);
-  --cover-base: #16161a;
-  --dots: rgb(255 255 255 / 0.09);
+  --shot-bg: #16161a;
   /* Glass tiles: translucent tint + hairline over the .bs-backdrop colour fields. */
   --glass-tint: rgb(255 255 255 / 0.035);
   --glass-line: rgb(255 255 255 / 0.1);
@@ -78,10 +75,7 @@
   --shadow-hover:
     0 0 0 1px rgb(9 9 11 / 0.03), 0 2px 4px rgb(9 9 11 / 0.06), 0 14px 30px -8px rgb(9 9 11 / 0.12),
     0 34px 60px -24px rgb(90 60 180 / 0.25);
-  --cover-a: rgb(160 80 255 / 0.32);
-  --cover-b: rgb(80 180 255 / 0.32);
-  --cover-base: #ececf0;
-  --dots: rgb(9 9 11 / 0.08);
+  --shot-bg: #ececf0;
   --glass-tint: rgb(255 255 255 / 0.55);
   --glass-line: rgb(255 255 255 / 0.75);
   color-scheme: light;
@@ -347,144 +341,16 @@ a.bn-chip:hover {
 /* ============================================================
    Projects (the grid itself: .bs-projGrid in layout.css)
    ============================================================ */
-@media (min-width: 640px) {
-  .bn-projAll {
-    grid-column: span 2;
-  }
-}
-
-@media (min-width: 1024px) {
-  .bn-projWide {
-    grid-column: span 4;
-  }
-  .bn-projNormal,
-  .bn-projAll {
-    grid-column: span 2;
-  }
-}
-
 .bn-project {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  container-type: inline-size;
 }
 
 .bn-projectInner {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-.bn-cover {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  margin: 0.5rem 0.5rem 0;
-  border-radius: 18px;
-  border: 1px solid var(--line);
-  background:
-    radial-gradient(90% 80% at var(--cx, 20%) var(--cy, 15%), var(--cover-a), transparent 62%),
-    radial-gradient(90% 80% at calc(100% - var(--cx, 20%)) calc(100% - var(--cy, 15%)), var(--cover-b), transparent 62%),
-    var(--cover-base);
-}
-
-.bn-cover::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: radial-gradient(var(--dots) 1px, transparent 1.2px);
-  background-size: 16px 16px;
-  mask-image: linear-gradient(180deg, #000 0%, transparent 85%);
-  pointer-events: none;
-}
-
-.bn-coverImage {
-  object-fit: cover;
-  object-position: top;
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.bn-project:hover .bn-coverImage {
-  transform: scale(1.035);
-}
-
-/* Shared cover for projects without a screenshot. */
-.bn-placeholder {
-  position: absolute;
-  inset: 50% auto auto 50%;
-  width: min(46%, 220px);
-  translate: -50% -50%;
-  overflow: visible;
-  filter: drop-shadow(0 10px 30px rgb(80 140 255 / 0.25));
-  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.bn-project:hover .bn-placeholder {
-  transform: scale(1.05);
-}
-
-/* Screenshot opens in a dialog: the whole cover is the button. */
-.bn-coverBtn {
-  position: absolute;
-  inset: 0;
-  cursor: zoom-in;
-}
-
-.bn-coverBtn:focus-visible {
-  outline: 2px solid var(--brand-b);
-  outline-offset: -4px;
-  border-radius: 18px;
-}
-
-.bn-zoomHint {
-  position: absolute;
-  right: 0.65rem;
-  bottom: 0.65rem;
-  display: grid;
-  place-items: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--tile) 88%, transparent);
-  color: var(--fg);
-  opacity: 0;
-  translate: 0 4px;
-  transition:
-    opacity 0.25s ease,
-    translate 0.25s ease;
-}
-
-.bn-project:hover .bn-zoomHint,
-.bn-coverBtn:focus-visible .bn-zoomHint {
-  opacity: 1;
-  translate: 0 0;
-}
-
-@media (hover: none) {
-  .bn-zoomHint {
-    opacity: 1;
-    translate: 0 0;
-  }
-}
-
-.bn-wip {
-  position: absolute;
-  top: 0.65rem;
-  left: 0.65rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  border-radius: 999px;
-  padding: 0.22rem 0.6rem;
-  font-family: var(--font-geist-mono);
-  font-size: 0.68rem;
-  background: color-mix(in srgb, var(--tile) 90%, transparent);
-  color: var(--fg);
-  border: 1px solid var(--line-strong);
-  box-shadow: 0 4px 12px -4px rgb(0 0 0 / 0.3);
-  pointer-events: none;
+  padding: 1.4rem;
 }
 
 .bn-wipDot {
@@ -545,7 +411,7 @@ a.bn-chip:hover {
   flex: 0 1 auto;
   aspect-ratio: 16 / 10;
   max-height: 70dvh;
-  background: var(--cover-base);
+  background: var(--shot-bg);
   border-bottom: 1px solid var(--line);
 }
 
@@ -563,48 +429,6 @@ a.bn-chip:hover {
   top: 0.75rem;
   right: 0.75rem;
   background: color-mix(in srgb, var(--tile) 88%, transparent);
-}
-
-.bn-coverLang {
-  position: absolute;
-  left: 0.75rem;
-  bottom: 0.75rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  border-radius: 999px;
-  padding: 0.25rem 0.65rem;
-  font-family: var(--font-geist-mono);
-  font-size: 0.7rem;
-  background: var(--tile);
-  color: var(--fg);
-  border: 1px solid var(--line);
-  box-shadow: 0 4px 12px -4px rgb(0 0 0 / 0.3);
-}
-
-.bn-projectBody {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  padding: 1.25rem 1.4rem 1.4rem;
-}
-
-@container (min-width: 640px) {
-  .bn-wideInner {
-    flex-direction: row;
-  }
-  .bn-wideInner .bn-cover {
-    flex: 0 0 56%;
-    aspect-ratio: auto;
-    min-height: 300px;
-    margin: 0.5rem 0 0.5rem 0.5rem;
-  }
-  .bn-wideInner .bn-projectBody {
-    padding: 1.6rem 1.75rem;
-  }
-  .bn-wideInner .bn-placeholder {
-    width: min(42%, 260px);
-  }
 }
 
 /* ============================================================
@@ -646,10 +470,6 @@ a.bn-chip:hover {
   .bn-lift:hover,
   .bn-lift:focus-within,
   .bn-btnSolid:hover {
-    transform: none;
-  }
-  .bn-project:hover .bn-coverImage,
-  .bn-project:hover .bn-placeholder {
     transform: none;
   }
   .bn-wipDot {

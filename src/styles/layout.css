@@ -247,7 +247,11 @@
   }
 }
 
-/* ---------- Projects: 1 → 2 → 6 columns (wide tiles span 4 from xl) ---------- */
+/*
+ * ---------- Projects: 1 → 2 → 3 columns ----------
+ * Seven projects + the "All on GitHub" tile: even at 2 columns; at 3 the GitHub tile takes the two
+ * free thirds of the last row.
+ */
 .bs-projGrid {
   display: grid;
   gap: 1rem;
@@ -261,36 +265,15 @@
   }
 }
 
-/* The left column narrows the content: stay at 2 columns until xl. */
-@media (min-width: 1024px) and (max-width: 1279.98px) {
-  .bs-projGrid > .bn-projWide,
-  .bs-projGrid > .bn-projNormal {
-    grid-column: auto;
-  }
-}
-
 @media (min-width: 1280px) {
   .bs-projGrid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
-
-  /* Wide tiles go side-by-side earlier than in the full-width bento. */
-  @container (min-width: 520px) {
-    .bs-projGrid .bn-wideInner {
-      flex-direction: row;
-    }
-    .bs-projGrid .bn-wideInner .bn-cover {
-      flex: 0 0 50%;
-      aspect-ratio: auto;
-      min-height: 280px;
-      margin: 0.5rem 0 0.5rem 0.5rem;
-    }
-    .bs-projGrid .bn-wideInner .bn-projectBody {
-      padding: 1.4rem 1.5rem;
-    }
-    .bs-projGrid .bn-wideInner .bn-coverImage {
-      object-position: left top;
-    }
+  .bs-projGrid > * {
+    grid-column: span 2;
+  }
+  .bs-projGrid > .bn-projAll {
+    grid-column: span 4;
   }
 }
 

@@ -1,28 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import { useId, useRef, type ReactNode } from "react";
+import { useId, useRef } from "react";
 
 /**
- * Project cover that opens the screenshot uncropped in a modal dialog, with the app's name and
- * description underneath. Native <dialog>: Esc, the close button and a backdrop click close it.
+ * "Preview" chip that opens the project's screenshot uncropped in a modal dialog, with the app's
+ * name and description underneath. Native <dialog>: Esc, the close button and a backdrop click
+ * close it.
  */
-export function CoverDialog({
+export function ScreenshotDialog({
   image,
   alt,
   title,
   description,
-  openLabel,
+  label,
   closeLabel,
-  children,
+  className,
 }: {
   image: string;
   alt: string;
   title: string;
   description: string;
-  openLabel: string;
+  /** Visible button text ("Preview"); the accessible name adds the project title. */
+  label: string;
   closeLabel: string;
-  children: ReactNode;
+  className: string;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
@@ -31,12 +33,27 @@ export function CoverDialog({
     <>
       <button
         type="button"
-        className="bn-coverBtn"
+        className={className}
         aria-haspopup="dialog"
-        aria-label={`${openLabel}: ${title}`}
+        aria-label={`${label}: ${title}`}
         onClick={() => dialogRef.current?.showModal()}
       >
-        {children}
+        <svg
+          viewBox="0 0 24 24"
+          width="14"
+          height="14"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="4" width="18" height="16" rx="2" />
+          <path d="m3 16 5-5 4 4 3-3 6 6" />
+          <circle cx="15.5" cy="8.5" r="1.5" />
+        </svg>
+        {label}
       </button>
       <dialog
         ref={dialogRef}

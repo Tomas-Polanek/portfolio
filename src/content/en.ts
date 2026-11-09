@@ -27,7 +27,6 @@ export const en: Dictionary = {
     role: "Software Development student",
     lines: [
       "Focused on web development and open to new technologies and ideas.",
-      "Studying Software Development in Prague and tinkering with my homelab in the evenings.",
     ],
   },
   about: {
@@ -75,7 +74,7 @@ export const en: Dictionary = {
     forkOf: "Fork of",
     allOnGithub: "All projects on GitHub",
     screenshot: "app screenshot",
-    openShot: "Enlarge screenshot",
+    preview: "Preview",
     closeShot: "Close",
     wip: "Work in progress",
     teamProject: "Team school project",

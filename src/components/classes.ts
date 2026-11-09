@@ -14,9 +14,6 @@ export const s = {
   btnSolid: "bn-btnSolid",
   chip: "bn-chip",
   chipMono: "bn-chipMono",
-  cover: "bn-cover",
-  coverImage: "bn-coverImage",
-  coverLang: "bn-coverLang",
   dot: "bn-dot",
   eyebrow: "bn-eyebrow",
   faint: "bn-faint",
@@ -29,12 +26,8 @@ export const s = {
   muted: "bn-muted",
   orb: "bn-orb",
   pin: "bn-pin",
-  placeholder: "bn-placeholder",
   projAll: "bn-projAll",
-  projNormal: "bn-projNormal",
-  projWide: "bn-projWide",
   project: "bn-project",
-  projectBody: "bn-projectBody",
   projectInner: "bn-projectInner",
   prompt: "bn-prompt",
   roleText: "bn-roleText",
@@ -42,10 +35,7 @@ export const s = {
   specRow: "bn-specRow",
   terminalBar: "bn-terminalBar",
   tile: "bn-tile",
-  wideInner: "bn-wideInner",
-  wip: "bn-wip",
   wipDot: "bn-wipDot",
-  zoomHint: "bn-zoomHint",
 } as const;
 
 /** Page layout, side panel, glass layer, homelab teaser and Pi sketch: src/styles/layout.css (bs-*). */

@@ -40,7 +40,6 @@ export const cs = {
     role: "Student softwarového vývoje",
     lines: [
       "Zaměřuji se na webový vývoj a jsem otevřený novým technologiím a nápadům.",
-      "Studuji softwarový vývoj v Praze a po večerech ladím svůj homelab.",
     ],
   },
   about: {
@@ -90,7 +89,7 @@ export const cs = {
     forkOf: "Fork z",
     allOnGithub: "Všechny projekty na GitHubu",
     screenshot: "náhled aplikace",
-    openShot: "Zvětšit náhled",
+    preview: "Náhled",
     closeShot: "Zavřít",
     wip: "Work in progress",
     teamProject: "Týmový školní projekt",

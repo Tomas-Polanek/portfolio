@@ -18,8 +18,8 @@ npm run build
 | What | Where |
 |---|---|
 | All texts (CZ / EN) | `src/content/cs.ts`, `src/content/en.ts` – the English file must match the Czech structure (TypeScript enforces it) |
-| Which GitHub repos are shown, their order and tech tags | `src/content/projects.ts` |
-| Project screenshots | `public/projects/*.webp`, listed in `projectImages` in `src/content/projects.ts` |
+| Which GitHub repos are shown, their order, card icon and tech tags | `src/content/projects.ts` |
+| Project screenshots (opened by the card's "Preview" button) | `public/projects/*.webp`, listed in `projectImages` in `src/content/projects.ts` |
 | E-mail, social links, site URL | `src/content/site.ts` |
 | Colors (dark / light) | CSS variables at the top of `src/styles/tiles.css`; backdrop colour fields in `.bs-backdrop` (`src/styles/layout.css`) |
 

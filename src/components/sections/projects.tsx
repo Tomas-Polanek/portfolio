@@ -10,9 +10,6 @@ import { formatMonthYear } from "@/lib/dates";
 import { getRepoInfo } from "@/lib/github";
 import type { Locale } from "@/lib/locales";
 
-/** Projects drawn as wide (4/6) tiles from xl; the rest take 2/6. */
-const wideProjects = new Set([1, 5]);
-
 export async function Projects({ t, nav, locale }: { t: Dictionary["projects"]; nav: string; locale: Locale }) {
   const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo, p.owner)));
   const githubHandle = site.links.github.replace("https://github.com/", "@");
@@ -21,16 +18,15 @@ export async function Projects({ t, nav, locale }: { t: Dictionary["projects"]; 
     <section id="projects" aria-labelledby="projects-title" className="pt-20 sm:pt-28">
       <SectionHeader eyebrow={`02 · ${nav}`} title={t.title} intro={t.subtitle} id="projects-title" />
       <ul className={bs.projGrid}>
-        {projects.map(({ repo, owner, tags, teamInProgress }, i) => {
+        {projects.map(({ repo, owner, icon, tags, teamInProgress }, i) => {
           const info = infos[i];
           const { title, description } = t.items[repo];
           return (
             <ProjectTile
               key={repo}
-              index={i}
-              wide={wideProjects.has(i)}
               title={title}
               description={description}
+              icon={icon}
               tags={tags}
               codeUrl={info?.url ?? `https://github.com/${owner ?? site.githubUser}/${repo}`}
               image={projectImages[repo]}

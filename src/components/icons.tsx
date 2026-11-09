@@ -1,5 +1,6 @@
 import type { ReactNode, SVGProps } from "react";
 import type { HomelabIcon } from "@/content/cs";
+import type { ProjectIcon } from "@/content/projects";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -180,6 +181,52 @@ const homelabPaths: Record<HomelabIcon, ReactNode> = {
 
 export function HomelabGlyph({ name, ...props }: IconProps & { name: HomelabIcon }) {
   return <Stroke {...props}>{homelabPaths[name]}</Stroke>;
+}
+
+const projectPaths: Record<ProjectIcon, ReactNode> = {
+  pdf: (
+    <>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z" />
+      <path d="M14 3v5h5M9 13h6M9 17h4" />
+    </>
+  ),
+  calendar: (
+    <>
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M3 10h18M8 3v4M16 3v4M8 14h2M14 14h2M8 17h2" />
+    </>
+  ),
+  fridge: (
+    <>
+      <rect x="5" y="2" width="14" height="20" rx="2" />
+      <path d="M5 10h14M9 5v2M9 13v3" />
+    </>
+  ),
+  moon: <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" />,
+  map: (
+    <>
+      <path d="m9 4-6 2v14l6-2 6 2 6-2V4l-6 2-6-2Z" />
+      <path d="M9 4v14M15 6v14" />
+    </>
+  ),
+  qr: (
+    <>
+      <rect x="3" y="3" width="7" height="7" rx="1" />
+      <rect x="14" y="3" width="7" height="7" rx="1" />
+      <rect x="3" y="14" width="7" height="7" rx="1" />
+      <path d="M14 14h3v3M21 14v.01M14 21h3M21 18v3h-1" />
+    </>
+  ),
+  game: (
+    <>
+      <path d="M7 7h10a5 5 0 0 1 4.9 6l-.7 3.4a2.5 2.5 0 0 1-4.4 1L15 16H9l-1.8 1.4a2.5 2.5 0 0 1-4.4-1L2.1 13A5 5 0 0 1 7 7Z" />
+      <path d="M7 10v4M5 12h4M15.5 11h.01M18 13h.01" />
+    </>
+  ),
+};
+
+export function ProjectGlyph({ name, ...props }: IconProps & { name: ProjectIcon }) {
+  return <Stroke {...props}>{projectPaths[name]}</Stroke>;
 }
 
 /** "Go to" arrow pointing up-right, used in the corner of link tiles. */

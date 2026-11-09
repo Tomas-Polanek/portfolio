@@ -1,48 +1,15 @@
-import Image from "next/image";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { Dictionary } from "@/content/cs";
-import { ExternalIcon, ForkIcon, GitHubIcon, StarIcon } from "@/components/icons";
+import type { ProjectIcon } from "@/content/projects";
+import { ExternalIcon, ForkIcon, GitHubIcon, ProjectGlyph, StarIcon } from "@/components/icons";
 import type { RepoInfo } from "@/lib/github";
 import { s } from "@/components/classes";
-import { CoverDialog } from "./cover-dialog";
-
-/** Cover gradient focal points, varied per tile so generated covers don't look cloned. */
-const focalPoints = [
-  ["18%", "12%"],
-  ["82%", "18%"],
-  ["25%", "85%"],
-  ["70%", "75%"],
-  ["50%", "10%"],
-  ["12%", "55%"],
-] as const;
-
-/** Shared cover for projects without a screenshot: a wireframe app window, same sketch style as the Pi. */
-function PlaceholderArt() {
-  return (
-    <svg className={s.placeholder} viewBox="0 0 160 110" aria-hidden="true">
-      <defs>
-        <linearGradient id="bn-placeholder-grad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="var(--brand-a)" />
-          <stop offset="1" stopColor="var(--brand-b)" />
-        </linearGradient>
-      </defs>
-      <g fill="none" stroke="url(#bn-placeholder-grad)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="8" y="8" width="144" height="94" rx="9" />
-        <path d="M8 26h144" />
-        <circle cx="20" cy="17" r="2.6" />
-        <circle cx="29" cy="17" r="2.6" />
-        <circle cx="38" cy="17" r="2.6" />
-        <path d="M64 50l-14 14 14 14M96 50l14 14-14 14M86 44l-12 40" strokeWidth="2.4" />
-      </g>
-    </svg>
-  );
-}
+import { ScreenshotDialog } from "./screenshot-dialog";
 
 export function ProjectTile({
-  index,
-  wide,
   title,
   description,
+  icon,
   tags,
   codeUrl,
   image,
@@ -52,14 +19,14 @@ export function ProjectTile({
   t,
   layer,
 }: {
-  index: number;
-  wide: boolean;
   title: string;
   description: string;
+  icon: ProjectIcon;
   tags: readonly string[];
   codeUrl: string;
+  /** Screenshot opened by the "Preview" button; no button without one. */
   image: string | undefined;
-  /** Team project still in development: "Work in progress" badge on the cover. */
+  /** Team project still in development: "Work in progress" badge + "team school project" line. */
   inProgress: boolean;
   info: RepoInfo | null;
   updated: string | null;
@@ -67,110 +34,87 @@ export function ProjectTile({
   /** Optional surface rendered behind the content (e.g. a glass layer). */
   layer?: ReactNode;
 }) {
-  const [cx, cy] = focalPoints[index % focalPoints.length];
-  const coverStyle = { "--cx": cx, "--cy": cy } as CSSProperties;
-
   return (
-    <li className={`${s.tile} ${s.lift} ${s.project} ${wide ? s.projWide : s.projNormal}`}>
+    <li className={`${s.tile} ${s.lift} ${s.project}`}>
       {layer}
-      <article className={`${s.projectInner} ${wide ? s.wideInner : ""}`}>
-        <div className={s.cover} style={coverStyle}>
-          {image ? (
-            <CoverDialog
-              image={image}
-              alt={`${title} – ${t.screenshot}`}
-              title={title}
-              description={description}
-              openLabel={t.openShot}
-              closeLabel={t.closeShot}
-            >
-              <Image
-                src={image}
-                alt={`${title} – ${t.screenshot}`}
-                fill
-                sizes={wide ? "(min-width: 1024px) 460px, (min-width: 640px) 100vw, 100vw" : "(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"}
-                className={s.coverImage}
-              />
-              <span className={s.zoomHint} aria-hidden="true">
-                <svg viewBox="0 0 24 24" width="15" height="15">
-                  <path
-                    d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+      <article className={s.projectInner}>
+        <div className="flex items-start justify-between gap-3">
+          <span className={s.iconWell}>
+            <ProjectGlyph name={icon} />
+          </span>
+          <div className="flex flex-wrap justify-end gap-1.5">
+            {inProgress && (
+              <span className={`${s.chip} ${s.chipMono}`}>
+                <span className={s.wipDot} aria-hidden="true" />
+                {t.wip}
               </span>
-            </CoverDialog>
-          ) : (
-            <>
-              <PlaceholderArt />
-              {info?.language && (
-                <span className={s.coverLang} aria-hidden="true">
-                  <span className={s.dot} />
-                  {info.language}
-                </span>
-              )}
-            </>
-          )}
-          {inProgress && (
-            <span className={s.wip}>
-              <span className={s.wipDot} aria-hidden="true" />
-              {t.wip}
-            </span>
-          )}
-        </div>
-
-        <div className={s.projectBody}>
-          <h3 className={`font-semibold tracking-tight ${wide ? "text-xl sm:text-2xl" : "text-lg"}`}>{title}</h3>
-
-          {inProgress && <p className={`${s.faint} mt-1.5 text-xs`}>{t.teamProject}</p>}
-
-          {info?.forkOf && (
-            <p className={`${s.faint} mt-1.5 inline-flex items-center gap-1.5 text-xs`}>
-              <ForkIcon width={14} height={14} /> {t.forkOf} {info.forkOf}
-            </p>
-          )}
-
-          <p className={`${s.muted} mt-2.5 text-[0.93rem] leading-relaxed`}>{description}</p>
-
-          <ul className="mt-4 flex flex-wrap gap-1.5">
-            {tags.map((tag) => (
-              <li key={tag} className={`${s.chip} ${s.chipMono}`}>
-                {tag}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-3 pt-5">
-            <div className="flex gap-2">
-              <a href={codeUrl} target="_blank" rel="noopener noreferrer" className={`${s.chip} font-medium`}>
-                <GitHubIcon width={14} height={14} /> {t.code}
-              </a>
-              {info?.homepage && (
-                <a href={info.homepage} target="_blank" rel="noopener noreferrer" className={`${s.chip} font-medium`}>
-                  {t.live} <ExternalIcon width={13} height={13} />
-                </a>
-              )}
-            </div>
-            {info && (
-              <p className={`${s.faint} ml-auto flex items-center gap-3 font-mono text-[0.72rem]`}>
-                {info.stars > 0 && (
-                  <span className="inline-flex items-center gap-1" title={t.stars}>
-                    <StarIcon width={12} height={12} />
-                    <span className="sr-only">{t.stars}:</span> {info.stars}
-                  </span>
-                )}
-                {updated && (
-                  <span>
-                    {t.updated} {updated}
-                  </span>
-                )}
-              </p>
+            )}
+            {info?.language && (
+              <span className={`${s.chip} ${s.chipMono}`}>
+                <span className={s.dot} aria-hidden="true" />
+                {info.language}
+              </span>
             )}
           </div>
+        </div>
+
+        <h3 className="mt-5 text-lg font-semibold tracking-tight">{title}</h3>
+
+        {inProgress && <p className={`${s.faint} mt-1.5 text-xs`}>{t.teamProject}</p>}
+
+        {info?.forkOf && (
+          <p className={`${s.faint} mt-1.5 inline-flex items-center gap-1.5 text-xs`}>
+            <ForkIcon width={14} height={14} /> {t.forkOf} {info.forkOf}
+          </p>
+        )}
+
+        <p className={`${s.muted} mt-2.5 text-[0.93rem] leading-relaxed`}>{description}</p>
+
+        <ul className="mt-4 flex flex-wrap gap-1.5">
+          {tags.map((tag) => (
+            <li key={tag} className={`${s.chip} ${s.chipMono}`}>
+              {tag}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-3 pt-5">
+          <div className="flex flex-wrap gap-2">
+            <a href={codeUrl} target="_blank" rel="noopener noreferrer" className={`${s.chip} font-medium`}>
+              <GitHubIcon width={14} height={14} /> {t.code}
+            </a>
+            {info?.homepage && (
+              <a href={info.homepage} target="_blank" rel="noopener noreferrer" className={`${s.chip} font-medium`}>
+                {t.live} <ExternalIcon width={13} height={13} />
+              </a>
+            )}
+            {image && (
+              <ScreenshotDialog
+                image={image}
+                alt={`${title} – ${t.screenshot}`}
+                title={title}
+                description={description}
+                label={t.preview}
+                closeLabel={t.closeShot}
+                className={`${s.chip} cursor-pointer font-medium`}
+              />
+            )}
+          </div>
+          {info && (
+            <p className={`${s.faint} ml-auto flex items-center gap-3 font-mono text-[0.72rem]`}>
+              {info.stars > 0 && (
+                <span className="inline-flex items-center gap-1" title={t.stars}>
+                  <StarIcon width={12} height={12} />
+                  <span className="sr-only">{t.stars}:</span> {info.stars}
+                </span>
+              )}
+              {updated && (
+                <span>
+                  {t.updated} {updated}
+                </span>
+              )}
+            </p>
+          )}
         </div>
       </article>
     </li>
