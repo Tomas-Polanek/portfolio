@@ -21,6 +21,8 @@ is **one pull request** (or nothing). Tomáš reviews and merges it; merging dep
   `src/content/cs.ts` (Czech, 2–3 concrete sentences: what it does, how, his role if stated).
   `en.ts` gets a faithful English translation with the same structure.
 - `npm ci`, `npm run lint` and `npm run build` must pass before you open the PR.
+- Run shell commands one at a time with literal values: no `for` loops, no `$variables` (the
+  permission check rejects commands it can't verify up front). One `gh api` call per repo is fine.
 
 ## Steps
 

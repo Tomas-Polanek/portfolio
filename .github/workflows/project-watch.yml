@@ -29,6 +29,11 @@ jobs:
           node-version: 22
           cache: npm
 
+      # Commits of a proposal are authored by the Actions bot.
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - uses: anthropics/claude-code-action@v1
         env:
           # gh inside Claude's shell: list repos, open the PR.
