@@ -1,5 +1,7 @@
 import { Backdrop } from "@/components/backdrop";
 import { bs, s } from "@/components/classes";
+import { GitSide } from "@/components/git-side";
+import { PiSide } from "@/components/pi-model/pi-side";
 import { TileSpotlight } from "@/components/tile-spotlight";
 import { CompactBar } from "@/components/panel/compact-bar";
 import { SitePanel } from "@/components/panel/site-panel";
@@ -28,6 +30,8 @@ export default async function Home() {
     <div className={s.root} id="top">
       <Backdrop />
       <TileSpotlight />
+      <GitSide />
+      <PiSide />
       <div className={bs.layout}>
         <SitePanel t={t} locale={locale} nav={nav} endId={END_ID} />
         <CompactBar

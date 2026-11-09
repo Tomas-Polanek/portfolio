@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { onIdle } from "@/lib/idle";
 import { Pi5Sketch } from "./pi5-sketch";
 import type { PiScene } from "./scene";
 
@@ -8,7 +9,8 @@ import type { PiScene } from "./scene";
  * Wireframe 3D model of the homelab build (Pi 5 + Active Cooler + X1001 + 990 PRO). three.js is
  * fetched once the tile nears the viewport and the main thread is idle, so its parse and scene
  * build (~150 ms on a 4× throttled CPU) stay out of hydration; the SVG sketch stays as poster until
- * the first frame (and if WebGL fails).
+ * the first frame (and if WebGL fails). The build explodes as the tile scrolls up the viewport and
+ * on hover, tap or Enter/Space.
  */
 export function PiModel({ label }: { label: string }) {
   const [open, setOpen] = useState(false);
@@ -28,6 +30,20 @@ export function PiModel({ label }: { label: string }) {
     if (!host) return;
     let cancelled = false;
     let cancelIdle = () => {};
+    let frame = 0;
+
+    // Explodes as the tile scrolls up the viewport: 0 while its top is below 60 % of the
+    // viewport, 1 once it has risen another half viewport. Hover/tap still explode it fully.
+    const applyScroll = () => {
+      frame = 0;
+      const top = host.getBoundingClientRect().top;
+      const vh = window.innerHeight;
+      sceneRef.current?.setScroll((vh * 0.6 - top) / (vh * 0.5));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(applyScroll);
+    };
+    const scrollDriven = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const load = () => {
       import("./scene")
@@ -38,6 +54,10 @@ export function PiModel({ label }: { label: string }) {
             open: openRef.current,
             onReady: () => setReady(true),
           });
+          if (scrollDriven) {
+            applyScroll();
+            window.addEventListener("scroll", onScroll, { passive: true });
+          }
         })
         .catch(() => {
           // No WebGL (or the chunk failed to load): the SVG poster stays.
@@ -48,14 +68,7 @@ export function PiModel({ label }: { label: string }) {
       ([entry]) => {
         if (!entry.isIntersecting) return;
         observer.disconnect();
-        // Safari has no requestIdleCallback.
-        if (typeof window.requestIdleCallback === "function") {
-          const id = window.requestIdleCallback(load, { timeout: 2000 });
-          cancelIdle = () => window.cancelIdleCallback(id);
-        } else {
-          const id = window.setTimeout(load, 200);
-          cancelIdle = () => window.clearTimeout(id);
-        }
+        cancelIdle = onIdle(load);
       },
       { rootMargin: "300px" },
     );
@@ -65,6 +78,8 @@ export function PiModel({ label }: { label: string }) {
       cancelled = true;
       observer.disconnect();
       cancelIdle();
+      window.removeEventListener("scroll", onScroll);
+      cancelAnimationFrame(frame);
       sceneRef.current?.dispose();
       sceneRef.current = null;
       setReady(false);

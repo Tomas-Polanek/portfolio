@@ -16,10 +16,16 @@ export type PiSceneOptions = {
   host: HTMLElement;
   open: boolean;
   onReady: () => void;
+  /** Slow sway and spinning fan, rendered continuously while visible (default true). */
+  ambient?: boolean;
+  /** Extra yaw (rad) reached at setScroll(…, 1); the scale fits the whole range (default 0). */
+  turn?: number;
 };
 
 export type PiScene = {
   setOpen: (open: boolean) => void;
+  /** Scroll-driven pose: explode amount 0–1 (the hover state wins if larger) and turn fraction 0–1. */
+  setScroll: (explode: number, turn?: number) => void;
   dispose: () => void;
 };
 
@@ -33,13 +39,13 @@ const BASE_YAW = 0.12;
 const SWAY = 0.2;
 const SWAY_PERIOD = 14000;
 const CAMERA_DIR = new THREE.Vector3(-0.5, 0.62, 1).normalize();
-const PAD = 10;
+const PAD = 6;
 const FFC_SAMPLES = 40;
 
 const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
 
-export function createPiScene({ host, open, onReady }: PiSceneOptions): PiScene {
+export function createPiScene({ host, open, onReady, ambient = true, turn = 0 }: PiSceneOptions): PiScene {
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
@@ -185,18 +191,28 @@ export function createPiScene({ host, open, onReady }: PiSceneOptions): PiScene 
   let ready = false;
   let width = 0;
   let height = 0;
+  let scrollExplode = 0;
+  let turnAt = 0;
   /** Model scale in px per mm: fixed so the build keeps one size whether collapsed or exploded. */
   let scale = 1;
+  let yaws: number[] = [];
 
   const corner = new THREE.Vector3();
   const yawMatrix = new THREE.Matrix4();
   const extent = { minX: 0, maxX: 0, minY: 0, maxY: 0 };
 
-  /** Screen-space bounds of the build at explode amount `e`, over every yaw the sway reaches. */
-  function measureExtent(e: number, yaw: number) {
+  /** Every yaw the build reaches (sway around the base, plus the scroll turn), sampled. */
+  function yawSamples() {
+    const sway = reduced || !ambient ? 0 : SWAY;
+    const from = BASE_YAW - sway;
+    const to = BASE_YAW + turn + sway;
+    return from === to ? [from] : Array.from({ length: 5 }, (_, i) => from + ((to - from) * i) / 4);
+  }
+
+  /** Screen-space bounds of the build at explode amount `e`, over every reachable yaw. */
+  function measureExtent(e: number) {
     extent.minX = extent.minY = Infinity;
     extent.maxX = extent.maxY = -Infinity;
-    const yaws = reduced ? [yaw] : [BASE_YAW - SWAY, BASE_YAW, BASE_YAW + SWAY];
     for (const y of yaws) {
       yawMatrix.makeRotationY(y);
       for (const { layer, box } of bounds) {
@@ -221,7 +237,7 @@ export function createPiScene({ host, open, onReady }: PiSceneOptions): PiScene 
   }
 
   function fitScale(e: number) {
-    const { minX, maxX, minY, maxY } = measureExtent(e, BASE_YAW);
+    const { minX, maxX, minY, maxY } = measureExtent(e);
     const availW = Math.max(1, width - 2 * PAD);
     const availH = Math.max(1, height - 2 * PAD);
     return Math.min(availW / (maxX - minX), availH / (maxY - minY));
@@ -232,13 +248,14 @@ export function createPiScene({ host, open, onReady }: PiSceneOptions): PiScene 
     height = host.clientHeight;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height, false);
+    yaws = yawSamples();
     // The exploded build is taller, so it sets the scale for both states.
     scale = Math.min(fitScale(0), fitScale(1));
   }
 
   /** Same scale throughout; only the centre follows the build so it stays centred as it opens. */
-  function fitCamera(e: number, yaw: number) {
-    const { minX, maxX, minY, maxY } = measureExtent(e, yaw);
+  function fitCamera(e: number) {
+    const { minX, maxX, minY, maxY } = measureExtent(e);
     const cx = (minX + maxX) / 2;
     const cy = (minY + maxY) / 2;
     camera.left = cx - width / 2 / scale;
@@ -255,20 +272,21 @@ export function createPiScene({ host, open, onReady }: PiSceneOptions): PiScene 
       if (p >= 1) tween = null;
     }
     // Ease relative to the full 0→1 range so a reversed tween continues smoothly.
-    const e = easeInOutCubic(progress);
-    if (!reduced) {
+    const e = Math.max(easeInOutCubic(progress), scrollExplode);
+    const animate = ambient && !reduced;
+    if (animate) {
       clock += dt;
       fan.rotation.y -= dt * 0.0035;
     }
-    const yaw = reduced ? BASE_YAW : BASE_YAW + SWAY * Math.sin((clock / SWAY_PERIOD) * Math.PI * 2);
-    root.rotation.y = yaw;
+    const sway = animate ? SWAY * Math.sin((clock / SWAY_PERIOD) * Math.PI * 2) : 0;
+    root.rotation.y = BASE_YAW + turn * turnAt + sway;
     for (const id of Object.keys(LIFT) as LayerId[]) layers[id].position.y = LIFT[id] * e;
     if (e !== ribbonAt) {
       updateRibbon(LIFT.hat * e);
       ribbonAt = e;
     }
     root.updateMatrixWorld(true);
-    fitCamera(e, yaw);
+    fitCamera(e);
   }
 
   function frame(now: number) {
@@ -281,7 +299,7 @@ export function createPiScene({ host, open, onReady }: PiSceneOptions): PiScene 
       ready = true;
       onReady();
     }
-    if (visible && !document.hidden && (!reduced || tween)) raf = requestAnimationFrame(frame);
+    if (visible && !document.hidden && ((ambient && !reduced) || tween)) raf = requestAnimationFrame(frame);
   }
 
   function kick() {
@@ -345,6 +363,14 @@ export function createPiScene({ host, open, onReady }: PiSceneOptions): PiScene 
           duration: Math.max(1, DURATION * Math.abs(to - progress)),
         };
       }
+      kick();
+    },
+    setScroll(explode, turnFraction = 0) {
+      const e = Math.min(1, Math.max(0, explode));
+      const t = Math.min(1, Math.max(0, turnFraction));
+      if (e === scrollExplode && t === turnAt) return;
+      scrollExplode = e;
+      turnAt = t;
       kick();
     },
     dispose() {
