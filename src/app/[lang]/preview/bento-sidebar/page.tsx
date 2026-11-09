@@ -7,6 +7,7 @@ import {
   MailIcon,
   StarIcon,
 } from "@/components/icons";
+import { TpMark } from "@/components/tp-mark";
 import { projectImages, projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { getRepoInfo } from "@/lib/github";
@@ -203,7 +204,7 @@ export default async function BentoSidebarPreview() {
           <div>
             <div className="flex items-center gap-3">
               <span className={s.monogram} aria-hidden="true">
-                TP
+                <TpMark className="size-full" />
               </span>
               <ThemeButton label={t.theme.toggle} className={s.iconBtn} />
               <a
@@ -756,11 +757,8 @@ export default async function BentoSidebarPreview() {
               className={`${s.tile} flex flex-col gap-3 px-6 py-5 text-sm sm:flex-row sm:items-center sm:justify-between`}
             >
               <p className="flex items-center gap-2.5">
-                <span
-                  className={`${s.monogram} size-7! rounded-lg! text-[0.65rem]!`}
-                  aria-hidden="true"
-                >
-                  TP
+                <span className={`${s.monogram} size-7! rounded-lg!`} aria-hidden="true">
+                  <TpMark className="size-full" />
                 </span>
                 <span className="font-medium">© {site.name}</span>
               </p>

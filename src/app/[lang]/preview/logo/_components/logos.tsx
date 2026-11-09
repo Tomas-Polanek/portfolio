@@ -1,3 +1,5 @@
+import { TP_LIGATURE as LIGATURE } from "@/components/tp-mark";
+
 /**
  * Logo / favicon concepts. Pure paths on a 32-unit grid (no fonts), so they stay crisp at 16 px
  * and render the same everywhere.
@@ -7,8 +9,6 @@ export type LogoVariant = "ligature" | "ligatureSolid" | "prompt" | "cube";
 
 const TILE = "M9 1h14a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8H9a8 8 0 0 1-8-8V9a8 8 0 0 1 8-8Z";
 
-/** T and P sharing one stem: left half of the T's bar, the stem, the P's bowl. */
-const LIGATURE = "M8 8.5h7M15 8.5v15M15 8.5h4a4.5 4.5 0 0 1 0 9h-4";
 /** Shell prompt: chevron + cursor (the homelab terminal). */
 const PROMPT = "M8.5 10l6 6-6 6M17.5 22h6.5";
 /** Isometric wireframe box, same sketch language as the Pi model. */

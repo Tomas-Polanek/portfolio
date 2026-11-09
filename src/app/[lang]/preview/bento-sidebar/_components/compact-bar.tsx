@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CloseIcon, MenuIcon } from "@/components/icons";
+import { TpMark } from "@/components/tp-mark";
 import { s } from "../../bento/_components/styles";
 import { ThemeButton } from "../../bento/_components/theme-button";
 import { bs } from "./classes";
@@ -57,11 +58,8 @@ export function CompactBar({
   return (
     <div className={`${bs.bar} lg:hidden`} data-shown={shown}>
       <div className="flex h-13 items-center gap-2.5 pr-2 pl-2">
-        <span
-          className={`${s.monogram} size-9! rounded-xl! text-[0.8rem]! shadow-none!`}
-          aria-hidden="true"
-        >
-          TP
+        <span className={`${s.monogram} size-9! rounded-xl! shadow-none!`} aria-hidden="true">
+          <TpMark className="size-full" />
         </span>
         <p className="min-w-0 flex-1 truncate font-semibold tracking-tight">
           {name}
