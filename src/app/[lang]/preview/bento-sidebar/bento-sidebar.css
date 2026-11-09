@@ -480,8 +480,7 @@
   transition: opacity 0.5s ease;
 }
 
-.bs-pi3dCanvas,
-.bs-pi3dLabels {
+.bs-pi3dCanvas {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -504,26 +503,6 @@
 
 .bs-pi3d[data-ready] > .bs-pi3dCanvas {
   opacity: 1;
-}
-
-.bs-pi3dLabels {
-  overflow: hidden;
-}
-
-.bs-pi3dLabel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0.1rem 0.35rem;
-  border: 1px solid var(--line-strong);
-  border-radius: 0.3rem;
-  background: color-mix(in srgb, var(--tile) 82%, transparent);
-  color: var(--muted);
-  font-family: var(--font-geist-mono);
-  font-size: 0.5625rem;
-  line-height: 1.45;
-  white-space: nowrap;
-  opacity: 0;
 }
 
 .bs-pi3dBtn {

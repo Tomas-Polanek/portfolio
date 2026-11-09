@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import {
-  ANCHORS,
   FAN_AXIS,
   FFC,
   LIFT,
@@ -15,8 +14,6 @@ import {
 
 export type PiSceneOptions = {
   host: HTMLElement;
-  /** Label elements in `LABEL_LAYERS` order. */
-  labels: HTMLElement[];
   open: boolean;
   onReady: () => void;
 };
@@ -25,8 +22,6 @@ export type PiScene = {
   setOpen: (open: boolean) => void;
   dispose: () => void;
 };
-
-export const LABEL_LAYERS = ["pi", "cooler", "hat", "ssd"] as const;
 
 const PALETTES = {
   dark: { a: "#a050ff", b: "#50b4ff", accent: "#ffffff" },
@@ -44,7 +39,7 @@ const FFC_SAMPLES = 40;
 const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2;
 
-export function createPiScene({ host, labels, open, onReady }: PiSceneOptions): PiScene {
+export function createPiScene({ host, open, onReady }: PiSceneOptions): PiScene {
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
@@ -190,27 +185,17 @@ export function createPiScene({ host, labels, open, onReady }: PiSceneOptions): 
   let ready = false;
   let width = 0;
   let height = 0;
-  let labelWidths: number[] = [];
-  let labelHeight = 0;
-
-  function measure() {
-    width = host.clientWidth;
-    height = host.clientHeight;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(width, height, false);
-    labelWidths = labels.map((el) => el.offsetWidth);
-    labelHeight = labels[0]?.offsetHeight ?? 0;
-  }
+  /** Model scale in px per mm: fixed so the build keeps one size whether collapsed or exploded. */
+  let scale = 1;
 
   const corner = new THREE.Vector3();
-  const anchor = new THREE.Vector3();
   const yawMatrix = new THREE.Matrix4();
+  const extent = { minX: 0, maxX: 0, minY: 0, maxY: 0 };
 
-  function fitCamera(e: number, yaw: number) {
-    let minX = Infinity;
-    let maxX = -Infinity;
-    let minY = Infinity;
-    let maxY = -Infinity;
+  /** Screen-space bounds of the build at explode amount `e`, over every yaw the sway reaches. */
+  function measureExtent(e: number, yaw: number) {
+    extent.minX = extent.minY = Infinity;
+    extent.maxX = extent.maxY = -Infinity;
     const yaws = reduced ? [yaw] : [BASE_YAW - SWAY, BASE_YAW, BASE_YAW + SWAY];
     for (const y of yaws) {
       yawMatrix.makeRotationY(y);
@@ -225,44 +210,42 @@ export function createPiScene({ host, labels, open, onReady }: PiSceneOptions): 
             )
             .applyMatrix4(yawMatrix)
             .applyMatrix4(camera.matrixWorldInverse);
-          minX = Math.min(minX, corner.x);
-          maxX = Math.max(maxX, corner.x);
-          minY = Math.min(minY, corner.y);
-          maxY = Math.max(maxY, corner.y);
+          extent.minX = Math.min(extent.minX, corner.x);
+          extent.maxX = Math.max(extent.maxX, corner.x);
+          extent.minY = Math.min(extent.minY, corner.y);
+          extent.maxY = Math.max(extent.maxY, corner.y);
         }
       }
     }
-    // Room for the left label column, but never squeeze the model below ~140 px.
-    const widest = Math.max(0, ...labelWidths) + 10;
-    const labelSpace = Math.min(widest, Math.max(width * 0.3, width - 140)) * e;
-    const availW = Math.max(1, width - 2 * PAD - labelSpace);
-    const availH = Math.max(1, height - 2 * PAD);
-    const scale = Math.min(availW / (maxX - minX), availH / (maxY - minY));
-    const cx = (minX + maxX) / 2;
-    const cy = (minY + maxY) / 2;
-    camera.left = cx - (PAD + labelSpace + availW / 2) / scale;
-    camera.right = camera.left + width / scale;
-    camera.top = cy + height / 2 / scale;
-    camera.bottom = camera.top - height / scale;
-    camera.updateProjectionMatrix();
+    return extent;
   }
 
-  function placeLabels(e: number) {
-    const opacity = String(Math.max(0, (e - 0.55) / 0.45));
-    for (const el of labels) el.style.opacity = opacity;
-    if (opacity === "0") return;
-    // Layers are ordered bottom → top; keep each label at least one label height above the
-    // previous so they never overlap, whatever the tile size.
-    let floor = Infinity;
-    LABEL_LAYERS.forEach((id, i) => {
-      const el = labels[i];
-      anchor.copy(ANCHORS[id]).applyMatrix4(layers[id].matrixWorld).project(camera);
-      const x = ((anchor.x + 1) / 2) * width;
-      const y = Math.min(((1 - anchor.y) / 2) * height, floor - labelHeight - 3);
-      floor = y;
-      const left = Math.max(2, x - labelWidths[i] - 6);
-      el.style.transform = `translate(${left.toFixed(1)}px, ${y.toFixed(1)}px) translateY(-50%)`;
-    });
+  function fitScale(e: number) {
+    const { minX, maxX, minY, maxY } = measureExtent(e, BASE_YAW);
+    const availW = Math.max(1, width - 2 * PAD);
+    const availH = Math.max(1, height - 2 * PAD);
+    return Math.min(availW / (maxX - minX), availH / (maxY - minY));
+  }
+
+  function measure() {
+    width = host.clientWidth;
+    height = host.clientHeight;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(width, height, false);
+    // The exploded build is taller, so it sets the scale for both states.
+    scale = Math.min(fitScale(0), fitScale(1));
+  }
+
+  /** Same scale throughout; only the centre follows the build so it stays centred as it opens. */
+  function fitCamera(e: number, yaw: number) {
+    const { minX, maxX, minY, maxY } = measureExtent(e, yaw);
+    const cx = (minX + maxX) / 2;
+    const cy = (minY + maxY) / 2;
+    camera.left = cx - width / 2 / scale;
+    camera.right = cx + width / 2 / scale;
+    camera.top = cy + height / 2 / scale;
+    camera.bottom = cy - height / 2 / scale;
+    camera.updateProjectionMatrix();
   }
 
   function update(dt: number, now: number) {
@@ -286,7 +269,6 @@ export function createPiScene({ host, labels, open, onReady }: PiSceneOptions): 
     }
     root.updateMatrixWorld(true);
     fitCamera(e, yaw);
-    placeLabels(e);
   }
 
   function frame(now: number) {
@@ -340,6 +322,7 @@ export function createPiScene({ host, labels, open, onReady }: PiSceneOptions): 
       progress = target;
       tween = null;
     }
+    measure();
     kick();
   };
   reducedQuery.addEventListener("change", onReducedChange);

@@ -357,14 +357,6 @@ export function buildParts() {
   };
 }
 
-/** Label anchors (layer-local, collapsed). */
-export const ANCHORS: Record<Exclude<LayerId, "standoffs">, THREE.Vector3> = {
-  pi: v3(0, 47, PI_TOP),
-  cooler: v3(17, 40, PI_TOP + 3),
-  hat: v3(0, 44, HAT_TOP),
-  ssd: v3(3.6, 46, SSD_TOP),
-};
-
 /**
  * FFC path at a given HAT lift (root coordinates): leaves the Pi connector outwards, loops
  * round the board edge and enters the X1001 connector from the left.
