@@ -36,14 +36,15 @@ export function Homelab({
               <h3 className="mt-4 text-lg font-semibold tracking-tight">{t.specsTitle}</h3>
               <dl className="mt-3">
                 {t.specs.map((spec) => (
-                  <div key={spec.label} className={`${s.specRow} flex items-start gap-3.5 py-3`}>
-                    <span className={`${s.iconWell} size-9!`}>
-                      <HomelabGlyph name={spec.icon} width={17} height={17} />
-                    </span>
-                    <div className="min-w-0">
-                      <dt className={`${s.eyebrow} text-[0.68rem]!`}>{spec.label}</dt>
-                      <dd className="mt-0.5 text-[0.95rem] leading-snug">{spec.value}</dd>
-                    </div>
+                  // <dt>/<dd> must be direct children of the row, so the icon sits inside <dt>.
+                  <div key={spec.label} className={`${s.specRow} relative min-h-15 py-3 pl-12.5`}>
+                    <dt className={`${s.eyebrow} text-[0.68rem]!`}>
+                      <span className={`${s.iconWell} absolute top-3 left-0 size-9!`} aria-hidden="true">
+                        <HomelabGlyph name={spec.icon} width={17} height={17} />
+                      </span>
+                      {spec.label}
+                    </dt>
+                    <dd className="mt-0.5 text-[0.95rem] leading-snug">{spec.value}</dd>
                   </div>
                 ))}
               </dl>

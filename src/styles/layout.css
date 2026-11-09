@@ -499,19 +499,9 @@
 }
 
 /* ============================================================
-   Liquid glass: tiles are translucent; GlassLayer (_components/glass-layer.tsx) refracts the
-   colour fields of .bs-backdrop behind them.
+   Liquid glass backdrop: colour fields that GlassLayer (src/components/glass-layer.tsx) refracts
+   behind every tile. Tile tint and hairline: --glass-tint / --glass-line in tiles.css.
    ============================================================ */
-.bn-root {
-  --glass-tint: rgb(255 255 255 / 0.035);
-  --glass-line: rgb(255 255 255 / 0.1);
-}
-
-[data-theme="light"] .bn-root {
-  --glass-tint: rgb(255 255 255 / 0.55);
-  --glass-line: rgb(255 255 255 / 0.75);
-}
-
 .bs-backdrop {
   position: fixed;
   inset: 0;
@@ -548,12 +538,6 @@
     linear-gradient(90deg, rgb(9 9 11 / 0.05) 1px, transparent 1px);
 }
 
-.bs-layout .bn-tile {
-  isolation: isolate;
-  background: var(--glass-tint);
-  border-color: var(--glass-line);
-}
-
 .bs-glass {
   position: absolute;
   inset: 0;
@@ -564,16 +548,11 @@
 }
 
 /*
- * liquid-glass-react's container is class "glass", which the old global .glass utility styles. Its
- * inline drop shadow (offset 12px down) also shows through the tile's rounded bottom corners as grey
- * spots, hence !important against the inline style; the tile has its own shadow.
+ * liquid-glass-react's inline drop shadow (offset 12px down) shows through the tile's rounded
+ * bottom corners as grey spots: !important beats the inline style; the tile has its own shadow.
  */
 .bs-glass .glass {
-  background: none;
-  border: 0;
   box-shadow: none !important;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
 }
 
 /* No refraction (touch, Safari, Firefox, small tiles, before hydration): frosted glass. */

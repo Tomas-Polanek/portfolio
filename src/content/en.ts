@@ -24,14 +24,11 @@ export const en: Dictionary = {
     switchShort: "CZ",
   },
   hero: {
-    greeting: "Hi, I'm Tomáš",
     role: "Software Engineering student",
     lines: [
       "Focused on web development and open to new technologies and ideas.",
       "Studying Software Engineering in Prague and tinkering with my homelab in the evenings.",
     ],
-    ctaProjects: "My projects",
-    ctaContact: "Get in touch",
   },
   about: {
     title: "About me",
