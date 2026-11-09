@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import type { Dictionary } from "@/content/cs";
 import { ExternalIcon, ForkIcon, GitHubIcon, StarIcon } from "@/components/icons";
 import type { RepoInfo } from "@/lib/github";
@@ -52,6 +52,7 @@ export function ProjectTile({
   updated,
   t,
   ui,
+  layer,
 }: {
   index: number;
   wide: boolean;
@@ -66,12 +67,15 @@ export function ProjectTile({
   updated: string | null;
   t: Dictionary["projects"];
   ui: ReturnType<typeof getCopy>;
+  /** Optional surface rendered behind the content (e.g. a glass layer). */
+  layer?: ReactNode;
 }) {
   const [cx, cy] = focalPoints[index % focalPoints.length];
   const coverStyle = { "--cx": cx, "--cy": cy } as CSSProperties;
 
   return (
     <li className={`${s.tile} ${s.lift} ${s.project} ${wide ? s.projWide : s.projNormal}`}>
+      {layer}
       <article className={`${s.projectInner} ${wide ? s.wideInner : ""}`}>
         <div className={s.cover} style={coverStyle}>
           {image ? (

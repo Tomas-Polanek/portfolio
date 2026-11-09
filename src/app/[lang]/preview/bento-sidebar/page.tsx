@@ -20,6 +20,7 @@ import { s } from "../bento/_components/styles";
 import { bs, sectionsLabel, styleName } from "./_components/classes";
 import { CompactBar } from "./_components/compact-bar";
 import { PiModel } from "./_components/pi-model/pi-model";
+import { GlassLayer } from "./_components/glass-layer";
 import { SectionNav } from "./_components/section-nav";
 import { ThemeButton } from "../bento/_components/theme-button";
 
@@ -197,9 +198,12 @@ export default async function BentoSidebarPreview() {
 
   return (
     <div className={s.root} id="top">
+      {/* Colour fields the glass refracts */}
+      <div className="bs-backdrop" aria-hidden="true" />
       <div className={bs.layout}>
         {/* Left column: intro block (< lg) / sticky full-height column (≥ lg) */}
         <header id="intro" className={bs.column}>
+          <GlassLayer radius={28} className="bs-columnGlass" />
           <div>
             <div className="flex items-center gap-3">
               <span className={s.monogram} aria-hidden="true">
@@ -283,6 +287,7 @@ export default async function BentoSidebarPreview() {
               <div
                 className={`${s.tile} ${s.lift} ${s.aStudy} flex flex-col p-5 sm:p-6`}
               >
+                <GlassLayer />
                 <div className="flex items-center justify-between">
                   <span className={s.iconWell}>
                     <CapIcon />
@@ -302,6 +307,7 @@ export default async function BentoSidebarPreview() {
               <div
                 className={`${s.tile} ${s.lift} ${s.aLoc} relative flex min-h-44 flex-col overflow-hidden p-5 sm:p-6`}
               >
+                <GlassLayer />
                 <span className={s.mapGrid} aria-hidden="true" />
                 <span
                   className="absolute top-[40%] left-[70%] -translate-x-1/2 -translate-y-1/2"
@@ -324,6 +330,7 @@ export default async function BentoSidebarPreview() {
                 aria-labelledby="about-title"
                 className={`${s.tile} ${s.aAbout} p-6 sm:p-8`}
               >
+                <GlassLayer />
                 <p className={s.eyebrow}>
                   <span className={s.dot} /> 01
                 </p>
@@ -347,6 +354,7 @@ export default async function BentoSidebarPreview() {
                 aria-labelledby="skills-title"
                 className={`${s.tile} ${s.aSkills} p-6 sm:p-8`}
               >
+                <GlassLayer />
                 <h2
                   id="skills-title"
                   className="text-lg font-semibold tracking-tight"
@@ -366,6 +374,7 @@ export default async function BentoSidebarPreview() {
               <div
                 className={`${s.tile} ${s.lift} ${s.aLab} ${bs.labTile} group relative p-5 sm:p-6`}
               >
+                <GlassLayer />
                 <span
                   className={`${s.faint} absolute top-5 right-5 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 sm:top-6 sm:right-6`}
                 >
@@ -421,6 +430,7 @@ export default async function BentoSidebarPreview() {
                 rel="noopener noreferrer"
                 className={`${s.tile} ${s.lift} ${s.aGh} group flex flex-col p-5 sm:p-6`}
               >
+                <GlassLayer />
                 <div className="flex items-center justify-between">
                   <GitHubIcon width={30} height={30} />
                   <span
@@ -486,6 +496,7 @@ export default async function BentoSidebarPreview() {
                       }
                       t={t.projects}
                       ui={c}
+                      layer={<GlassLayer />}
                     />
                   );
                 })}
@@ -496,6 +507,7 @@ export default async function BentoSidebarPreview() {
                     rel="noopener noreferrer"
                     className={`${s.tile} ${s.lift} group relative flex w-full flex-col justify-between overflow-hidden p-6 sm:p-7`}
                   >
+                    <GlassLayer />
                     <span className={s.orb} aria-hidden="true" />
                     <span className="relative flex items-center justify-between">
                       <GitHubIcon width={34} height={34} />
@@ -536,6 +548,7 @@ export default async function BentoSidebarPreview() {
                 <div className="flex flex-col gap-4 sm:gap-5 xl:grid xl:grid-cols-2">
                   {/* Specs as a terminal */}
                   <div className={`${s.tile} overflow-hidden`}>
+                    <GlassLayer />
                     <div className={s.terminalBar} aria-hidden="true">
                       <span />
                       <span />
@@ -584,6 +597,7 @@ export default async function BentoSidebarPreview() {
 
                   {/* What it taught me */}
                   <div className={`${s.tile} flex-1 p-5 sm:p-7`}>
+                    <GlassLayer />
                     <h3 className="text-lg font-semibold tracking-tight">
                       {t.homelab.learnedTitle}
                     </h3>
@@ -616,6 +630,7 @@ export default async function BentoSidebarPreview() {
                         key={svc.name}
                         className={`${s.tile} ${s.lift} flex flex-col p-5`}
                       >
+                        <GlassLayer liquid={false} />
                         <span className={s.iconWell}>
                           <HomelabGlyph name={svc.icon} />
                         </span>
@@ -642,6 +657,7 @@ export default async function BentoSidebarPreview() {
                 className="flex flex-col gap-4 sm:gap-5 xl:col-span-5"
               >
                 <div className={`${s.tile} p-6 sm:p-7`}>
+                  <GlassLayer />
                   <p className={s.eyebrow}>
                     <span className={s.dot} /> 04
                   </p>
@@ -671,6 +687,7 @@ export default async function BentoSidebarPreview() {
                   </ol>
                 </div>
                 <div className={`${s.tile} flex-1 p-6 sm:p-7`}>
+                  <GlassLayer />
                   <h3 className="text-lg font-semibold tracking-tight">
                     {t.education.learningTitle}
                   </h3>
@@ -693,6 +710,7 @@ export default async function BentoSidebarPreview() {
                 <div
                   className={`${s.tile} relative flex flex-1 flex-col overflow-hidden p-6 sm:p-9`}
                 >
+                  <GlassLayer />
                   <span className={s.orb} aria-hidden="true" />
                   <p className={`${s.eyebrow} relative`}>
                     <span className={s.dot} /> 05 · {t.nav.contact}
@@ -730,6 +748,7 @@ export default async function BentoSidebarPreview() {
                         rel="noopener noreferrer"
                         className={`${s.tile} ${s.lift} group flex w-full items-center gap-3.5 p-4 sm:flex-col sm:items-start sm:p-5`}
                       >
+                        <GlassLayer liquid={false} />
                         <span className={s.iconWell}>
                           <Icon width={18} height={18} />
                         </span>
@@ -753,6 +772,7 @@ export default async function BentoSidebarPreview() {
             <div
               className={`${s.tile} flex flex-col gap-3 px-6 py-5 text-sm sm:flex-row sm:items-center sm:justify-between`}
             >
+              <GlassLayer />
               <p className="flex items-center gap-2.5">
                 <span className={`${s.monogram} size-7! rounded-lg!`} aria-hidden="true">
                   <TpMark className="size-full" />

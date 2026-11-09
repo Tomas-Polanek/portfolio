@@ -53,6 +53,16 @@
   padding: 2.5rem 0.25rem 1.5rem;
 }
 
+.bs-columnGlass {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .bs-columnGlass {
+    display: block;
+  }
+}
+
 @media (min-width: 1024px) {
   .bs-column {
     position: sticky;
@@ -64,6 +74,20 @@
     gap: 2.5rem;
     padding: 3.5rem 0;
     scrollbar-width: none;
+  }
+
+  /* The panel is a glass card floating 1rem from the viewport edges. */
+  .bs-column {
+    top: 1rem;
+    height: calc(100vh - 2rem);
+    height: calc(100dvh - 2rem);
+    margin: 1rem 0;
+    padding: 2.75rem 2.25rem 2.25rem;
+    border-radius: 28px;
+    border: 1px solid var(--glass-line);
+    background: var(--glass-tint);
+    box-shadow: var(--shadow);
+    isolation: isolate;
   }
 }
 
@@ -127,7 +151,9 @@
   z-index: 40;
   border-radius: 18px;
   border: 1px solid var(--line-strong);
-  background: var(--tile);
+  background: color-mix(in srgb, var(--tile) 72%, transparent);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
   box-shadow: var(--shadow);
   transition:
     transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
@@ -160,7 +186,9 @@
   right: 0;
   border-radius: 18px;
   border: 1px solid var(--line-strong);
-  background: var(--tile);
+  background: color-mix(in srgb, var(--tile) 82%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
   box-shadow: var(--shadow-hover);
   padding: 0.85rem 0.85rem 1rem;
 }
@@ -468,4 +496,88 @@
   .bn-lift:focus-visible .bs-piStage {
     transform: rotateX(54deg) rotateZ(-32deg);
   }
+}
+
+/* ============================================================
+   Liquid glass: tiles are translucent; GlassLayer (_components/glass-layer.tsx) refracts the
+   colour fields of .bs-backdrop behind them.
+   ============================================================ */
+.bn-root {
+  --glass-tint: rgb(255 255 255 / 0.035);
+  --glass-line: rgb(255 255 255 / 0.1);
+}
+
+[data-theme="light"] .bn-root {
+  --glass-tint: rgb(255 255 255 / 0.55);
+  --glass-line: rgb(255 255 255 / 0.75);
+}
+
+.bs-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 34% at 22% 12%, rgb(124 58 237 / 0.42), transparent 70%),
+    radial-gradient(42% 40% at 88% 42%, rgb(37 99 235 / 0.38), transparent 70%),
+    radial-gradient(36% 32% at 40% 92%, rgb(192 38 211 / 0.3), transparent 70%);
+}
+
+/* A faint grid gives the refraction sharp lines to bend. */
+.bs-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
+}
+
+[data-theme="light"] .bs-backdrop {
+  background:
+    radial-gradient(38% 34% at 22% 12%, rgb(160 80 255 / 0.3), transparent 70%),
+    radial-gradient(42% 40% at 88% 42%, rgb(80 180 255 / 0.32), transparent 70%),
+    radial-gradient(36% 32% at 40% 92%, rgb(232 121 249 / 0.24), transparent 70%);
+}
+
+[data-theme="light"] .bs-backdrop::after {
+  background-image:
+    linear-gradient(rgb(9 9 11 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(9 9 11 / 0.05) 1px, transparent 1px);
+}
+
+.bs-layout .bn-tile {
+  isolation: isolate;
+  background: var(--glass-tint);
+  border-color: var(--glass-line);
+}
+
+.bs-glass {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/*
+ * liquid-glass-react's container is class "glass", which the old global .glass utility styles. Its
+ * inline drop shadow (offset 12px down) also shows through the tile's rounded bottom corners as grey
+ * spots, hence !important against the inline style; the tile has its own shadow.
+ */
+.bs-glass .glass {
+  background: none;
+  border: 0;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* No refraction (touch, Safari, Firefox, small tiles, before hydration): frosted glass. */
+.bs-glassFallback {
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  backdrop-filter: blur(18px) saturate(150%);
 }
