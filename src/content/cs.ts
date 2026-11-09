@@ -20,6 +20,7 @@ export const cs = {
       "Student softwarového inženýrství v Praze. Webový vývoj, Python, Linux a homelab.",
   },
   nav: {
+    sections: "Sekce stránky",
     about: "O mně",
     projects: "Projekty",
     homelab: "Homelab",

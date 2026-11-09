@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { CloseIcon, MenuIcon } from "@/components/icons";
 import { TpMark } from "@/components/tp-mark";
 import { bs, s } from "@/components/classes";
+import { LanguageSwitch } from "@/components/language-switch";
 import { ThemeButton } from "@/components/theme-button";
+import type { Locale } from "@/lib/locales";
 import { type NavItem, useScrollspy } from "./use-scrollspy";
 
 type Props = {
@@ -13,7 +15,7 @@ type Props = {
   navLabel: string;
   themeLabel: string;
   menuLabels: { open: string; close: string };
-  language: { href: string; lang: string; label: string; short: string };
+  language: { target: Locale; label: string; short: string };
   /** The intro block; the bar appears only once it has scrolled out of view. */
   watchId: string;
   endId: string;
@@ -67,16 +69,7 @@ export function CompactBar({
           label={themeLabel}
           className={`${s.iconBtn} ${bs.barBtn}`}
         />
-        <a
-          href={language.href}
-          hrefLang={language.lang}
-          lang={language.lang}
-          aria-label={language.label}
-          title={language.label}
-          className={`${s.iconBtn} ${bs.barBtn}`}
-        >
-          {language.short}
-        </a>
+        <LanguageSwitch {...language} className={`${s.iconBtn} ${bs.barBtn}`} />
         <button
           type="button"
           className={`${s.iconBtn} ${bs.barBtn}`}

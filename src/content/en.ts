@@ -7,6 +7,7 @@ export const en: Dictionary = {
       "Software Engineering student in Prague. Web development, Python, Linux and homelab.",
   },
   nav: {
+    sections: "Page sections",
     about: "About",
     projects: "Projects",
     homelab: "Homelab",

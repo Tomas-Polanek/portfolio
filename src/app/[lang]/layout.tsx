@@ -6,6 +6,8 @@ import { locales } from "@/lib/locales";
 import { themeBootScript } from "@/lib/theme";
 import { ThemeSync } from "@/components/theme-sync";
 import "../globals.css";
+import "@/styles/tiles.css";
+import "@/styles/layout.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin", "latin-ext"] });
