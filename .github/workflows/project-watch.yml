@@ -42,5 +42,14 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           # The workflow token instead of the Claude GitHub App, so no app install is needed.
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          prompt: "/project-watch"
-          claude_args: "--max-turns 60"
+          prompt: |
+            TEST of the pull-request path only (step 6 of .claude/skills/project-watch/SKILL.md), no repo checks.
+            Run each command on its own: `date -u +%Y-%m-%dT%H:%M:%SZ`; set "lastRun" in .github/project-watch.json to that time;
+            `npm ci`; `npm run lint`; `npm run build`; `git switch -c project-watch/test-run`;
+            `git commit -am "Project watch test"`; `git push -u origin HEAD`;
+            `gh label list --search project-watch` and create the label as the skill says if missing;
+            write a one-line Czech body to pr-body.md and run
+            `gh pr create --base project-watch-test --label project-watch --title "Test hlídače – zavřít" --body-file pr-body.md`.
+            Report each command's outcome.
+          claude_args: '--max-turns 30 --allowedTools "Bash(gh *),Bash(git *),Bash(npm ci),Bash(npm run *),Bash(date *),Read,Edit,Write"'
+          show_full_output: true
