@@ -25,6 +25,7 @@ export const en: Dictionary = {
   },
   hero: {
     role: "Software Development student",
+    status: "Open to junior opportunities",
     lines: [
       "Focused on web development and open to new technologies and ideas.",
       "Studying Software Development in Prague and tinkering with my homelab in the evenings.",

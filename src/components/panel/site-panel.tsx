@@ -35,7 +35,7 @@ export function SitePanel({
 
   return (
     <header id="intro" className={bs.column}>
-      <GlassLayer radius={28} className="bs-columnGlass" />
+      <GlassLayer liquid radius={28} className="bs-columnGlass" />
       <div>
         <div className="flex items-center gap-3">
           <span className={s.monogram} aria-hidden="true">
@@ -62,6 +62,10 @@ export function SitePanel({
             </p>
           ))}
         </div>
+        <p className={`${s.chip} mt-5`}>
+          <span className={s.openDot} aria-hidden="true" />
+          {t.hero.status}
+        </p>
       </div>
 
       <SectionNav items={nav} label={t.nav.sections} endId={endId} />

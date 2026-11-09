@@ -27,6 +27,7 @@ export const s = {
   mapGrid: "bn-mapGrid",
   monogram: "bn-monogram",
   muted: "bn-muted",
+  openDot: "bn-openDot",
   orb: "bn-orb",
   pin: "bn-pin",
   placeholder: "bn-placeholder",

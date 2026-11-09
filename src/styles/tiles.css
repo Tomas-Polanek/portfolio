@@ -490,6 +490,36 @@ a.bn-chip:hover {
   }
 }
 
+/* "Open to opportunities" status: pulse on a pseudo-element via transform/opacity (compositor only). */
+.bn-openDot {
+  position: relative;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #22c55e;
+  flex: none;
+}
+
+.bn-openDot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #22c55e;
+  animation: bn-open-pulse 2s ease-out infinite;
+}
+
+@keyframes bn-open-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
 /* Screenshot dialog */
 .bn-shot {
   width: min(94vw, 1100px);
@@ -640,7 +670,8 @@ a.bn-chip:hover {
   .bn-project:hover .bn-placeholder {
     transform: none;
   }
-  .bn-wipDot {
+  .bn-wipDot,
+  .bn-openDot::after {
     animation: none;
   }
 }
