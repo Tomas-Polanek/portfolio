@@ -20,7 +20,6 @@ import { s } from "../bento/_components/styles";
 import { bs, sectionsLabel, styleName } from "./_components/classes";
 import { CompactBar } from "./_components/compact-bar";
 import { PiModel } from "./_components/pi-model/pi-model";
-import { PragueMap } from "./_components/prague-map";
 import { SectionNav } from "./_components/section-nav";
 import { ThemeButton } from "../bento/_components/theme-button";
 
@@ -301,24 +300,22 @@ export default async function BentoSidebarPreview() {
 
               {/* Location */}
               <div
-                className={`${s.tile} ${s.lift} ${s.aLoc} relative flex min-h-60 flex-col overflow-hidden p-5 sm:p-6`}
+                className={`${s.tile} ${s.lift} ${s.aLoc} relative flex min-h-44 flex-col overflow-hidden p-5 sm:p-6`}
               >
-                <PragueMap />
+                <span className={s.mapGrid} aria-hidden="true" />
+                <span
+                  className="absolute top-[40%] left-[70%] -translate-x-1/2 -translate-y-1/2"
+                  aria-hidden="true"
+                >
+                  <span className={`${s.pin} block`} />
+                </span>
                 <p className={`${s.eyebrow} relative`}>{c.basedIn}</p>
                 <p className="relative mt-auto text-4xl font-semibold tracking-tight">
                   {city}
                 </p>
                 <p className={`${s.faint} relative mt-1 font-mono text-xs`}>
-                  50.04° N · 14.44° E
+                  50.08° N · 14.44° E
                 </p>
-                <a
-                  href="https://www.openstreetmap.org/copyright"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={bs.mapCredit}
-                >
-                  © OpenStreetMap
-                </a>
               </div>
 
               {/* About */}

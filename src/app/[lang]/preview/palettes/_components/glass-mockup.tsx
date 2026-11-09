@@ -4,7 +4,6 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { TP_LIGATURE } from "@/components/tp-mark";
-import { pragueOutline } from "../../bento-sidebar/_components/prague-outline";
 import type { Palette } from "./palettes";
 
 // liquid-glass-react measures the DOM and builds SVG filters on mount: client only.
@@ -176,20 +175,28 @@ export function GlassMockup({ p, copy }: { p: Palette; copy: MockupCopy }) {
       {/* Location */}
       <Glass x={728} y={16} w={296} h={236} light={p.light}>
         <div className="relative flex h-full flex-col p-6">
-          <svg viewBox={pragueOutline.viewBox} className="absolute top-1/2 left-1/2 w-[70%] -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
-            <defs>
-              <linearGradient id={`${gradId}-map`} x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor={a} />
-                <stop offset="1" stopColor={b} />
-              </linearGradient>
-            </defs>
-            <path d={pragueOutline.d} fill={`${a}14`} stroke={`url(#${gradId}-map)`} strokeWidth="2.2" strokeLinejoin="round" />
-            <path d={pragueOutline.river} fill="none" stroke={`url(#${gradId}-map)`} strokeWidth="3" strokeLinecap="round" />
-          </svg>
+          {/* Same as the site's location tile: faint grid and a pulsing pin. */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `linear-gradient(${p.light ? "rgb(0 0 0 / 0.07)" : "rgb(255 255 255 / 0.07)"} 1px, transparent 1px), linear-gradient(90deg, ${p.light ? "rgb(0 0 0 / 0.07)" : "rgb(255 255 255 / 0.07)"} 1px, transparent 1px)`,
+              backgroundSize: "22px 22px",
+              maskImage: "radial-gradient(circle at 70% 40%, #000, transparent 75%)",
+            }}
+          />
+          <span
+            aria-hidden="true"
+            className="absolute top-[40%] left-[70%] size-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
+            style={{ background: b, boxShadow: `0 0 0 4px ${b}33, 0 0 0 10px ${b}14` }}
+          />
           <p className={`${eyebrow} relative`} style={{ color: "var(--m-muted)" }}>
             {copy.basedIn}
           </p>
           <p className="relative mt-auto text-[32px] font-semibold tracking-tight">{copy.city}</p>
+          <p className="relative mt-1 font-mono text-[11px]" style={{ color: "var(--m-muted)" }}>
+            50.08° N · 14.44° E
+          </p>
         </div>
       </Glass>
 

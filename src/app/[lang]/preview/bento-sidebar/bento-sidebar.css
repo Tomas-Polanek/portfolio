@@ -266,55 +266,6 @@
   }
 }
 
-/* ---------- Location tile: Prague city boundary (data in _components/prague-outline.ts) ---------- */
-.bs-map {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  width: min(72%, 250px);
-  pointer-events: none;
-}
-
-.bs-map svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.bs-map path {
-  fill: rgb(160 80 255 / 0.08);
-  stroke: url(#bs-prague-grad);
-  stroke-width: 1.4;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.bs-map .bs-mapRiver {
-  fill: none;
-  stroke-width: 2;
-  stroke-linecap: round;
-  opacity: 0.85;
-}
-
-[data-theme="light"] .bs-map path:not(.bs-mapRiver) {
-  fill: rgb(160 80 255 / 0.06);
-}
-
-.bs-mapCredit {
-  position: absolute;
-  right: 1rem;
-  bottom: 0.7rem;
-  font-size: 0.62rem;
-  color: var(--faint);
-}
-
-.bs-mapCredit:hover {
-  color: var(--fg);
-  text-decoration: underline;
-}
-
 /* ---------- Homelab teaser: Raspberry Pi 5 sketch in CSS 3D ---------- */
 .bn-tile.bs-labTile {
   display: flex;
