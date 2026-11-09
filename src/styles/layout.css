@@ -695,10 +695,22 @@
   --blob: rgb(232 121 249 / 0.24);
 }
 
+/*
+ * Light theme: the grid lines carry the brand gradient (purple → blue). The gradient fills the layer
+ * and the mask cuts it down to the lines (horizontal ∪ vertical), faded out by the ellipse (∩).
+ * Layers listed top first: the ellipse intersects the union of the two line patterns below it.
+ */
 [data-theme="light"] .bs-backdrop::after {
-  background-image:
-    linear-gradient(rgb(9 9 11 / 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(9 9 11 / 0.05) 1px, transparent 1px);
+  background: linear-gradient(135deg, rgb(124 58 237 / 0.32), rgb(37 99 235 / 0.32));
+  mask-image:
+    radial-gradient(ellipse at center, #000 30%, transparent 85%),
+    linear-gradient(#000 1px, transparent 1px),
+    linear-gradient(90deg, #000 1px, transparent 1px);
+  mask-size:
+    100% 100%,
+    44px 44px,
+    44px 44px;
+  mask-composite: intersect, add;
 }
 
 .bs-glass {
