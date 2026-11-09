@@ -77,8 +77,7 @@ export function Homelab({
           <ul className="grid flex-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
             {t.services.map((svc) => (
               <li key={svc.name} className={`${s.tile} ${s.lift} flex flex-col p-5`}>
-                {/* Small repeated tiles: cheap frosted glass instead of refraction. */}
-                <GlassLayer liquid={false} />
+                <GlassLayer />
                 <span className={s.iconWell}>
                   <HomelabGlyph name={svc.icon} />
                 </span>

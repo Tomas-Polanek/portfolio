@@ -45,8 +45,7 @@ export function Contact({ t, nav }: { t: Dictionary["contact"]; nav: string }) {
               rel="noopener noreferrer"
               className={`${s.tile} ${s.lift} group flex w-full items-center gap-3.5 p-4 sm:flex-col sm:items-start sm:p-5`}
             >
-              {/* Small repeated tiles: cheap frosted glass instead of refraction. */}
-              <GlassLayer liquid={false} />
+              <GlassLayer />
               <span className={s.iconWell}>
                 <Icon width={18} height={18} />
               </span>

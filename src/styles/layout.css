@@ -555,7 +555,7 @@
   box-shadow: none !important;
 }
 
-/* No refraction (touch, Safari, Firefox, small tiles, before hydration): frosted glass. */
+/* No refraction (scrolling tiles, touch, Safari, Firefox, before hydration): frosted glass. */
 .bs-glassFallback {
   -webkit-backdrop-filter: blur(18px) saturate(150%);
   backdrop-filter: blur(18px) saturate(150%);

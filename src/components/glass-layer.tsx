@@ -31,12 +31,13 @@ const getServerLiquid = () => false;
 /**
  * Glass surface behind a tile's content. Put it first inside a `.bn-tile` (or the panel): it fills
  * the parent, sits under the content (z-index -1 in the tile's isolated stacking context) and
- * refracts the page backdrop. `liquid={false}` forces the cheap CSS frosted glass, for small
- * repeated tiles.
+ * shows the page backdrop as CSS frosted glass. `liquid` opts into real refraction: its SVG
+ * displacement filter is recomputed every frame the backdrop moves under the surface, so it is
+ * only for surfaces that stay put while the page scrolls (the sticky panel, the 404 card).
  */
 export function GlassLayer({
   radius = 24,
-  liquid: allowLiquid = true,
+  liquid: allowLiquid = false,
   className = "",
 }: {
   radius?: number;

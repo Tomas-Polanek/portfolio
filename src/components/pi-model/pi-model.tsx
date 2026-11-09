@@ -6,7 +6,9 @@ import type { PiScene } from "./scene";
 
 /**
  * Wireframe 3D model of the homelab build (Pi 5 + Active Cooler + X1001 + 990 PRO). three.js is
- * loaded lazily; the SVG sketch stays as poster until the first frame (and if WebGL fails).
+ * fetched once the tile nears the viewport and the main thread is idle, so its parse and scene
+ * build (~150 ms on a 4× throttled CPU) stay out of hydration; the SVG sketch stays as poster until
+ * the first frame (and if WebGL fails).
  */
 export function PiModel({ label }: { label: string }) {
   const [open, setOpen] = useState(false);
@@ -22,21 +24,47 @@ export function PiModel({ label }: { label: string }) {
   }, [open]);
 
   useEffect(() => {
+    const host = hostRef.current;
+    if (!host) return;
     let cancelled = false;
-    import("./scene")
-      .then(({ createPiScene }) => {
-        if (cancelled || !hostRef.current) return;
-        sceneRef.current = createPiScene({
-          host: hostRef.current,
-          open: openRef.current,
-          onReady: () => setReady(true),
+    let cancelIdle = () => {};
+
+    const load = () => {
+      import("./scene")
+        .then(({ createPiScene }) => {
+          if (cancelled) return;
+          sceneRef.current = createPiScene({
+            host,
+            open: openRef.current,
+            onReady: () => setReady(true),
+          });
+        })
+        .catch(() => {
+          // No WebGL (or the chunk failed to load): the SVG poster stays.
         });
-      })
-      .catch(() => {
-        // No WebGL (or the chunk failed to load): the SVG poster stays.
-      });
+    };
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        observer.disconnect();
+        // Safari has no requestIdleCallback.
+        if (typeof window.requestIdleCallback === "function") {
+          const id = window.requestIdleCallback(load, { timeout: 2000 });
+          cancelIdle = () => window.cancelIdleCallback(id);
+        } else {
+          const id = window.setTimeout(load, 200);
+          cancelIdle = () => window.clearTimeout(id);
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(host);
+
     return () => {
       cancelled = true;
+      observer.disconnect();
+      cancelIdle();
       sceneRef.current?.dispose();
       sceneRef.current = null;
       setReady(false);
