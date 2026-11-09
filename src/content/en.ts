@@ -4,14 +4,14 @@ export const en: Dictionary = {
   meta: {
     title: "Tomáš Polánek | Portfolio",
     description:
-      "Software Engineering student in Prague. Web development, Python, Linux and homelab.",
+      "Software Development student in Prague. Web development, Python, Linux and homelab.",
   },
   nav: {
     sections: "Page sections",
     about: "About",
     projects: "Projects",
     homelab: "Homelab",
-    education: "Education",
+    education: "Education & experience",
     contact: "Contact",
     openMenu: "Open menu",
     closeMenu: "Close menu",
@@ -24,18 +24,19 @@ export const en: Dictionary = {
     switchShort: "CZ",
   },
   hero: {
-    role: "Software Engineering student",
+    role: "Software Development student",
     lines: [
       "Focused on web development and open to new technologies and ideas.",
-      "Studying Software Engineering in Prague and tinkering with my homelab in the evenings.",
+      "Studying Software Development in Prague and tinkering with my homelab in the evenings.",
     ],
   },
   about: {
     title: "About me",
     paragraphs: [
-      "Hi, I'm Tomáš, a Software Engineering student based in Prague. I'm building a solid foundation in programming and modern technologies, with a strong focus on practical learning and real-world problem solving.",
-      "I learn best by turning ideas into small projects, which helps me gradually tackle more complex challenges – from web apps through working with data to applications built on language models.",
-      "Outside of code I enjoy Linux and my own homelab, where I find out how services behave in real operation. Feel free to reach out – I'm always open to connecting, sharing ideas and learning from others.",
+      "I'm a Software Development student at Unicorn University and I also work as a service technician. That gives me a strong technical foundation, independence and a responsible approach to work.",
+      "I have hands-on experience solving problems, communicating with customers and working in a technical environment where precision, reliability and the ability to react under pressure matter.",
+      "I see my studies as a chance to systematically build my knowledge of programming, logical thinking and modern technologies. I'm most interested in software development and connecting theory with real-world use.",
+      "I'm looking for opportunities where I can keep learning, grow and gradually take on more responsibility.",
     ],
     skillsTitle: "Skills",
     skills: [
@@ -171,12 +172,25 @@ export const en: Dictionary = {
     ],
   },
   education: {
-    title: "Education",
+    title: "Education & experience",
     items: [
       {
-        period: "since 2025",
-        title: "Software Engineering",
+        period: "2025 – 2028",
+        title: "Software Development (Bachelor's)",
         place: "Unicorn University, Prague",
+      },
+      {
+        period: "2019 – 2023",
+        title: "Electrical Engineering – Computer-Aided Design (school-leaving exam)",
+        place: "Secondary Technical School and College, Písek",
+      },
+    ],
+    experienceTitle: "Experience",
+    experience: [
+      {
+        period: "since 2023",
+        title: "Service technician",
+        place: "ENTSOL s.r.o., Prague · hybrid",
       },
     ],
     learningTitle: "Currently learning",

@@ -17,14 +17,14 @@ export const cs = {
   meta: {
     title: "Tomáš Polánek | Portfolio",
     description:
-      "Student softwarového inženýrství v Praze. Webový vývoj, Python, Linux a homelab.",
+      "Student softwarového vývoje v Praze. Webový vývoj, Python, Linux a homelab.",
   },
   nav: {
     sections: "Sekce stránky",
     about: "O mně",
     projects: "Projekty",
     homelab: "Homelab",
-    education: "Vzdělání",
+    education: "Vzdělání a praxe",
     contact: "Kontakt",
     openMenu: "Otevřít menu",
     closeMenu: "Zavřít menu",
@@ -37,18 +37,19 @@ export const cs = {
     switchShort: "EN",
   },
   hero: {
-    role: "Student softwarového inženýrství",
+    role: "Student softwarového vývoje",
     lines: [
       "Zaměřuji se na webový vývoj a jsem otevřený novým technologiím a nápadům.",
-      "Studuji softwarové inženýrství v Praze a po večerech ladím svůj homelab.",
+      "Studuji softwarový vývoj v Praze a po večerech ladím svůj homelab.",
     ],
   },
   about: {
     title: "O mně",
     paragraphs: [
-      "Ahoj, jsem Tomáš, student softwarového inženýrství v Praze. Stavím si pevné základy v programování a moderních technologiích a nejvíc mě baví praktické učení a řešení skutečných problémů.",
-      "Nové věci se nejradši učím tak, že z nápadu udělám malý projekt. Postupně se tak dostávám ke složitějším výzvám – od webových aplikací přes práci s daty až po aplikace nad jazykovými modely.",
-      "Mimo kód mě baví Linux a vlastní homelab, kde si zkouším, jak služby fungují v reálném provozu. Klidně se ozvi – rád se propojím, sdílím nápady a učím se od ostatních.",
+      "Jsem student softwarového vývoje na Unicorn University a zároveň pracuji jako servisní technik. Díky tomu mám silný technický základ, samostatnost a zodpovědný přístup k práci.",
+      "Mám zkušenosti s řešením problémů v praxi, komunikací se zákazníky a prací v technickém prostředí, kde záleží na přesnosti, spolehlivosti a schopnosti reagovat pod tlakem.",
+      "Studium beru jako příležitost systematicky rozvíjet své znalosti v oblasti programování, logického myšlení a práce s moderními technologiemi. Zajímá mě především software development a propojení teorie s reálným využitím.",
+      "Hledám příležitosti, kde se mohu dál učit, růst a postupně přebírat větší odpovědnost.",
     ],
     skillsTitle: "Dovednosti",
     skills: [
@@ -190,12 +191,25 @@ export const cs = {
     ],
   },
   education: {
-    title: "Vzdělání",
+    title: "Vzdělání a praxe",
     items: [
       {
-        period: "od 2025",
-        title: "Softwarové inženýrství",
+        period: "2025 – 2028",
+        title: "Softwarový vývoj (Bc.)",
         place: "Unicorn University, Praha",
+      },
+      {
+        period: "2019 – 2023",
+        title: "Elektrotechnika – počítačové projektování (maturita)",
+        place: "Střední průmyslová škola a Vyšší odborná škola, Písek",
+      },
+    ],
+    experienceTitle: "Praxe",
+    experience: [
+      {
+        period: "od 2023",
+        title: "Servisní technik",
+        place: "ENTSOL s.r.o., Praha · hybridně",
       },
     ],
     learningTitle: "Aktuálně se učím",
