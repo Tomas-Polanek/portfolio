@@ -77,5 +77,6 @@ export const bs = {
   commit: "bs-commit",
   commitDot: "bs-commitDot",
   commitHash: "bs-commitHash",
+  commitLanes: "bs-commitLanes",
   commitMsg: "bs-commitMsg",
 } as const;
