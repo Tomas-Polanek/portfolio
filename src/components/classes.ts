@@ -37,6 +37,7 @@ export const s = {
   projectBody: "bn-projectBody",
   projectInner: "bn-projectInner",
   prompt: "bn-prompt",
+  roleText: "bn-roleText",
   root: "bn-root",
   specRow: "bn-specRow",
   terminalBar: "bn-terminalBar",

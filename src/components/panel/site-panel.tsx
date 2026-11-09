@@ -52,7 +52,7 @@ export function SitePanel({
         <h1 className="mt-10 text-[2.6rem] leading-[1.05] font-semibold tracking-[-0.035em] sm:text-5xl xl:text-[3.5rem]">
           {site.name}
         </h1>
-        <p className={`${s.gradText} mt-3 text-lg font-semibold tracking-tight sm:text-xl`}>
+        <p className={`${s.roleText} mt-3 text-lg font-semibold tracking-tight sm:text-xl`}>
           {t.hero.role}
         </p>
         <div className="mt-4 max-w-sm space-y-2">
