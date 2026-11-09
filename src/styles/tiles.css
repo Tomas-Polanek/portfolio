@@ -1,5 +1,6 @@
 /* ============================================================
-   Bento grid preview (classes prefixed bn-, see _components/styles.ts) — tokens (dark default, light override)
+   Design tokens (dark default, light override), tiles, chips, buttons, project cards.
+   Classes prefixed bn-, mapped in src/components/classes.ts (s).
    ============================================================ */
 .bn-root {
   --page: #050506;
@@ -175,7 +176,6 @@ a.bn-tile:focus-visible {
 
 /* Buttons */
 .bn-btnSolid,
-.bn-btnGhost,
 .bn-iconBtn {
   display: inline-flex;
   align-items: center;
@@ -204,14 +204,6 @@ a.bn-tile:focus-visible {
     0 0 0 4px rgb(160 80 255 / 0.18);
 }
 
-.bn-btnGhost {
-  border: 1px solid var(--line-strong);
-  background: var(--chip);
-  color: var(--fg);
-  padding: 0.7rem 1.25rem;
-}
-
-.bn-btnGhost:hover,
 .bn-iconBtn:hover,
 a.bn-chip:hover {
   background: var(--chip-hover);
@@ -307,30 +299,8 @@ a.bn-chip:hover {
 }
 
 /* ============================================================
-   Hero bento layout
+   Overview grid areas (the grid itself: .bs-heroGrid in layout.css)
    ============================================================ */
-.bn-heroGrid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-areas:
-    "ctrl"
-    "intro"
-    "study"
-    "loc"
-    "about"
-    "skills"
-    "lab"
-    "gh"
-    "mail";
-}
-
-.bn-aIntro {
-  grid-area: intro;
-}
-.bn-aCtrl {
-  grid-area: ctrl;
-}
 .bn-aStudy {
   grid-area: study;
 }
@@ -349,60 +319,17 @@ a.bn-chip:hover {
 .bn-aGh {
   grid-area: gh;
 }
-.bn-aMail {
-  grid-area: mail;
-}
-
-@media (min-width: 640px) {
-  .bn-heroGrid {
-    gap: 1.25rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-areas:
-      "ctrl ctrl"
-      "intro intro"
-      "study loc"
-      "about about"
-      "skills skills"
-      "lab gh"
-      "lab mail";
-  }
-}
-
-@media (min-width: 1024px) {
-  .bn-heroGrid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-template-areas:
-      "intro intro intro ctrl"
-      "intro intro intro study"
-      "about about skills skills"
-      "about about loc lab"
-      "gh mail mail lab";
-  }
-}
 
 /* ============================================================
-   Projects
+   Projects (the grid itself: .bs-projGrid in layout.css)
    ============================================================ */
-.bn-projGrid {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: minmax(0, 1fr);
-}
-
 @media (min-width: 640px) {
-  .bn-projGrid {
-    gap: 1.25rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .bn-projAll {
     grid-column: span 2;
   }
 }
 
 @media (min-width: 1024px) {
-  .bn-projGrid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
   .bn-projWide {
     grid-column: span 4;
   }
@@ -685,33 +612,6 @@ a.bn-chip:hover {
   border-top: 1px dashed var(--line);
 }
 
-/* ============================================================
-   Preview badge
-   ============================================================ */
-.bn-badge {
-  position: fixed;
-  right: 0.75rem;
-  bottom: 0.75rem;
-  z-index: 50;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  max-width: calc(100vw - 1.5rem);
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: color-mix(in srgb, var(--tile) 88%, transparent);
-  backdrop-filter: blur(10px);
-  padding: 0.4rem 0.8rem;
-  font-size: 0.75rem;
-  color: var(--fg);
-  box-shadow: var(--shadow);
-  transition: transform 0.2s ease;
-}
-
-.bn-badge:hover {
-  transform: translateY(-2px);
-}
-
 @media (prefers-reduced-motion: reduce) {
   .bn-root *,
   .bn-root *::before,
@@ -721,8 +621,7 @@ a.bn-chip:hover {
   }
   .bn-lift:hover,
   .bn-lift:focus-within,
-  .bn-btnSolid:hover,
-  .bn-badge:hover {
+  .bn-btnSolid:hover {
     transform: none;
   }
   .bn-project:hover .bn-coverImage,

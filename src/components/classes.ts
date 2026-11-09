@@ -1,16 +1,16 @@
-/** Class names defined in ../bento.css (plain CSS: this project's Turbopack CSS rule disables CSS modules). */
+/*
+ * Class names of the site's plain CSS (this project's Turbopack CSS rule disables CSS modules, so
+ * the files are global and the names prefixed).
+ */
+
+/** Tokens, tiles, chips, project cards: src/styles/tiles.css (bn-*). */
 export const s = {
   aAbout: "bn-aAbout",
-  aCtrl: "bn-aCtrl",
   aGh: "bn-aGh",
-  aIntro: "bn-aIntro",
   aLab: "bn-aLab",
   aLoc: "bn-aLoc",
-  aMail: "bn-aMail",
   aSkills: "bn-aSkills",
   aStudy: "bn-aStudy",
-  badge: "bn-badge",
-  btnGhost: "bn-btnGhost",
   btnSolid: "bn-btnSolid",
   chip: "bn-chip",
   chipMono: "bn-chipMono",
@@ -21,7 +21,6 @@ export const s = {
   eyebrow: "bn-eyebrow",
   faint: "bn-faint",
   gradText: "bn-gradText",
-  heroGrid: "bn-heroGrid",
   iconBtn: "bn-iconBtn",
   iconWell: "bn-iconWell",
   lift: "bn-lift",
@@ -32,7 +31,6 @@ export const s = {
   pin: "bn-pin",
   placeholder: "bn-placeholder",
   projAll: "bn-projAll",
-  projGrid: "bn-projGrid",
   projNormal: "bn-projNormal",
   projWide: "bn-projWide",
   project: "bn-project",
@@ -47,4 +45,33 @@ export const s = {
   wip: "bn-wip",
   wipDot: "bn-wipDot",
   zoomHint: "bn-zoomHint",
+} as const;
+
+/** Page layout, side panel, liquid glass, homelab teaser and Pi sketch: src/styles/layout.css (bs-*). */
+export const bs = {
+  layout: "bs-layout",
+  column: "bs-column",
+  content: "bs-content",
+  navLink: "bs-navLink",
+  navLine: "bs-navLine",
+  bar: "bs-bar",
+  menu: "bs-menu",
+  barBtn: "bs-barBtn",
+  navChip: "bs-navChip",
+  heroGrid: "bs-heroGrid",
+  projGrid: "bs-projGrid",
+  labTile: "bs-labTile",
+  labBody: "bs-labBody",
+  labText: "bs-labText",
+  labLink: "bs-labLink",
+  pi: "bs-pi",
+  piStage: "bs-piStage",
+  piShadow: "bs-piShadow",
+  piBase: "bs-piBase",
+  piTop: "bs-piTop",
+  piBoard: "bs-piBoard",
+  piFaint: "bs-piFaint",
+  piFill: "bs-piFill",
+  piAccent: "bs-piAccent",
+  piLabel: "bs-piLabel",
 } as const;

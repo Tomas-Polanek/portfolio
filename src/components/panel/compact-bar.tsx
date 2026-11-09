@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import { CloseIcon, MenuIcon } from "@/components/icons";
 import { TpMark } from "@/components/tp-mark";
-import { s } from "../../bento/_components/styles";
-import { ThemeButton } from "../../bento/_components/theme-button";
-import { bs } from "./classes";
+import { bs, s } from "@/components/classes";
+import { ThemeButton } from "@/components/theme-button";
 import { type NavItem, useScrollspy } from "./use-scrollspy";
 
 type Props = {

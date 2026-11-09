@@ -1,6 +1,6 @@
 /* ============================================================
-   Bento + panel preview — builds on ../bento/bento.css (bn-*).
-   Classes prefixed bs-, see _components/classes.ts.
+   Page layout: side panel, compact bar, overview and project grids, liquid glass, homelab teaser.
+   Builds on tiles.css (bn-*). Classes prefixed bs-, mapped in src/components/classes.ts (bs).
    lg 1024 px = sticky full-height left column, xl 1280 px = 3-column bento.
    ============================================================ */
 .bs-layout {

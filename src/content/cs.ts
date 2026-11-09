@@ -80,6 +80,10 @@ export const cs = {
     allOnGithub: "Všechny projekty na GitHubu",
     screenshot: "náhled aplikace",
     teamInProgress: "Týmový školní projekt · ve vývoji",
+    openShot: "Zvětšit náhled",
+    closeShot: "Zavřít",
+    wip: "Work in progress",
+    teamProject: "Týmový školní projekt",
     items: {
       "Sport-slot": {
         title: "SportSlot",

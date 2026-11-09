@@ -3,9 +3,8 @@ import type { CSSProperties, ReactNode } from "react";
 import type { Dictionary } from "@/content/cs";
 import { ExternalIcon, ForkIcon, GitHubIcon, StarIcon } from "@/components/icons";
 import type { RepoInfo } from "@/lib/github";
-import type { getCopy } from "./copy";
+import { s } from "@/components/classes";
 import { CoverDialog } from "./cover-dialog";
-import { s } from "./styles";
 
 /** Cover gradient focal points, varied per tile so generated covers don't look cloned. */
 const focalPoints = [
@@ -51,7 +50,6 @@ export function ProjectTile({
   info,
   updated,
   t,
-  ui,
   layer,
 }: {
   index: number;
@@ -66,7 +64,6 @@ export function ProjectTile({
   info: RepoInfo | null;
   updated: string | null;
   t: Dictionary["projects"];
-  ui: ReturnType<typeof getCopy>;
   /** Optional surface rendered behind the content (e.g. a glass layer). */
   layer?: ReactNode;
 }) {
@@ -84,8 +81,8 @@ export function ProjectTile({
               alt={`${title} – ${t.screenshot}`}
               title={title}
               description={description}
-              openLabel={ui.openShot}
-              closeLabel={ui.closeShot}
+              openLabel={t.openShot}
+              closeLabel={t.closeShot}
             >
               <Image
                 src={image}
@@ -121,7 +118,7 @@ export function ProjectTile({
           {inProgress && (
             <span className={s.wip}>
               <span className={s.wipDot} aria-hidden="true" />
-              {ui.wip}
+              {t.wip}
             </span>
           )}
         </div>
@@ -129,7 +126,7 @@ export function ProjectTile({
         <div className={s.projectBody}>
           <h3 className={`font-semibold tracking-tight ${wide ? "text-xl sm:text-2xl" : "text-lg"}`}>{title}</h3>
 
-          {inProgress && <p className={`${s.faint} mt-1.5 text-xs`}>{ui.teamProject}</p>}
+          {inProgress && <p className={`${s.faint} mt-1.5 text-xs`}>{t.teamProject}</p>}
 
           {info?.forkOf && (
             <p className={`${s.faint} mt-1.5 inline-flex items-center gap-1.5 text-xs`}>

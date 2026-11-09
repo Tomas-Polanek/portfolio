@@ -67,6 +67,10 @@ export const en: Dictionary = {
     allOnGithub: "All projects on GitHub",
     screenshot: "app screenshot",
     teamInProgress: "Team school project · in progress",
+    openShot: "Enlarge screenshot",
+    closeShot: "Close",
+    wip: "Work in progress",
+    teamProject: "Team school project",
     items: {
       "Sport-slot": {
         title: "SportSlot",

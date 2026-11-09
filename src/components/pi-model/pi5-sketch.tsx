@@ -1,4 +1,4 @@
-import { bs } from "./classes";
+import { bs } from "@/components/classes";
 
 /*
  * Blueprint-style top view of a Raspberry Pi 5 (85 × 56 mm, 1 unit = 1 mm). Positions are

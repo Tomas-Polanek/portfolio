@@ -1,6 +1,6 @@
 "use client";
 
-import { bs } from "./classes";
+import { bs } from "@/components/classes";
 import { type NavItem, useScrollspy } from "./use-scrollspy";
 
 /** Vertical nav of the desktop column: line + uppercase label; the active line grows into the brand gradient. */

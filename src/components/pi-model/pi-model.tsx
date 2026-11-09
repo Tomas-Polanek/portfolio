@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Pi5Sketch } from "../pi5-sketch";
+import { Pi5Sketch } from "./pi5-sketch";
 import type { PiScene } from "./scene";
 
 /**
