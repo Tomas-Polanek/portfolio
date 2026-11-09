@@ -57,6 +57,16 @@ export const en: Dictionary = {
       "Git & GitHub",
     ],
   },
+  overview: {
+    studying: "Studying",
+    basedIn: "Based in",
+    homelabTeaser: "Homelab",
+    explodeBuild: "Explode the Raspberry Pi build",
+    servicesCount: (n: number) => `${n} ${n === 1 ? "service" : "services"} in Docker`,
+    projectsCount: (n: number) => `${n} ${n === 1 ? "project" : "projects"}`,
+    totalStars: "stars",
+    lastPush: "Last push",
+  },
   projects: {
     title: "Projects",
     subtitle: "Selected projects from my GitHub. Stats update automatically.",

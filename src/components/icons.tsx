@@ -181,3 +181,29 @@ const homelabPaths: Record<HomelabIcon, ReactNode> = {
 export function HomelabGlyph({ name, ...props }: IconProps & { name: HomelabIcon }) {
   return <Stroke {...props}>{homelabPaths[name]}</Stroke>;
 }
+
+/** "Go to" arrow pointing up-right, used in the corner of link tiles. */
+export function ArrowIcon(props: IconProps) {
+  return (
+    <Stroke width={16} height={16} strokeWidth={2} {...props}>
+      <path d="M7 17 17 7M8 7h9v9" />
+    </Stroke>
+  );
+}
+
+export function CapIcon(props: IconProps) {
+  return (
+    <Stroke {...props}>
+      <path d="m2 9 10-5 10 5-10 5L2 9Z" />
+      <path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5M22 9v6" />
+    </Stroke>
+  );
+}
+
+export function CheckIcon(props: IconProps) {
+  return (
+    <Stroke width={16} height={16} strokeWidth={2.2} {...props}>
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
+    </Stroke>
+  );
+}

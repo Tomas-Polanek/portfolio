@@ -70,6 +70,18 @@ export const cs = {
       "Git & GitHub",
     ],
   },
+  overview: {
+    studying: "Studuji",
+    basedIn: "Žiju v",
+    homelabTeaser: "Homelab",
+    explodeBuild: "Rozložit sestavu Raspberry Pi",
+    servicesCount: (n: number) =>
+      `${n} ${n === 1 ? "služba" : n >= 2 && n <= 4 ? "služby" : "služeb"} v Dockeru`,
+    projectsCount: (n: number) =>
+      `${n} ${n === 1 ? "projekt" : n >= 2 && n <= 4 ? "projekty" : "projektů"}`,
+    totalStars: "hvězdiček",
+    lastPush: "Poslední push",
+  },
   projects: {
     title: "Projekty",
     subtitle: "Vybrané projekty z mého GitHubu. Statistiky se aktualizují automaticky.",

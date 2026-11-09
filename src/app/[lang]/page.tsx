@@ -2,10 +2,10 @@ import { bs, s } from "@/components/classes";
 import { CompactBar } from "@/components/panel/compact-bar";
 import { SitePanel } from "@/components/panel/site-panel";
 import { RevealObserver } from "@/components/reveal-observer";
-import { About } from "@/components/sections/about";
 import { Contact } from "@/components/sections/contact";
 import { Education } from "@/components/sections/education";
 import { Homelab } from "@/components/sections/homelab";
+import { Overview } from "@/components/sections/overview";
 import { Projects } from "@/components/sections/projects";
 import { SiteFooter } from "@/components/site-footer";
 import { site } from "@/content/site";
@@ -46,7 +46,7 @@ export default async function Home() {
 
         <div className={bs.content}>
           <main>
-            <About t={t.about} />
+            <Overview t={t} locale={locale} />
             <Projects t={t.projects} locale={locale} />
             <Homelab t={t.homelab} />
             <Education t={t.education} />
