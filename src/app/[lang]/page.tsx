@@ -1,3 +1,4 @@
+import { Backdrop } from "@/components/backdrop";
 import { bs, s } from "@/components/classes";
 import { CompactBar } from "@/components/panel/compact-bar";
 import { SitePanel } from "@/components/panel/site-panel";
@@ -24,8 +25,7 @@ export default async function Home() {
 
   return (
     <div className={s.root} id="top">
-      {/* Colour fields the glass refracts */}
-      <div className="bs-backdrop" aria-hidden="true" />
+      <Backdrop />
       <div className={bs.layout}>
         <SitePanel t={t} locale={locale} nav={nav} endId={END_ID} />
         <CompactBar

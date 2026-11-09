@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Backdrop } from "@/components/backdrop";
 import { s } from "@/components/classes";
 import { GlassLayer } from "@/components/glass-layer";
 import { getDictionary, getLocale } from "@/lib/i18n";
@@ -12,7 +13,7 @@ export default async function NotFound() {
   const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
   return (
     <div className={s.root}>
-      <div className="bs-backdrop" aria-hidden="true" />
+      <Backdrop />
       <main className="mx-auto flex min-h-screen w-[calc(100%-2rem)] max-w-[700px] items-center">
         <div className={`${s.tile} w-full px-6 py-16 text-center sm:px-10`}>
           <GlassLayer />

@@ -482,18 +482,86 @@
 }
 
 /* ============================================================
-   Glass backdrop: colour fields that GlassLayer (src/components/glass-layer.tsx) blurs
-   behind every tile. Tile tint and hairline: --glass-tint / --glass-line in tiles.css.
+   Glass backdrop (src/components/backdrop.tsx): colour blobs that GlassLayer
+   (src/components/glass-layer.tsx) blurs behind every tile. Tile tint and hairline:
+   --glass-tint / --glass-line in tiles.css.
    ============================================================ */
 .bs-backdrop {
   position: fixed;
   inset: 0;
   z-index: -1;
+  overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(38% 34% at 22% 12%, rgb(124 58 237 / 0.42), transparent 70%),
-    radial-gradient(42% 40% at 88% 42%, rgb(37 99 235 / 0.38), transparent 70%),
-    radial-gradient(36% 32% at 40% 92%, rgb(192 38 211 / 0.3), transparent 70%);
+}
+
+/* Each blob is an ellipse sized in vw/vh around its resting centre; the drift moves and scales it
+   (transform only: composited, no repaint of the glass above beyond its usual blur). */
+.bs-blob {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, var(--blob), transparent 70%);
+  will-change: transform;
+  animation: var(--drift) ease-in-out infinite alternate;
+}
+
+.bs-blob:nth-child(1) {
+  left: -16vw;
+  top: -22vh;
+  width: 76vw;
+  height: 68vh;
+  --blob: rgb(124 58 237 / 0.42);
+  --drift: bs-drift-a 28s;
+}
+
+.bs-blob:nth-child(2) {
+  left: 46vw;
+  top: 2vh;
+  width: 84vw;
+  height: 80vh;
+  --blob: rgb(37 99 235 / 0.38);
+  --drift: bs-drift-b 34s;
+}
+
+.bs-blob:nth-child(3) {
+  left: 4vw;
+  top: 60vh;
+  width: 72vw;
+  height: 64vh;
+  --blob: rgb(192 38 211 / 0.3);
+  --drift: bs-drift-c 40s;
+}
+
+@keyframes bs-drift-a {
+  50% {
+    transform: translate(14vw, 10vh) scale(1.12);
+  }
+  100% {
+    transform: translate(4vw, 24vh) scale(0.94);
+  }
+}
+
+@keyframes bs-drift-b {
+  50% {
+    transform: translate(-18vw, 14vh) scale(0.9);
+  }
+  100% {
+    transform: translate(-8vw, -8vh) scale(1.1);
+  }
+}
+
+@keyframes bs-drift-c {
+  50% {
+    transform: translate(20vw, -16vh) scale(1.1);
+  }
+  100% {
+    transform: translate(30vw, -4vh) scale(0.95);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-blob {
+    animation: none;
+  }
 }
 
 /* A faint grid behind the colour fields. */
@@ -508,11 +576,16 @@
   mask-image: radial-gradient(ellipse at center, #000 30%, transparent 85%);
 }
 
-[data-theme="light"] .bs-backdrop {
-  background:
-    radial-gradient(38% 34% at 22% 12%, rgb(160 80 255 / 0.3), transparent 70%),
-    radial-gradient(42% 40% at 88% 42%, rgb(80 180 255 / 0.32), transparent 70%),
-    radial-gradient(36% 32% at 40% 92%, rgb(232 121 249 / 0.24), transparent 70%);
+[data-theme="light"] .bs-blob:nth-child(1) {
+  --blob: rgb(160 80 255 / 0.3);
+}
+
+[data-theme="light"] .bs-blob:nth-child(2) {
+  --blob: rgb(80 180 255 / 0.32);
+}
+
+[data-theme="light"] .bs-blob:nth-child(3) {
+  --blob: rgb(232 121 249 / 0.24);
 }
 
 [data-theme="light"] .bs-backdrop::after {
