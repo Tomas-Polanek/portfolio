@@ -302,7 +302,7 @@ export default async function BentoSidebarPreview() {
               <div
                 className={`${s.tile} ${s.lift} ${s.aLoc} relative flex min-h-60 flex-col overflow-hidden p-5 sm:p-6`}
               >
-                <PragueMap pinLabel="Praha 4" />
+                <PragueMap />
                 <p className={`${s.eyebrow} relative`}>{c.basedIn}</p>
                 <p className="relative mt-auto text-4xl font-semibold tracking-tight">
                   {city}

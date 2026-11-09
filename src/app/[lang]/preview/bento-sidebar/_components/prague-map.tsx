@@ -1,9 +1,8 @@
-import { s } from "../../bento/_components/styles";
 import { bs } from "./classes";
 import { pragueOutline as outline } from "./prague-outline";
 
-/** Prague's city boundary as a thin gradient line with a pulsing pin on Praha 4. */
-export function PragueMap({ pinLabel }: { pinLabel: string }) {
+/** Prague's city boundary as a thin gradient line with the Vltava flowing through it. */
+export function PragueMap() {
   return (
     <div
       className={bs.map}
@@ -18,17 +17,8 @@ export function PragueMap({ pinLabel }: { pinLabel: string }) {
           </linearGradient>
         </defs>
         <path d={outline.d} />
+        <path d={outline.river} className={bs.mapRiver} />
       </svg>
-      <span
-        className={bs.mapPin}
-        style={{
-          left: `${(outline.pin.x / outline.width) * 100}%`,
-          top: `${(outline.pin.y / outline.height) * 100}%`,
-        }}
-      >
-        <span className={`${s.pin} block`} />
-        <span className={bs.mapPinLabel}>{pinLabel}</span>
-      </span>
     </div>
   );
 }
