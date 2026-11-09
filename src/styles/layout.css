@@ -307,8 +307,8 @@
 
 /*
  * ---------- Projects: 1 → 2 → 3 columns ----------
- * Seven projects + the "All on GitHub" tile: even at 2 columns; at 3 the GitHub tile takes the two
- * free thirds of the last row.
+ * The "All on GitHub" tile spans whatever the last row leaves free (--span-sm / --span-xl, set
+ * from the project count in projects.tsx), so the grid ends flush for any number of projects.
  */
 .bs-projGrid {
   display: grid;
@@ -321,6 +321,9 @@
     gap: 1.25rem;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+  .bs-projGrid > .bn-projAll {
+    grid-column: span var(--span-sm, 1);
+  }
 }
 
 @media (min-width: 1280px) {
@@ -331,7 +334,7 @@
     grid-column: span 2;
   }
   .bs-projGrid > .bn-projAll {
-    grid-column: span 4;
+    grid-column: span var(--span-xl, 2);
   }
 }
 

@@ -1,5 +1,7 @@
-/** Glyph in the top-left corner of a project card (drawn in src/components/icons.tsx). */
-export type ProjectIcon = "pdf" | "calendar" | "fridge" | "moon" | "map" | "qr" | "game";
+/** Glyphs for the top-left corner of a project card (drawn in src/components/icons.tsx). */
+export const projectIcons = ["pdf", "calendar", "fridge", "moon", "map", "qr", "game", "code"] as const;
+
+export type ProjectIcon = (typeof projectIcons)[number];
 
 type ProjectEntry = {
   repo: string;
@@ -12,9 +14,10 @@ type ProjectEntry = {
 };
 
 /**
- * Approved GitHub repositories, in display order.
- * Stars, language, last update, fork origin and live URL come from the GitHub API;
- * titles and descriptions per language live in cs.ts / en.ts under `projects.items`.
+ * Curated GitHub repositories, in display order (shown before repositories opted in with the
+ * `portfolio` topic, see src/lib/projects.ts). Stars, language, last update, fork origin and live
+ * URL come from the GitHub API; titles and descriptions per language live in cs.ts / en.ts under
+ * `projects.items`.
  */
 const list = [
   { repo: "ask-your-pdfs", icon: "pdf", tags: ["Python", "RAG", "ChromaDB", "Gemini", "Streamlit"] },

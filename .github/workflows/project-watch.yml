@@ -1,0 +1,41 @@
+# Daily check of Tomáš's GitHub projects: Claude Code proposes site updates as one pull request
+# (.claude/skills/project-watch/SKILL.md). Runs on his Claude subscription via the
+# CLAUDE_CODE_OAUTH_TOKEN secret (`claude setup-token`). Run it by hand from the Actions tab too.
+name: Project watch
+
+on:
+  schedule:
+    - cron: "0 5 * * *" # 06:00 / 07:00 in Prague
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: project-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: anthropics/claude-code-action@v1
+        env:
+          # gh inside Claude's shell: list repos, open the PR.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # The workflow token instead of the Claude GitHub App, so no app install is needed.
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: "/project-watch"
+          claude_args: "--max-turns 60"

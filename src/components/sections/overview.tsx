@@ -4,7 +4,7 @@ import { GlassLayer } from "@/components/glass-layer";
 import { ArrowIcon, CapIcon, GitHubIcon, HomelabGlyph, StarIcon } from "@/components/icons";
 import { PiModel } from "@/components/pi-model/pi-model";
 import type { Dictionary } from "@/content/cs";
-import { projects } from "@/content/projects";
+import { getProjects } from "@/lib/projects";
 import { site } from "@/content/site";
 import { formatMonthYear } from "@/lib/dates";
 import { getRepoInfo } from "@/lib/github";
@@ -16,6 +16,7 @@ import type { Locale } from "@/lib/locales";
  * GitHub summary.
  */
 export async function Overview({ t, locale }: { t: Dictionary; locale: Locale }) {
+  const projects = await getProjects(locale, t.projects);
   const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo, p.owner)));
   const c = t.overview;
   const study = t.education.items[0];

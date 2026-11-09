@@ -1,33 +1,22 @@
 import type { ReactNode } from "react";
 import type { Dictionary } from "@/content/cs";
-import type { ProjectIcon } from "@/content/projects";
 import { ExternalIcon, ForkIcon, GitHubIcon, ProjectGlyph, StarIcon } from "@/components/icons";
 import type { RepoInfo } from "@/lib/github";
+import type { Project } from "@/lib/projects";
 import { s } from "@/components/classes";
 import { ScreenshotDialog } from "./screenshot-dialog";
 
 export function ProjectTile({
-  title,
-  description,
-  icon,
-  tags,
+  project: { title, description, icon, tags, image, inProgress, team },
   codeUrl,
-  image,
-  inProgress,
   info,
   updated,
   t,
   layer,
 }: {
-  title: string;
-  description: string;
-  icon: ProjectIcon;
-  tags: readonly string[];
+  /** Screenshot opened by the "Preview" button (no button without one), badges and texts. */
+  project: Project;
   codeUrl: string;
-  /** Screenshot opened by the "Preview" button; no button without one. */
-  image: string | undefined;
-  /** Team project still in development: "Work in progress" badge + "team school project" line. */
-  inProgress: boolean;
   info: RepoInfo | null;
   updated: string | null;
   t: Dictionary["projects"];
@@ -60,7 +49,7 @@ export function ProjectTile({
 
         <h3 className="mt-5 text-lg font-semibold tracking-tight">{title}</h3>
 
-        {inProgress && <p className={`${s.faint} mt-1.5 text-xs`}>{t.teamProject}</p>}
+        {team && <p className={`${s.faint} mt-1.5 text-xs`}>{t.teamProject}</p>}
 
         {info?.forkOf && (
           <p className={`${s.faint} mt-1.5 inline-flex items-center gap-1.5 text-xs`}>

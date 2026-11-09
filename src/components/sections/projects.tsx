@@ -1,36 +1,37 @@
+import type { CSSProperties } from "react";
 import { bs, s } from "@/components/classes";
 import { GlassLayer } from "@/components/glass-layer";
 import { ArrowIcon, GitHubIcon } from "@/components/icons";
 import { ProjectTile } from "@/components/projects/project-tile";
 import { SectionHeader } from "@/components/section-header";
 import type { Dictionary } from "@/content/cs";
-import { projectImages, projects } from "@/content/projects";
+import { getProjects } from "@/lib/projects";
 import { site } from "@/content/site";
 import { formatMonthYear } from "@/lib/dates";
 import { getRepoInfo } from "@/lib/github";
 import type { Locale } from "@/lib/locales";
 
 export async function Projects({ t, nav, locale }: { t: Dictionary["projects"]; nav: string; locale: Locale }) {
+  const projects = await getProjects(locale, t);
   const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo, p.owner)));
   const githubHandle = site.links.github.replace("https://github.com/", "@");
+  // The "All on GitHub" tile fills what the last row leaves: 2 columns from sm, 3 (of 6) from xl.
+  const fill = {
+    "--span-sm": projects.length % 2 ? 1 : 2,
+    "--span-xl": [6, 4, 2][projects.length % 3],
+  } as CSSProperties;
 
   return (
     <section id="projects" aria-labelledby="projects-title" className="pt-20 sm:pt-28">
       <SectionHeader eyebrow={`02 · ${nav}`} title={t.title} intro={t.subtitle} id="projects-title" />
       <ul className={bs.projGrid}>
-        {projects.map(({ repo, owner, icon, tags, teamInProgress }, i) => {
+        {projects.map((project, i) => {
           const info = infos[i];
-          const { title, description } = t.items[repo];
           return (
             <ProjectTile
-              key={repo}
-              title={title}
-              description={description}
-              icon={icon}
-              tags={tags}
-              codeUrl={info?.url ?? `https://github.com/${owner ?? site.githubUser}/${repo}`}
-              image={projectImages[repo]}
-              inProgress={teamInProgress === true}
+              key={`${project.owner}/${project.repo}`}
+              project={project}
+              codeUrl={info?.url ?? `https://github.com/${project.owner}/${project.repo}`}
               info={info}
               updated={info ? formatMonthYear(locale, info.pushedAt) : null}
               t={t}
@@ -38,7 +39,7 @@ export async function Projects({ t, nav, locale }: { t: Dictionary["projects"]; 
             />
           );
         })}
-        <li className={`${s.projAll} flex`}>
+        <li className={`${s.projAll} flex`} style={fill}>
           <a
             href={site.links.github}
             target="_blank"

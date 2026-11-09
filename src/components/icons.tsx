@@ -223,6 +223,12 @@ const projectPaths: Record<ProjectIcon, ReactNode> = {
       <path d="M7 10v4M5 12h4M15.5 11h.01M18 13h.01" />
     </>
   ),
+  code: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="m9.5 10-2.5 2 2.5 2M14.5 10l2.5 2-2.5 2" />
+    </>
+  ),
 };
 
 export function ProjectGlyph({ name, ...props }: IconProps & { name: ProjectIcon }) {
