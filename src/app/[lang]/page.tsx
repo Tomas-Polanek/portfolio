@@ -48,7 +48,7 @@ export default async function Home() {
           <main>
             <Overview t={t} locale={locale} />
             <Projects t={t.projects} nav={t.nav.projects} locale={locale} />
-            <Homelab t={t.homelab} />
+            <Homelab t={t.homelab} nav={t.nav.homelab} servicesCount={t.overview.servicesCount} />
             <Education t={t.education} />
             <Contact t={t.contact} />
           </main>
