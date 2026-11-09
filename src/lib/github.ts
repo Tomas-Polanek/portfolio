@@ -57,13 +57,14 @@ export async function getRepoInfo(repo: string, owner: string = site.githubUser)
   }
 }
 
-export type CommitInfo = { hash: string; subject: string };
+export type CommitInfo = { sha: string; hash: string; subject: string; parents: string[] };
 
-type GitHubCommit = { sha: string; commit: { message: string }; parents: unknown[] };
+type GitHubCommit = { sha: string; commit: { message: string }; parents: { sha: string }[] };
 
 /**
- * The latest `count` non-merge commits on the default branch of `repo`, oldest first (short hash
- * + first line of the message), cached for a day like getRepoInfo. Null when GitHub is unreachable.
+ * The latest `count` commits on the default branch of `repo`, newest first like `git log`, merges
+ * included (full and short hash, first line of the message, parent hashes for the graph). Cached
+ * for a day like getRepoInfo. Null when GitHub is unreachable.
  */
 export async function getRecentCommits(
   repo: string,
@@ -81,8 +82,7 @@ export async function getRecentCommits(
   if (process.env.GITHUB_TOKEN) headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
 
   try {
-    // Extra headroom for the merge commits filtered out below.
-    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=${count + 10}`, {
+    const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=${count}`, {
       headers,
     });
     if (!res.ok) {
@@ -90,11 +90,12 @@ export async function getRecentCommits(
       return null;
     }
     const data = (await res.json()) as GitHubCommit[];
-    return data
-      .filter((c) => c.parents.length < 2)
-      .slice(0, count)
-      .map((c) => ({ hash: c.sha.slice(0, 7), subject: c.commit.message.split("\n", 1)[0] }))
-      .reverse();
+    return data.map((c) => ({
+      sha: c.sha,
+      hash: c.sha.slice(0, 7),
+      subject: c.commit.message.split("\n", 1)[0],
+      parents: c.parents.map((p) => p.sha),
+    }));
   } catch (error) {
     console.warn(`GitHub API unreachable for ${repo} commits:`, error);
     return null;

@@ -599,7 +599,10 @@
   height: 100%;
 }
 
-/* Git log: one line through the dots at x = 5px; rows share the height. */
+/*
+ * Git log with `--graph` lanes: each row's SVG (GitSide) is stretched to the row height and draws
+ * the lane segments; the dot sits on the commit's lane. Lane colours cycle through four.
+ */
 .bs-gitHead {
   margin-bottom: 1rem;
   font-family: var(--font-geist-mono);
@@ -609,6 +612,10 @@
 }
 
 .bs-git {
+  --lane-0: var(--brand-b);
+  --lane-1: var(--brand-a);
+  --lane-2: var(--role-text-b);
+  --lane-3: #e879f9;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -621,7 +628,7 @@
   align-items: center;
   gap: 0.5rem;
   min-height: 0;
-  padding-left: 22px;
+  padding-left: calc(var(--graph-w) + 12px);
   font-family: var(--font-geist-mono);
   font-size: 0.68rem;
   line-height: 1.2;
@@ -630,36 +637,50 @@
   animation-timeline: scroll(root block);
 }
 
-/* The line through every row, starting and ending at the first and last dot. */
-.bs-commit::before {
-  content: "";
+.bs-commitLanes {
   position: absolute;
   top: 0;
-  bottom: 0;
-  left: 4px;
-  width: 2px;
-  border-radius: 1px;
-  background: linear-gradient(180deg, var(--brand-a), var(--brand-b));
-  opacity: 0.55;
+  left: 0;
+  height: 100%;
+  overflow: visible;
 }
 
-.bs-commit:first-child::before {
-  top: 50%;
+.bs-commitLanes line {
+  stroke-width: 2px;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.6;
 }
 
-.bs-commit:last-child::before {
-  bottom: 50%;
+.bs-commitLanes [data-lane="0"],
+.bs-commitDot[data-lane="0"] {
+  --lane: var(--lane-0);
+}
+.bs-commitLanes [data-lane="1"],
+.bs-commitDot[data-lane="1"] {
+  --lane: var(--lane-1);
+}
+.bs-commitLanes [data-lane="2"],
+.bs-commitDot[data-lane="2"] {
+  --lane: var(--lane-2);
+}
+.bs-commitLanes [data-lane="3"],
+.bs-commitDot[data-lane="3"] {
+  --lane: var(--lane-3);
+}
+
+.bs-commitLanes line {
+  stroke: var(--lane);
 }
 
 .bs-commitDot {
   position: absolute;
   top: 50%;
-  left: 5px;
   width: 10px;
   height: 10px;
   translate: -50% -50%;
   border-radius: 999px;
-  border: 2px solid var(--brand-b);
+  border: 2px solid var(--lane);
   background: var(--page);
 }
 
