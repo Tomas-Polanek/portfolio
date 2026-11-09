@@ -1,40 +1,63 @@
-import type { ComponentType, SVGProps } from "react";
+import { s } from "@/components/classes";
+import { GlassLayer } from "@/components/glass-layer";
+import { GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 import type { Dictionary } from "@/content/cs";
 import { site } from "@/content/site";
-import { GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon } from "../icons";
-import { Section } from "../section";
 
-export function Contact({ t }: { t: Dictionary["contact"] }) {
-  const cards: {
-    href: string;
-    title: string;
-    sub: string;
-    Icon: ComponentType<SVGProps<SVGSVGElement>>;
-    external: boolean;
-  }[] = [
-    { href: `mailto:${site.email}`, title: t.email.title, sub: site.email, Icon: MailIcon, external: false },
-    { href: site.links.linkedin, ...t.linkedin, Icon: LinkedInIcon, external: true },
-    { href: site.links.github, ...t.github, Icon: GitHubIcon, external: true },
-    { href: site.links.instagram, ...t.instagram, Icon: InstagramIcon, external: true },
+export function Contact({ t, nav }: { t: Dictionary["contact"]; nav: string }) {
+  const socials = [
+    { href: site.links.linkedin, ...t.linkedin, Icon: LinkedInIcon },
+    { href: site.links.github, ...t.github, Icon: GitHubIcon },
+    { href: site.links.instagram, ...t.instagram, Icon: InstagramIcon },
   ];
 
   return (
-    <Section id="contact" title={t.title} subtitle={t.subtitle}>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {cards.map(({ href, title, sub, Icon, external }) => (
-          <a
-            key={href}
-            href={href}
-            data-reveal
-            {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-            className="glass gradient-border lift flex flex-col gap-1 rounded-[18px] p-6"
-          >
-            <Icon className="mb-2 text-accent-to" width={22} height={22} />
-            <span className="font-semibold">{title}</span>
-            <span className="break-all text-sm text-muted">{sub}</span>
-          </a>
-        ))}
+    <section id="contact" aria-labelledby="contact-title" className="flex flex-col gap-4 sm:gap-5 xl:col-span-7">
+      <div className={`${s.tile} relative flex flex-1 flex-col overflow-hidden p-6 sm:p-9`}>
+        <GlassLayer />
+        <span className={s.orb} aria-hidden="true" />
+        <p className={`${s.eyebrow} relative`}>
+          <span className={s.dot} /> 05 · {nav}
+        </p>
+        <h2
+          id="contact-title"
+          className="relative mt-3 text-3xl font-semibold tracking-tight text-balance sm:text-5xl"
+        >
+          {t.title}
+        </h2>
+        <p className={`${s.muted} relative mt-3 text-base sm:text-lg`}>{t.subtitle}</p>
+        <div className="relative mt-auto pt-8">
+          <p className={s.eyebrow}>{t.email.title}</p>
+          <div className="mt-2.5">
+            <a href={`mailto:${site.email}`} className={`${s.btnSolid} max-w-full`}>
+              <MailIcon width={17} height={17} className="shrink-0" />
+              <span className="wrap-anywhere">{site.email}</span>
+            </a>
+          </div>
+        </div>
       </div>
-    </Section>
+      <ul className="grid gap-4 sm:grid-cols-3 sm:gap-5">
+        {socials.map(({ href, title, sub, Icon }) => (
+          <li key={title} className="flex">
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${s.tile} ${s.lift} group flex w-full items-center gap-3.5 p-4 sm:flex-col sm:items-start sm:p-5`}
+            >
+              {/* Small repeated tiles: cheap frosted glass instead of refraction. */}
+              <GlassLayer liquid={false} />
+              <span className={s.iconWell}>
+                <Icon width={18} height={18} />
+              </span>
+              <span className="min-w-0 flex-1 sm:pt-3">
+                <span className="block font-semibold tracking-tight">{title}</span>
+                <span className={`${s.muted} block text-sm`}>{sub}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

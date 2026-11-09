@@ -1,7 +1,6 @@
 import { bs, s } from "@/components/classes";
 import { CompactBar } from "@/components/panel/compact-bar";
 import { SitePanel } from "@/components/panel/site-panel";
-import { RevealObserver } from "@/components/reveal-observer";
 import { Contact } from "@/components/sections/contact";
 import { Education } from "@/components/sections/education";
 import { Homelab } from "@/components/sections/homelab";
@@ -49,14 +48,14 @@ export default async function Home() {
             <Overview t={t} locale={locale} />
             <Projects t={t.projects} nav={t.nav.projects} locale={locale} />
             <Homelab t={t.homelab} nav={t.nav.homelab} servicesCount={t.overview.servicesCount} />
-            <Education t={t.education} />
-            <Contact t={t.contact} />
+            <div className="grid gap-4 pt-20 sm:gap-5 sm:pt-28 xl:grid-cols-12">
+              <Education t={t.education} />
+              <Contact t={t.contact} nav={t.nav.contact} />
+            </div>
           </main>
           <SiteFooter t={t.footer} id={END_ID} />
         </div>
       </div>
-
-      <RevealObserver />
     </div>
   );
 }
