@@ -18,7 +18,7 @@ import { ProjectTile } from "../bento/_components/project-tile";
 import { s } from "../bento/_components/styles";
 import { bs, sectionsLabel, styleName } from "./_components/classes";
 import { CompactBar } from "./_components/compact-bar";
-import { Pi5Sketch } from "./_components/pi5-sketch";
+import { PiModel } from "./_components/pi-model/pi-model";
 import { PragueMap } from "./_components/prague-map";
 import { SectionNav } from "./_components/section-nav";
 import { ThemeButton } from "../bento/_components/theme-button";
@@ -364,9 +364,8 @@ export default async function BentoSidebarPreview() {
                 </ul>
               </section>
 
-              {/* Homelab teaser */}
-              <a
-                href="#homelab"
+              {/* Homelab teaser: the model is its own button, the text is a stretched link. */}
+              <div
                 className={`${s.tile} ${s.lift} ${s.aLab} ${bs.labTile} group relative p-5 sm:p-6`}
               >
                 <span
@@ -375,8 +374,14 @@ export default async function BentoSidebarPreview() {
                   <ArrowIcon />
                 </span>
                 <div className={bs.labBody}>
-                  <Pi5Sketch />
-                  <div className={bs.labText}>
+                  <PiModel
+                    label={
+                      locale === "cs"
+                        ? "Rozložit sestavu Raspberry Pi"
+                        : "Explode the Raspberry Pi build"
+                    }
+                  />
+                  <a href="#homelab" className={`${bs.labText} ${bs.labLink}`}>
                     <p className={`${s.eyebrow} mt-4`}>{c.homelabTeaser}</p>
                     <p className="mt-1.5 text-xl font-semibold tracking-tight">
                       {hardware}
@@ -407,9 +412,9 @@ export default async function BentoSidebarPreview() {
                         {c.servicesCount(t.homelab.services.length)}
                       </p>
                     </div>
-                  </div>
+                  </a>
                 </div>
-              </a>
+              </div>
 
               {/* GitHub */}
               <a

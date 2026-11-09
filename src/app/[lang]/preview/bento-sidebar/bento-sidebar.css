@@ -446,6 +446,105 @@
   letter-spacing: 0.02em;
 }
 
+/* ---------- Homelab teaser: interactive wireframe model (three.js, lazy) ---------- */
+.bs-labLink {
+  border-radius: inherit;
+}
+
+.bs-labLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.bs-labLink:focus-visible {
+  outline: none;
+}
+
+.bs-labLink:focus-visible::after {
+  outline: 2px solid var(--brand-b);
+  outline-offset: 4px;
+}
+
+.bs-pi3d {
+  position: relative;
+  z-index: 1;
+  flex: 1.4 1 0;
+  min-height: 10.5rem;
+  max-height: 20rem;
+  margin-top: -0.25rem;
+}
+
+@container (min-width: 420px) {
+  .bs-labBody > .bs-pi3d {
+    align-self: stretch;
+    min-height: 12rem;
+    max-height: none;
+  }
+}
+
+.bs-pi3d > .bs-pi {
+  position: absolute;
+  inset: 0;
+  height: auto;
+  margin: 0;
+  transition: opacity 0.5s ease;
+}
+
+.bs-pi3dCanvas,
+.bs-pi3dLabels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.bs-pi3dCanvas {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.bs-pi3dCanvas > canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.bs-pi3d[data-ready] > .bs-pi {
+  opacity: 0;
+}
+
+.bs-pi3d[data-ready] > .bs-pi3dCanvas {
+  opacity: 1;
+}
+
+.bs-pi3dLabels {
+  overflow: hidden;
+}
+
+.bs-pi3dLabel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 0.3rem;
+  background: color-mix(in srgb, var(--tile) 82%, transparent);
+  color: var(--muted);
+  font-family: var(--font-geist-mono);
+  font-size: 0.5625rem;
+  line-height: 1.45;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.bs-pi3dBtn {
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .bn-lift:hover .bs-piStage,
   .bn-lift:focus-visible .bs-piStage {

@@ -14,6 +14,7 @@ export const bs = {
   labTile: "bs-labTile",
   labBody: "bs-labBody",
   labText: "bs-labText",
+  labLink: "bs-labLink",
   map: "bs-map",
   mapPin: "bs-mapPin",
   mapPinLabel: "bs-mapPinLabel",
