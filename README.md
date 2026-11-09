@@ -1,8 +1,8 @@
 # Tomáš Polánek – Portfolio
 
 Personal portfolio built with Next.js 16 (App Router, Cache Components), React 19, TypeScript and Tailwind CSS v4.
-Czech and English versions, a bento layout with a sticky glass side panel (dark by default, light variant),
-liquid glass, a wireframe 3D model of the homelab build and project cards fed by the GitHub API.
+Czech and English versions, a bento layout with a sticky frosted-glass side panel (dark by default, light variant),
+a wireframe 3D model of the homelab build and project cards fed by the GitHub API.
 
 ## Development
 
@@ -31,5 +31,5 @@ Adding a project: add `{ repo, tags }` to `projects.ts` (plus `owner` for repos 
 - **GitHub data** – `src/lib/github.ts` fetches stars, language, last push, fork origin and homepage URL per repo, cached for a day (`cacheLife("days")`). A homepage URL set on the GitHub repo shows up as a "Live" button. Set `GITHUB_TOKEN` to avoid the 60 requests/hour anonymous limit.
 - **Theme** – an inline script in `src/app/[lang]/layout.tsx` applies the saved theme before first paint; the toggle stores it in `localStorage`.
 - **Layout and styles** – `src/app/[lang]/page.tsx` composes the side panel (`src/components/panel`) and the sections (`src/components/sections`). Styles are plain CSS with prefixed class names (`bn-*` in `src/styles/tiles.css`, `bs-*` in `src/styles/layout.css`), mapped in `src/components/classes.ts`; CSS modules are not used.
-- **Liquid glass** – every tile renders `GlassLayer` (`src/components/glass-layer.tsx`) as CSS frosted glass. Surfaces that do not move while scrolling (the sticky side panel, the 404 card) opt into real refraction with `liquid`, using [liquid-glass-react](https://github.com/rdev/liquid-glass-react): its SVG displacement filter is recomputed on every frame the backdrop moves under it, which made scrolling over refracting tiles about 4× slower. The refraction only shows in Chromium, so it is enabled for a fine pointer in browsers that support `prefers-reduced-transparency`; touch devices, Safari and Firefox get frosted glass.
+- **Glass** – every tile and the side panel render `GlassLayer` (`src/components/glass-layer.tsx`): a CSS `backdrop-filter` blur over the `.bs-backdrop` colour fields. SVG refraction (liquid-glass-react) was dropped: its displacement filter is recomputed on every frame the backdrop moves under a tile, which made scrolling about 4× slower.
 - **3D model** – `src/components/pi-model` draws the Raspberry Pi 5 + Active Cooler + Geekworm X1001 + Samsung 990 PRO build as a wireframe with [three.js](https://threejs.org). It is loaded lazily, renders only while visible, explodes into layers on hover, tap or Enter/Space, and falls back to an SVG sketch without WebGL.

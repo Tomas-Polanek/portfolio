@@ -1,5 +1,5 @@
 /* ============================================================
-   Page layout: side panel, compact bar, overview and project grids, liquid glass, homelab teaser.
+   Page layout: side panel, compact bar, overview and project grids, glass layer, homelab teaser.
    Builds on tiles.css (bn-*). Classes prefixed bs-, mapped in src/components/classes.ts (bs).
    lg 1024 px = sticky full-height left column, xl 1280 px = 3-column bento.
    ============================================================ */
@@ -499,7 +499,7 @@
 }
 
 /* ============================================================
-   Liquid glass backdrop: colour fields that GlassLayer (src/components/glass-layer.tsx) refracts
+   Glass backdrop: colour fields that GlassLayer (src/components/glass-layer.tsx) blurs
    behind every tile. Tile tint and hairline: --glass-tint / --glass-line in tiles.css.
    ============================================================ */
 .bs-backdrop {
@@ -513,7 +513,7 @@
     radial-gradient(36% 32% at 40% 92%, rgb(192 38 211 / 0.3), transparent 70%);
 }
 
-/* A faint grid gives the refraction sharp lines to bend. */
+/* A faint grid behind the colour fields. */
 .bs-backdrop::after {
   content: "";
   position: absolute;
@@ -545,18 +545,6 @@
   border-radius: inherit;
   overflow: hidden;
   pointer-events: none;
-}
-
-/*
- * liquid-glass-react's inline drop shadow (offset 12px down) shows through the tile's rounded
- * bottom corners as grey spots: !important beats the inline style; the tile has its own shadow.
- */
-.bs-glass .glass {
-  box-shadow: none !important;
-}
-
-/* No refraction (scrolling tiles, touch, Safari, Firefox, before hydration): frosted glass. */
-.bs-glassFallback {
   -webkit-backdrop-filter: blur(18px) saturate(150%);
   backdrop-filter: blur(18px) saturate(150%);
 }
