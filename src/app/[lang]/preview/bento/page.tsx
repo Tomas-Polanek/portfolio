@@ -304,7 +304,7 @@ export default async function BentoPreview() {
         <section id="projects" aria-labelledby="projects-title" className="scroll-mt-6 pt-20 sm:pt-28">
           <SectionHeader eyebrow={`02 · ${t.nav.projects}`} title={t.projects.title} intro={t.projects.subtitle} id="projects-title" />
           <ul className={s.projGrid}>
-            {projects.map(({ repo, tags }, i) => {
+            {projects.map(({ repo, tags, teamInProgress }, i) => {
               const info = infos[i];
               const { title, description } = t.projects.items[repo];
               return (
@@ -317,9 +317,11 @@ export default async function BentoPreview() {
                   tags={tags}
                   codeUrl={info?.url ?? `${site.links.github}/${repo}`}
                   image={projectImages[repo]}
+                  inProgress={teamInProgress === true}
                   info={info}
                   updated={info ? monthYear.format(new Date(info.pushedAt)) : null}
                   t={t.projects}
+                  ui={c}
                 />
               );
             })}

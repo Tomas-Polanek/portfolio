@@ -17,6 +17,10 @@ const copy = {
     socials: "Sítě",
     controls: "Nastavení",
     projectsCount: (n: number) => `${n} projektů`,
+    openShot: "Zvětšit náhled",
+    closeShot: "Zavřít",
+    wip: "Work in progress",
+    teamProject: "Týmový školní projekt",
   },
   en: {
     badge: "Style preview",
@@ -33,6 +37,10 @@ const copy = {
     socials: "Socials",
     controls: "Settings",
     projectsCount: (n: number) => `${n} projects`,
+    openShot: "Enlarge screenshot",
+    closeShot: "Close",
+    wip: "Work in progress",
+    teamProject: "Team school project",
   },
 } satisfies Record<Locale, unknown>;
 

@@ -468,7 +468,7 @@ export default async function BentoSidebarPreview() {
                 id="projects-title"
               />
               <ul className={bs.projGrid}>
-                {projects.map(({ repo, tags }, i) => {
+                {projects.map(({ repo, tags, teamInProgress }, i) => {
                   const info = infos[i];
                   const { title, description } = t.projects.items[repo];
                   return (
@@ -481,11 +481,13 @@ export default async function BentoSidebarPreview() {
                       tags={tags}
                       codeUrl={info?.url ?? `${site.links.github}/${repo}`}
                       image={projectImages[repo]}
+                      inProgress={teamInProgress === true}
                       info={info}
                       updated={
                         info ? monthYear.format(new Date(info.pushedAt)) : null
                       }
                       t={t.projects}
+                      ui={c}
                     />
                   );
                 })}
