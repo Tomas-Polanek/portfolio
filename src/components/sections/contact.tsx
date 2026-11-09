@@ -29,7 +29,7 @@ export function Contact({ t, nav }: { t: Dictionary["contact"]; nav: string }) {
         <div className="relative mt-auto pt-8">
           <p className={s.eyebrow}>{t.email.title}</p>
           <div className="mt-2.5">
-            <a href={`mailto:${site.email}`} className={`${s.btnSolid} max-w-full`}>
+            <a href={`mailto:${site.email}`} className={`${s.btn} max-w-full`}>
               <MailIcon width={17} height={17} className="shrink-0" />
               <span className="wrap-anywhere">{site.email}</span>
             </a>

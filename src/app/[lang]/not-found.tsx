@@ -20,7 +20,7 @@ export default async function NotFound() {
           <p className={`${s.gradText} font-mono text-7xl font-bold sm:text-8xl`}>404</p>
           <h1 className="mt-6 text-2xl font-semibold tracking-tight sm:text-3xl">{t.notFound.heading}</h1>
           <p className={`${s.muted} mx-auto mt-3 max-w-[45ch]`}>{t.notFound.text}</p>
-          <a href={`/${locale}`} className={`${s.btnSolid} mt-8`}>
+          <a href={`/${locale}`} className={`${s.btn} mt-8`}>
             {t.notFound.back}
           </a>
         </div>

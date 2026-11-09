@@ -20,8 +20,6 @@
   /* Role line under the name in the side panel: blue → teal. */
   --role-text-a: #7cb8ff;
   --role-text-b: #5eead4;
-  --solid-bg: #fafafa;
-  --solid-fg: #09090b;
   --chip: rgb(255 255 255 / 0.05);
   --chip-hover: rgb(255 255 255 / 0.1);
   --shadow:
@@ -68,8 +66,6 @@
   --brand-text-b: #1a6fb8;
   --role-text-a: #1d5fd0;
   --role-text-b: #0f766e;
-  --solid-bg: #18181b;
-  --solid-fg: #fafafa;
   --chip: #f4f4f5;
   --chip-hover: #e9e9ec;
   --shadow:
@@ -256,7 +252,7 @@ a.bn-tile:focus-visible {
 }
 
 /* Buttons */
-.bn-btnSolid,
+.bn-btn,
 .bn-iconBtn {
   display: inline-flex;
   align-items: center;
@@ -271,18 +267,22 @@ a.bn-tile:focus-visible {
     box-shadow 0.2s ease;
 }
 
-.bn-btnSolid {
-  background: var(--solid-bg);
-  color: var(--solid-fg);
+/* Text button in the icon-well style: brand tint over the raised tile colour, hairline border. */
+.bn-btn {
+  border: 1px solid var(--line-strong);
+  background:
+    linear-gradient(135deg, rgb(160 80 255 / 0.16), rgb(80 180 255 / 0.16)),
+    var(--tile-2);
+  color: var(--fg);
   padding: 0.7rem 1.25rem;
-  box-shadow: 0 6px 20px -8px rgb(0 0 0 / 0.4);
 }
 
-.bn-btnSolid:hover {
+.bn-btn:hover {
   transform: translateY(-1px);
-  box-shadow:
-    0 10px 26px -10px rgb(0 0 0 / 0.5),
-    0 0 0 4px rgb(160 80 255 / 0.18);
+  background:
+    linear-gradient(135deg, rgb(160 80 255 / 0.26), rgb(80 180 255 / 0.26)),
+    var(--tile-2);
+  box-shadow: 0 0 0 4px rgb(160 80 255 / 0.16);
 }
 
 .bn-iconBtn:hover,
@@ -532,7 +532,7 @@ a.bn-chip:hover {
   }
   .bn-lift:hover,
   .bn-lift:focus-within,
-  .bn-btnSolid:hover {
+  .bn-btn:hover {
     transform: none;
   }
   .bn-wipDot {

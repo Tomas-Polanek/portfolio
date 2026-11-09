@@ -11,7 +11,7 @@ export const s = {
   aLoc: "bn-aLoc",
   aSkills: "bn-aSkills",
   aStudy: "bn-aStudy",
-  btnSolid: "bn-btnSolid",
+  btn: "bn-btn",
   chip: "bn-chip",
   chipMono: "bn-chipMono",
   dot: "bn-dot",
