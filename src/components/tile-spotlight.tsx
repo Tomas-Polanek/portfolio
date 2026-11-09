@@ -22,6 +22,9 @@ export function TileSpotlight() {
       const rect = tile.getBoundingClientRect();
       tile.style.setProperty("--mx", `${x - rect.left}px`);
       tile.style.setProperty("--my", `${y - rect.top}px`);
+      // -1…1 from the centre, for the tilt.
+      tile.style.setProperty("--tx", (((x - rect.left) / rect.width) * 2 - 1).toFixed(3));
+      tile.style.setProperty("--ty", (((y - rect.top) / rect.height) * 2 - 1).toFixed(3));
     };
 
     const onMove = (event: PointerEvent) => {

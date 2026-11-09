@@ -1,4 +1,5 @@
 import { bs, s } from "@/components/classes";
+import { CountUp } from "@/components/count-up";
 import { GlassLayer } from "@/components/glass-layer";
 import { ArrowIcon, CapIcon, GitHubIcon, HomelabGlyph, StarIcon } from "@/components/icons";
 import { PiModel } from "@/components/pi-model/pi-model";
@@ -117,7 +118,9 @@ export async function Overview({ t, locale }: { t: Dictionary; locale: Locale })
                   </li>
                 ))}
               </ul>
-              <p className={`${s.muted} mt-3 text-sm`}>{c.servicesCount(t.homelab.services.length)}</p>
+              <p className={`${s.muted} mt-3 text-sm`}>
+                <CountUp value={t.homelab.services.length} text={c.servicesCount(t.homelab.services.length)} />
+              </p>
             </div>
           </a>
         </div>
@@ -138,11 +141,13 @@ export async function Overview({ t, locale }: { t: Dictionary; locale: Locale })
           </span>
         </div>
         <p className="mt-6 font-mono text-sm font-medium">{githubHandle}</p>
-        <p className={`${s.muted} text-sm`}>{c.projectsCount(projects.length)}</p>
+        <p className={`${s.muted} text-sm`}>
+          <CountUp value={projects.length} text={c.projectsCount(projects.length)} />
+        </p>
         <p className={`${s.faint} mt-auto flex flex-wrap gap-x-3 pt-4 font-mono text-xs`}>
           {totalStars > 0 && (
             <span className="inline-flex items-center gap-1">
-              <StarIcon width={12} height={12} /> {totalStars} {c.totalStars}
+              <StarIcon width={12} height={12} /> <CountUp value={totalStars} text={String(totalStars)} /> {c.totalStars}
             </span>
           )}
           {lastPush && (
