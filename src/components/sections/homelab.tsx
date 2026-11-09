@@ -1,5 +1,6 @@
 import { s } from "@/components/classes";
 import { CountUp } from "@/components/count-up";
+import { countTexts } from "@/lib/count-texts";
 import { GlassLayer } from "@/components/glass-layer";
 import { CheckIcon, HomelabGlyph } from "@/components/icons";
 import { SectionHeader } from "@/components/section-header";
@@ -74,7 +75,7 @@ export function Homelab({
           <div className="flex items-baseline justify-between gap-3 px-1 pb-4 lg:pt-1">
             <h3 className="text-lg font-semibold tracking-tight">{t.servicesTitle}</h3>
             <span className={`${s.chip} ${s.chipMono}`}>
-              <CountUp value={t.services.length} text={servicesCount(t.services.length)} />
+              <CountUp texts={countTexts(t.services.length, servicesCount)} />
             </span>
           </div>
           <ul className="grid flex-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">

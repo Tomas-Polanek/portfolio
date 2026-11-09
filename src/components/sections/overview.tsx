@@ -8,6 +8,7 @@ import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 import { formatMonthYear } from "@/lib/dates";
 import { getRepoInfo } from "@/lib/github";
+import { countTexts } from "@/lib/count-texts";
 import type { Locale } from "@/lib/locales";
 
 /**
@@ -119,7 +120,7 @@ export async function Overview({ t, locale }: { t: Dictionary; locale: Locale })
                 ))}
               </ul>
               <p className={`${s.muted} mt-3 text-sm`}>
-                <CountUp value={t.homelab.services.length} text={c.servicesCount(t.homelab.services.length)} />
+                <CountUp texts={countTexts(t.homelab.services.length, c.servicesCount)} />
               </p>
             </div>
           </a>
@@ -142,12 +143,12 @@ export async function Overview({ t, locale }: { t: Dictionary; locale: Locale })
         </div>
         <p className="mt-6 font-mono text-sm font-medium">{githubHandle}</p>
         <p className={`${s.muted} text-sm`}>
-          <CountUp value={projects.length} text={c.projectsCount(projects.length)} />
+          <CountUp texts={countTexts(projects.length, c.projectsCount)} />
         </p>
         <p className={`${s.faint} mt-auto flex flex-wrap gap-x-3 pt-4 font-mono text-xs`}>
           {totalStars > 0 && (
             <span className="inline-flex items-center gap-1">
-              <StarIcon width={12} height={12} /> <CountUp value={totalStars} text={String(totalStars)} /> {c.totalStars}
+              <StarIcon width={12} height={12} /> <CountUp texts={countTexts(totalStars)} /> {c.totalStars}
             </span>
           )}
           {lastPush && (

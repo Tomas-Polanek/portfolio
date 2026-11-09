@@ -5,16 +5,18 @@ import { useEffect, useRef, useState } from "react";
 const DURATION = 900;
 
 /**
- * Text containing `value` (e.g. "11 služeb v Dockeru"): the number counts up from 0 the first time
- * the text scrolls into view. The server renders the final text; reduced motion skips the count.
+ * Counts up to the last entry of `texts` (texts[i] is the text for the number i, already in the
+ * right plural form, from countTexts) the first time it scrolls into view. The server renders the
+ * final text; reduced motion skips the count.
  */
-export function CountUp({ value, text }: { value: number; text: string }) {
+export function CountUp({ texts }: { texts: readonly string[] }) {
   const ref = useRef<HTMLSpanElement>(null);
+  const value = texts.length - 1;
   const [current, setCurrent] = useState(value);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || value === 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el || value <= 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let frame = 0;
     const observer = new IntersectionObserver(
@@ -38,5 +40,5 @@ export function CountUp({ value, text }: { value: number; text: string }) {
     };
   }, [value]);
 
-  return <span ref={ref}>{text.replace(String(value), String(current))}</span>;
+  return <span ref={ref}>{texts[current]}</span>;
 }

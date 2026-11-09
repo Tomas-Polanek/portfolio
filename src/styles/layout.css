@@ -534,7 +534,7 @@
 
 /* ============================================================
    Side art in the page margins, wide screens only: Raspberry Pi build on the right (PiSide),
-   git graph of this site on the left (GitSide). Free margin on each side = (viewport − 1424 px
+   git log of this site on the left (GitSide). Free margin on each side = (viewport − 1424 px
    of layout content, .bs-layout max-width minus its padding) / 2; the art keeps 28 px from both
    edges. From 1880 px that leaves ≥ 172 px of art width.
    ============================================================ */
@@ -580,7 +580,7 @@
   height: 100%;
 }
 
-/* Git graph: lane 0 (main) at x = 5px, lane 1 (style-previews) at x = 19px; rows share the height. */
+/* Git log: one line through the dots at x = 5px; rows share the height. */
 .bs-gitHead {
   margin-bottom: 1rem;
   font-family: var(--font-geist-mono);
@@ -596,14 +596,13 @@
 }
 
 .bs-commit {
-  --lane-x: 5px;
   position: relative;
   display: flex;
   flex: 1;
   align-items: center;
   gap: 0.5rem;
   min-height: 0;
-  padding-left: 32px;
+  padding-left: 22px;
   font-family: var(--font-geist-mono);
   font-size: 0.68rem;
   line-height: 1.2;
@@ -612,25 +611,17 @@
   animation-timeline: scroll(root block);
 }
 
-.bs-commit[data-lane="1"] {
-  --lane-x: 19px;
-}
-
-/* Main line through every row; the branch line through lane-1 rows, starting/ending mid-row. */
-.bs-commit::before,
-.bs-commit[data-lane="1"]::after {
+/* The line through every row, starting and ending at the first and last dot. */
+.bs-commit::before {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
+  left: 4px;
   width: 2px;
   border-radius: 1px;
   background: linear-gradient(180deg, var(--brand-a), var(--brand-b));
   opacity: 0.55;
-}
-
-.bs-commit::before {
-  left: 4px;
 }
 
 .bs-commit:first-child::before {
@@ -641,46 +632,16 @@
   bottom: 50%;
 }
 
-.bs-commit[data-lane="1"]::after {
-  left: 18px;
-}
-
-.bs-commit[data-fork]::after {
-  top: 50%;
-}
-
-.bs-commit[data-merge]::after {
-  bottom: 50%;
-}
-
 .bs-commitDot {
   position: absolute;
   top: 50%;
-  left: var(--lane-x);
+  left: 5px;
   width: 10px;
   height: 10px;
   translate: -50% -50%;
   border-radius: 999px;
   border: 2px solid var(--brand-b);
   background: var(--page);
-}
-
-.bs-commit[data-lane="1"] .bs-commitDot {
-  border-color: var(--brand-a);
-}
-
-/* Fork and merge: a short bridge between the lanes at the branch's first and last row. */
-.bs-commit[data-fork] .bs-commitDot::before,
-.bs-commit[data-merge] .bs-commitDot::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  width: 12px;
-  height: 2px;
-  translate: 0 -50%;
-  background: var(--brand-a);
-  opacity: 0.55;
 }
 
 .bs-commitHash {
