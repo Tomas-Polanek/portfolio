@@ -91,14 +91,30 @@
   }
 }
 
-/* Vertical section nav */
+/* Tall screens: the name and contact buttons grow with the panel too (nav: see .bs-navLink). */
+@media (min-width: 1280px) and (min-height: 1000px) {
+  .bs-column h1 {
+    font-size: clamp(3.5rem, 5.2vh, 5rem);
+  }
+  .bs-column .bn-iconBtn {
+    width: clamp(2.5rem, 3.4vh, 3.25rem);
+    height: clamp(2.5rem, 3.4vh, 3.25rem);
+  }
+}
+
+/*
+ * Vertical section nav. Sized by the viewport height, like the panel itself: about the same on a
+ * ~900 px tall laptop, up to ~1.7× on tall monitors so it doesn't float small in an empty panel.
+ * --nav-line is the resting line length; hover and active lines are 1.75× and 2.25× of it.
+ */
 .bs-navLink {
+  --nav-line: clamp(2rem, 4.2vh, 4.5rem);
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.7rem 0.25rem;
+  gap: clamp(1rem, 1.8vh, 1.75rem);
+  padding: clamp(0.7rem, 2.2vh - 0.35rem, 2rem) 0.25rem;
   border-radius: 6px;
-  font-size: 0.75rem;
+  font-size: clamp(0.75rem, 0.2rem + 1.2vh, 1.3rem);
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -110,7 +126,7 @@
   position: relative;
   display: block;
   height: 1px;
-  width: 2rem;
+  width: var(--nav-line);
   overflow: hidden;
   border-radius: 999px;
   background: var(--faint);
@@ -137,7 +153,7 @@
 
 .bs-navLink:hover .bs-navLine,
 .bs-navLink:focus-visible .bs-navLine {
-  width: 3.5rem;
+  width: calc(var(--nav-line) * 1.75);
   opacity: 1;
   background: var(--fg);
 }
@@ -147,7 +163,7 @@
 }
 
 .bs-navLink[aria-current="true"] .bs-navLine {
-  width: 4.5rem;
+  width: calc(var(--nav-line) * 2.25);
   height: 2px;
   opacity: 1;
   background: linear-gradient(90deg, var(--brand-a), var(--brand-b));
