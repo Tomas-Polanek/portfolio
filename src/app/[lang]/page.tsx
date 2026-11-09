@@ -1,5 +1,6 @@
 import { Backdrop } from "@/components/backdrop";
 import { bs, s } from "@/components/classes";
+import { TileSpotlight } from "@/components/tile-spotlight";
 import { CompactBar } from "@/components/panel/compact-bar";
 import { SitePanel } from "@/components/panel/site-panel";
 import { Contact } from "@/components/sections/contact";
@@ -26,6 +27,7 @@ export default async function Home() {
   return (
     <div className={s.root} id="top">
       <Backdrop />
+      <TileSpotlight />
       <div className={bs.layout}>
         <SitePanel t={t} locale={locale} nav={nav} endId={END_ID} />
         <CompactBar

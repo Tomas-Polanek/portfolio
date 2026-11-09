@@ -31,6 +31,9 @@
     inset 0 1px 0 rgb(255 255 255 / 0.06), 0 2px 4px rgb(0 0 0 / 0.6), 0 16px 36px -8px rgb(0 0 0 / 0.7),
     0 36px 70px -24px rgb(80 60 160 / 0.35);
   --shot-bg: #16161a;
+  /* Cursor spotlight on tiles: glow under the content and lit border. */
+  --spot: rgb(160 125 255 / 0.22);
+  --spot-edge: rgb(200 175 255 / 0.85);
   /* Glass tiles: translucent tint + hairline over the .bs-backdrop colour fields. */
   --glass-tint: rgb(255 255 255 / 0.035);
   --glass-line: rgb(255 255 255 / 0.1);
@@ -76,6 +79,8 @@
     0 0 0 1px rgb(9 9 11 / 0.03), 0 2px 4px rgb(9 9 11 / 0.06), 0 14px 30px -8px rgb(9 9 11 / 0.12),
     0 34px 60px -24px rgb(90 60 180 / 0.25);
   --shot-bg: #ececf0;
+  --spot: rgb(124 58 237 / 0.1);
+  --spot-edge: rgb(124 58 237 / 0.55);
   --glass-tint: rgb(255 255 255 / 0.55);
   --glass-line: rgb(255 255 255 / 0.75);
   color-scheme: light;
@@ -113,6 +118,64 @@
 
 a.bn-tile:focus-visible {
   outline-offset: 4px;
+}
+
+/*
+ * Cursor spotlight: TileSpotlight (src/components/tile-spotlight.tsx) sets --mx / --my on the tile
+ * under a fine pointer. ::after glows over the glass and under the content (z-index -1 after the
+ * GlassLayer in the tile's stacking context); ::before is a 1px ring masked out of a gradient, so
+ * the border lights up near the cursor. Inset 0 keeps the ring inside overflow-hidden tiles.
+ */
+@media (hover: hover) and (pointer: fine) {
+  .bn-tile::before,
+  .bn-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .bn-tile::after {
+    z-index: -1;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--spot), transparent 60%);
+  }
+
+  .bn-tile::before {
+    padding: 1px;
+    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), var(--spot-edge), transparent 70%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .bn-tile:hover::before,
+  .bn-tile:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Intro: the name's letters rise in one by one, then the role and the line under it. */
+.bn-introLetter {
+  display: inline-block;
+  animation: bn-intro-up 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(var(--i) * 35ms + 100ms);
+}
+
+.bn-introFade {
+  animation: bn-intro-up 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: var(--delay);
+}
+
+@keyframes bn-intro-up {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em);
+  }
 }
 
 .bn-muted {

@@ -1,3 +1,4 @@
+import { Fragment, type CSSProperties } from "react";
 import { bs, s } from "@/components/classes";
 import { GlassLayer } from "@/components/glass-layer";
 import { GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon } from "@/components/icons";
@@ -26,6 +27,9 @@ export function SitePanel({
   endId: string;
 }) {
   const other = locale === "cs" ? "en" : "cs";
+  // Letters of the name, numbered across words for the staggered intro.
+  let letterIndex = 0;
+  const nameWords = site.name.split(" ").map((word) => [...word].map((char) => ({ char, i: letterIndex++ })));
   const contactLinks = [
     { href: site.links.github, label: t.contact.github.title, Icon: GitHubIcon },
     { href: site.links.linkedin, label: t.contact.linkedin.title, Icon: LinkedInIcon },
@@ -50,12 +54,29 @@ export function SitePanel({
           />
         </div>
         <h1 className="mt-10 text-[2.6rem] leading-[1.05] font-semibold tracking-[-0.035em] sm:text-5xl xl:text-[3.5rem]">
-          {site.name}
+          <span className="sr-only">{site.name}</span>
+          <span aria-hidden="true">
+            {nameWords.map((letters, w) => (
+              <Fragment key={w}>
+                {w > 0 && " "}
+                <span className="inline-block whitespace-nowrap">
+                  {letters.map(({ char, i }) => (
+                    <span key={i} className={s.introLetter} style={{ "--i": i } as CSSProperties}>
+                      {char}
+                    </span>
+                  ))}
+                </span>
+              </Fragment>
+            ))}
+          </span>
         </h1>
-        <p className={`${s.roleText} mt-3 text-lg font-semibold tracking-tight sm:text-xl`}>
+        <p
+          className={`${s.roleText} ${s.introFade} mt-3 text-lg font-semibold tracking-tight sm:text-xl`}
+          style={{ "--delay": "0.55s" } as CSSProperties}
+        >
           {t.hero.role}
         </p>
-        <div className="mt-4 max-w-sm space-y-2">
+        <div className={`${s.introFade} mt-4 max-w-sm space-y-2`} style={{ "--delay": "0.7s" } as CSSProperties}>
           {t.hero.lines.map((line) => (
             <p key={line} className={`${s.muted} leading-relaxed`}>
               {line}

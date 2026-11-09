@@ -107,9 +107,11 @@
 }
 
 .bs-navLine {
+  position: relative;
   display: block;
   height: 1px;
   width: 2rem;
+  overflow: hidden;
   border-radius: 999px;
   background: var(--faint);
   opacity: 0.6;
@@ -117,6 +119,15 @@
     width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
     height 0.3s ease,
     opacity 0.3s ease;
+}
+
+/* Reading progress of the section, inside the active line (shown only with scroll timelines). */
+.bs-navFill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--brand-a), var(--brand-b));
+  transform-origin: left;
+  opacity: 0;
 }
 
 .bs-navLink:hover,
@@ -140,6 +151,53 @@
   height: 2px;
   opacity: 1;
   background: linear-gradient(90deg, var(--brand-a), var(--brand-b));
+}
+
+/*
+ * Where scroll timelines exist, the active line becomes a track that fills while you read: from the
+ * section's top crossing the scrollspy line (40 % down the viewport) to its bottom crossing it. The
+ * last section ends at the page bottom instead. Each fill picks its section's timeline inline
+ * (SectionNav); the scope on .bn-root lets the panel see timelines declared on the sections.
+ */
+@supports (timeline-scope: --a) {
+  .bn-root {
+    timeline-scope: --sec-about, --sec-projects, --sec-homelab, --sec-education, --sec-contact;
+  }
+  #about {
+    view-timeline: --sec-about block;
+  }
+  #projects {
+    view-timeline: --sec-projects block;
+  }
+  #homelab {
+    view-timeline: --sec-homelab block;
+  }
+  #education {
+    view-timeline: --sec-education block;
+  }
+  #contact {
+    view-timeline: --sec-contact block;
+  }
+
+  .bs-navLink[aria-current="true"] .bs-navLine {
+    background: color-mix(in srgb, var(--fg) 18%, transparent);
+  }
+  .bs-navLink[aria-current="true"] .bs-navFill {
+    opacity: 1;
+  }
+  .bs-navFill {
+    animation: bs-nav-fill linear both;
+    animation-range: cover 60vh cover calc(100% - 40vh);
+  }
+  li:last-child > .bs-navLink .bs-navFill {
+    animation-range: cover 60vh cover calc(100% - 100vh);
+  }
+}
+
+@keyframes bs-nav-fill {
+  from {
+    transform: scaleX(0);
+  }
 }
 
 /* ---------- Compact top bar (< lg), shown once the intro block is gone ---------- */
