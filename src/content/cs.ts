@@ -229,6 +229,7 @@ export const cs = {
   },
   footer: {
     builtWith: "Postaveno v Next.js a Tailwind CSS",
+    rights: "Všechna práva vyhrazena.",
     backToTop: "Nahoru",
   },
   notFound: {

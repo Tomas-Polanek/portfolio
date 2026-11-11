@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { CloseIcon, MenuIcon } from "@/components/icons";
-import { TpMark } from "@/components/tp-mark";
 import { bs, s } from "@/components/classes";
 import { LanguageSwitch } from "@/components/language-switch";
 import { ThemeButton } from "@/components/theme-button";
@@ -58,10 +57,7 @@ export function CompactBar({
 
   return (
     <div className={`${bs.bar} lg:hidden`} data-shown={shown}>
-      <div className="flex h-13 items-center gap-2.5 pr-2 pl-2">
-        <span className={`${s.monogram} size-9! rounded-xl! shadow-none!`} aria-hidden="true">
-          <TpMark className="size-full" />
-        </span>
+      <div className="flex h-13 items-center gap-2.5 pr-2 pl-4">
         <p className="min-w-0 flex-1 truncate font-semibold tracking-tight">
           {name}
         </p>

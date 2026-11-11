@@ -210,6 +210,7 @@ export const en: Dictionary = {
   },
   footer: {
     builtWith: "Built with Next.js and Tailwind CSS",
+    rights: "All rights reserved.",
     backToTop: "Back to top",
   },
   notFound: {

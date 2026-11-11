@@ -1,7 +1,6 @@
 import { cacheLife } from "next/cache";
 import { s } from "@/components/classes";
 import { GlassLayer } from "@/components/glass-layer";
-import { TpMark } from "@/components/tp-mark";
 import type { Dictionary } from "@/content/cs";
 import { site } from "@/content/site";
 
@@ -16,13 +15,8 @@ export async function SiteFooter({ t, id }: { t: Dictionary["footer"]; id: strin
         className={`${s.tile} flex flex-col gap-3 px-6 py-5 text-sm sm:flex-row sm:items-center sm:justify-between`}
       >
         <GlassLayer />
-        <p className="flex items-center gap-2.5">
-          <span className={`${s.monogram} size-7! rounded-lg!`} aria-hidden="true">
-            <TpMark className="size-full" />
-          </span>
-          <span className="font-medium">
-            © {new Date().getFullYear()} {site.name}
-          </span>
+        <p className="font-medium">
+          © {new Date().getFullYear()} {site.name}. {t.rights}
         </p>
         <p className={s.muted}>{t.builtWith}</p>
         <a href="#top" className={`${s.chip} self-start sm:self-auto`}>

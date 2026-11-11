@@ -4,7 +4,6 @@ import { GlassLayer } from "@/components/glass-layer";
 import { GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 import { LanguageSwitch } from "@/components/language-switch";
 import { ThemeButton } from "@/components/theme-button";
-import { TpMark } from "@/components/tp-mark";
 import type { Dictionary } from "@/content/cs";
 import { site } from "@/content/site";
 import type { Locale } from "@/lib/locales";
@@ -42,9 +41,6 @@ export function SitePanel({
       <GlassLayer className="bs-columnGlass" />
       <div>
         <div className="flex items-center gap-3">
-          <span className={s.monogram} aria-hidden="true">
-            <TpMark className="size-full" />
-          </span>
           <ThemeButton label={t.theme.toggle} className={s.iconBtn} />
           <LanguageSwitch
             target={other}

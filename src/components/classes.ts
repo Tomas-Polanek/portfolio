@@ -24,7 +24,6 @@ export const s = {
   introLetter: "bn-introLetter",
   lift: "bn-lift",
   mapGrid: "bn-mapGrid",
-  monogram: "bn-monogram",
   muted: "bn-muted",
   orb: "bn-orb",
   pin: "bn-pin",

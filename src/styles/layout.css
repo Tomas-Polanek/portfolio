@@ -724,6 +724,18 @@
 }
 
 /*
+ * Dark theme (the default, also before the theme script runs): the blobs are filled with a cyan →
+ * deep purple gradient instead of a flat colour. The radial mask keeps the soft fade to
+ * transparent, so the black page and the grid stay as they were. The light theme keeps its colours.
+ */
+html:not([data-theme="light"]) .bs-blob {
+  background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+  opacity: 0.5;
+  -webkit-mask-image: radial-gradient(closest-side, #000, transparent 70%);
+  mask-image: radial-gradient(closest-side, #000, transparent 70%);
+}
+
+/*
  * Each blob sits in a track: an ellipse box sized in vw/vh around its resting centre. The track
  * follows the page scroll (scroll-driven animation, where supported: the colours travel across the
  * screen as you move through the sections); the blob inside drifts slowly on its own so the
