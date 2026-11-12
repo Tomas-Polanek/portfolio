@@ -122,6 +122,24 @@
   transition: color 0.2s ease;
 }
 
+/* Short screens (laptop with browser UI, ~600–760 px tall): tighten the panel so the whole nav,
+   including its last item (Kontakt), fits without scrolling. The panel scrollbar is hidden, so
+   anything that overflows is effectively unreachable. */
+@media (min-width: 1024px) and (max-height: 760px) {
+  .bs-column {
+    gap: 1.25rem;
+    padding-top: 2rem;
+    padding-bottom: 1.25rem;
+  }
+  .bs-column h1 {
+    margin-top: 1.25rem;
+  }
+  .bs-navLink {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
+}
+
 .bs-navLine {
   position: relative;
   display: block;
