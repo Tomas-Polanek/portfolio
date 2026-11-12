@@ -1,7 +1,7 @@
 import { s } from "@/components/classes";
+import { ContactForm } from "@/components/contact-form";
 import { GlassLayer } from "@/components/glass-layer";
 import { GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon } from "@/components/icons";
-import { ContactForm } from "@/components/contact-form";
 import type { Dictionary } from "@/content/cs";
 import { site } from "@/content/site";
 
@@ -27,15 +27,41 @@ export function Contact({ t, nav }: { t: Dictionary["contact"]; nav: string }) {
           {t.title}
         </h2>
         <p className={`${s.muted} relative mt-3 text-base sm:text-lg`}>{t.subtitle}</p>
-        <ContactForm t={t.form} />
-        <div className="relative mt-auto pt-8">
-          <p className={s.eyebrow}>{t.email.title}</p>
-          <div className="mt-2.5">
-            <a href={`mailto:${site.email}`} className={`${s.btn} max-w-full`}>
-              <MailIcon width={17} height={17} className="shrink-0" />
-              <span className="wrap-anywhere">{site.email}</span>
-            </a>
-          </div>
+
+        <a
+          href={`mailto:${site.email}`}
+          className={`${s.tile} ${s.lift} group relative mt-7 flex min-w-0 items-center gap-3.5 p-5 sm:p-6`}
+        >
+          <GlassLayer />
+          <span className={s.iconWell}>
+            <MailIcon width={18} height={18} />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className={`${s.eyebrow} block`}>{t.email.eyebrow}</span>
+            <span className="mt-1 block text-xl font-semibold tracking-tight sm:text-2xl">{t.email.cta}</span>
+            <span className={`${s.muted} wrap-anywhere mt-0.5 block text-sm`}>{site.email}</span>
+          </span>
+          <span aria-hidden="true" className={`${s.muted} shrink-0 text-2xl`}>
+            ↗
+          </span>
+        </a>
+
+        <div className="relative mt-7">
+          <p className={s.eyebrow}>{t.checklist.title}</p>
+          <ol className="mt-3">
+            {t.checklist.items.map((item, i) => (
+              <li key={item} className="flex gap-4 border-b border-[var(--line-strong)] py-2.5 last:border-b-0">
+                <span className={`${s.eyebrow} shrink-0 pt-0.5`}>{String(i + 1).padStart(2, "0")}</span>
+                <span className={s.muted}>{item}</span>
+              </li>
+            ))}
+          </ol>
+          <p className={`${s.muted} mt-3 text-sm italic`}>{t.checklist.reply}</p>
+        </div>
+
+        <div className="relative mt-8">
+          <h3 className={s.eyebrow}>{t.formTitle}</h3>
+          <ContactForm t={t.form} />
         </div>
       </div>
       <ul className="grid gap-4 sm:grid-cols-3 sm:gap-5">

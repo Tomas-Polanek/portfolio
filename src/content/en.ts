@@ -202,15 +202,25 @@ export const en: Dictionary = {
   contact: {
     title: "Let's connect",
     subtitle: "Send me an email or find me on social media.",
-    email: { title: "Email" },
+    email: { title: "Email", eyebrow: "Easiest way to reach me", cta: "Write to me by email" },
     form: {
       name: "Name",
-      email: "Email",
+      email: "Your email (so I can reply)",
       message: "Message",
       submit: "Send message",
       sending: "Sending…",
       sent: "Thanks, message sent. I'll get back to you.",
       error: "Sending failed. Try again, or write to my email directly.",
+    },
+    formTitle: "Or send a message here",
+    checklist: {
+      title: "A useful first message",
+      items: [
+        "The idea, problem or product you have",
+        "What you need designed or built",
+        "Your timeline or a fixed deadline",
+      ],
+      reply: "I usually reply on working days.",
     },
     linkedin: { title: "LinkedIn", sub: "Professional profile" },
     github: { title: "GitHub", sub: "Projects & code" },

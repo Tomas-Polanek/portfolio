@@ -221,15 +221,25 @@ export const cs = {
   contact: {
     title: "Pojďme se spojit",
     subtitle: "Napiš mi e-mail nebo mě najdi na sítích.",
-    email: { title: "E-mail" },
+    email: { title: "E-mail", eyebrow: "Nejlepší cesta", cta: "Napiš mi e-mail" },
     form: {
       name: "Jméno",
-      email: "E-mail",
+      email: "Tvůj e-mail (kam ti odpovím)",
       message: "Zpráva",
       submit: "Odeslat zprávu",
       sending: "Odesílám…",
       sent: "Díky, zpráva je odeslaná. Ozvu se.",
       error: "Odeslání se nepovedlo. Zkus to znovu, nebo napiš přímo na e-mail.",
+    },
+    formTitle: "Nebo napiš zprávu sem",
+    checklist: {
+      title: "Užitečná první zpráva",
+      items: [
+        "Tvůj nápad, problém nebo existující produkt",
+        "Co potřebuješ navrhnout nebo vyvinout",
+        "Tvůj ideální termín nebo pevný deadline",
+      ],
+      reply: "Odpovídám zpravidla v pracovních dnech.",
     },
     linkedin: { title: "LinkedIn", sub: "Profesní profil" },
     github: { title: "GitHub", sub: "Projekty a kód" },
