@@ -1,8 +1,9 @@
 import { bs, s } from "@/components/classes";
 import { CountUp } from "@/components/count-up";
 import { GlassLayer } from "@/components/glass-layer";
-import { ArrowIcon, CapIcon, GitHubIcon, HomelabGlyph, StarIcon } from "@/components/icons";
+import { ArrowIcon, GitHubIcon, HomelabGlyph, StarIcon } from "@/components/icons";
 import { PiModel } from "@/components/pi-model/pi-model";
+import { TileHeading } from "@/components/tile-heading";
 import type { Dictionary } from "@/content/cs";
 import { getProjects } from "@/lib/projects";
 import { site } from "@/content/site";
@@ -11,16 +12,27 @@ import { getRepoInfo } from "@/lib/github";
 import { countTexts } from "@/lib/count-texts";
 import type { Locale } from "@/lib/locales";
 
+function emphasize(text: string) {
+  return text.split(/\*\*(.+?)\*\*/).map((part, i) =>
+    i % 2 ? (
+      <strong key={i} className="font-semibold text-[color:var(--fg)]">
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
+
 /**
- * Top bento grid: about (#about), studies, location, skills, homelab teaser with the 3D model and a
+ * Top bento grid: about (#about), location, skills, homelab teaser with the 3D model and a
  * GitHub summary.
  */
 export async function Overview({ t, locale }: { t: Dictionary; locale: Locale }) {
   const projects = await getProjects(locale, t.projects);
   const infos = await Promise.all(projects.map((p) => getRepoInfo(p.repo, p.owner)));
   const c = t.overview;
-  const study = t.education.items[0];
-  const [university, city] = study.place.split(",").map((part) => part.trim());
+  const [, city] = t.education.items[0].place.split(",").map((part) => part.trim());
   const [hardware, ...hardwareSpecs] = t.homelab.specs[0].value.split(" · ");
   const totalStars = infos.reduce((sum, info) => sum + (info?.stars ?? 0), 0);
   const lastPush = infos.reduce<string | null>(
@@ -31,20 +43,6 @@ export async function Overview({ t, locale }: { t: Dictionary; locale: Locale })
 
   return (
     <div className={bs.heroGrid}>
-      {/* Studying */}
-      <div className={`${s.tile} ${s.lift} ${s.aStudy} flex flex-col p-5 sm:p-6`}>
-        <GlassLayer />
-        <div className="flex items-center justify-between">
-          <span className={s.iconWell}>
-            <CapIcon />
-          </span>
-          <span className={`${s.chip} ${s.chipMono}`}>{study.period}</span>
-        </div>
-        <p className={`${s.eyebrow} mt-auto pt-6`}>{c.studying}</p>
-        <p className="mt-1.5 text-lg leading-snug font-semibold tracking-tight">{study.title}</p>
-        <p className={`${s.muted} text-sm`}>{university}</p>
-      </div>
-
       {/* Location */}
       <div
         className={`${s.tile} ${s.lift} ${s.aLoc} relative flex min-h-44 flex-col overflow-hidden p-5 sm:p-6`}
@@ -62,16 +60,11 @@ export async function Overview({ t, locale }: { t: Dictionary; locale: Locale })
       {/* About */}
       <section id="about" aria-labelledby="about-title" className={`${s.tile} ${s.aAbout} p-6 sm:p-8`}>
         <GlassLayer />
-        <p className={s.eyebrow}>
-          <span className={s.dot} /> 01
-        </p>
-        <h2 id="about-title" className="mt-3 text-2xl font-semibold tracking-tight sm:text-3xl">
-          {t.about.title}
-        </h2>
+        <TileHeading eyebrow="01" id="about-title" title={t.about.title} />
         <div className="mt-4 space-y-3.5">
           {t.about.paragraphs.map((p) => (
-            <p key={p} className={`${s.muted} leading-relaxed`}>
-              {p}
+            <p key={p} className={`${s.muted} text-base leading-relaxed sm:text-lg`}>
+              {emphasize(p)}
             </p>
           ))}
         </div>
@@ -103,7 +96,7 @@ export async function Overview({ t, locale }: { t: Dictionary; locale: Locale })
         <div className={bs.labBody}>
           <PiModel label={c.explodeBuild} />
           <a href="#homelab" className={`${bs.labText} ${bs.labLink}`}>
-            <p className={`${s.eyebrow} mt-4`}>{c.homelabTeaser}</p>
+            <p className={`${s.eyebrow} mt-4`}>{t.nav.homelab}</p>
             <p className="mt-1.5 text-xl font-semibold tracking-tight">{hardware}</p>
             <ul className="mt-3 flex flex-wrap gap-1.5">
               {hardwareSpecs.map((spec) => (

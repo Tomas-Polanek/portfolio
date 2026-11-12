@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { bs } from "@/components/classes";
 import { onIdle } from "@/lib/idle";
+import { REDUCED_MOTION_QUERY } from "@/lib/media";
 import type { PiScene } from "./scene";
 
 /** Matches the CSS breakpoint that shows the side art (layout.css, .bs-sideArt). */
@@ -24,7 +25,7 @@ export function PiSide() {
     const host = hostRef.current;
     if (!host) return;
     const wide = window.matchMedia(WIDE_QUERY);
-    const scrollDriven = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const scrollDriven = !window.matchMedia(REDUCED_MOTION_QUERY).matches;
     let scene: PiScene | null = null;
     let cancelled = false;
     let cancelIdle = () => {};

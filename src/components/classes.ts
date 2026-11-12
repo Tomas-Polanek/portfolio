@@ -10,7 +10,6 @@ export const s = {
   aLab: "bn-aLab",
   aLoc: "bn-aLoc",
   aSkills: "bn-aSkills",
-  aStudy: "bn-aStudy",
   btn: "bn-btn",
   chip: "bn-chip",
   chipMono: "bn-chipMono",

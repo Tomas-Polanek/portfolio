@@ -4,9 +4,11 @@ import { site } from "@/content/site";
 import { getDictionary, getLocale } from "@/lib/i18n";
 import { locales } from "@/lib/locales";
 import { themeBootScript } from "@/lib/theme";
+import { MagicCursor } from "@/components/magic-cursor";
 import { ThemeSync } from "@/components/theme-sync";
 import "../globals.css";
 import "@/styles/tiles.css";
+import "@/styles/magic-cursor.css";
 import "@/styles/layout.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext"] });
@@ -54,6 +56,7 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
       <body className="font-sans">
+        <MagicCursor />
         <ThemeSync />
         {children}
       </body>

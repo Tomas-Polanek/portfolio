@@ -45,10 +45,10 @@ export const cs = {
   about: {
     title: "O mně",
     paragraphs: [
-      "Jsem student softwarového vývoje na Unicorn University a zároveň pracuji jako servisní technik. Díky tomu mám silný technický základ, samostatnost a zodpovědný přístup k práci.",
-      "Mám zkušenosti s řešením problémů v praxi, komunikací se zákazníky a prací v technickém prostředí, kde záleží na přesnosti, spolehlivosti a schopnosti reagovat pod tlakem.",
-      "Studium beru jako příležitost systematicky rozvíjet své znalosti v oblasti programování, logického myšlení a práce s moderními technologiemi. Zajímá mě především software development a propojení teorie s reálným využitím.",
-      "Hledám příležitosti, kde se mohu dál učit, růst a postupně přebírat větší odpovědnost.",
+      "Jsem student softwarového vývoje na **Unicorn University** a zároveň pracuji jako **servisní technik**. Díky tomu mám silný technický základ, samostatnost a zodpovědný přístup k práci.",
+      "Mám zkušenosti s **řešením problémů v praxi**, komunikací se zákazníky a prací v technickém prostředí, kde záleží na přesnosti, spolehlivosti a schopnosti reagovat pod tlakem.",
+      "Studium beru jako příležitost systematicky rozvíjet své znalosti v oblasti programování, logického myšlení a práce s moderními technologiemi. Zajímá mě především **software development** a propojení teorie s reálným využitím.",
+      "Hledám příležitosti, kde se mohu **dál se učit**, růst a postupně přebírat větší odpovědnost.",
     ],
     skillsTitle: "Dovednosti",
     skills: [
@@ -68,9 +68,7 @@ export const cs = {
     ],
   },
   overview: {
-    studying: "Studuji",
     basedIn: "Žiju v",
-    homelabTeaser: "Homelab",
     explodeBuild: "Rozložit sestavu Raspberry Pi",
     servicesCount: (n: number) =>
       `${n} ${n === 1 ? "služba" : n >= 2 && n <= 4 ? "služby" : "služeb"} v Dockeru`,
@@ -196,6 +194,7 @@ export const cs = {
         period: "2025 – 2028",
         title: "Softwarový vývoj (Bc.)",
         place: "Unicorn University, Praha",
+        status: "Aktivní studium",
       },
       {
         period: "2019 – 2023",
@@ -223,6 +222,15 @@ export const cs = {
     title: "Pojďme se spojit",
     subtitle: "Napiš mi e-mail nebo mě najdi na sítích.",
     email: { title: "E-mail" },
+    form: {
+      name: "Jméno",
+      email: "E-mail",
+      message: "Zpráva",
+      submit: "Odeslat zprávu",
+      sending: "Odesílám…",
+      sent: "Díky, zpráva je odeslaná. Ozvu se.",
+      error: "Odeslání se nepovedlo. Zkus to znovu, nebo napiš přímo na e-mail.",
+    },
     linkedin: { title: "LinkedIn", sub: "Profesní profil" },
     github: { title: "GitHub", sub: "Projekty a kód" },
     instagram: { title: "Instagram", sub: "Osobní" },

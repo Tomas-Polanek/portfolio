@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { FINE_POINTER_QUERY } from "@/lib/media";
 
 /**
  * Feeds the cursor position to the `.bn-tile` under a fine pointer as `--mx` / `--my` (px from the
@@ -9,7 +10,7 @@ import { useEffect } from "react";
  */
 export function TileSpotlight() {
   useEffect(() => {
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (!window.matchMedia(FINE_POINTER_QUERY).matches) return;
 
     let frame = 0;
     let tile: HTMLElement | null = null;

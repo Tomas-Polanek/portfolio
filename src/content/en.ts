@@ -32,10 +32,10 @@ export const en: Dictionary = {
   about: {
     title: "About me",
     paragraphs: [
-      "I'm a Software Development student at Unicorn University and I also work as a service technician. That gives me a strong technical foundation, independence and a responsible approach to work.",
-      "I have hands-on experience solving problems, communicating with customers and working in a technical environment where precision, reliability and the ability to react under pressure matter.",
-      "I see my studies as a chance to systematically build my knowledge of programming, logical thinking and modern technologies. I'm most interested in software development and connecting theory with real-world use.",
-      "I'm looking for opportunities where I can keep learning, grow and gradually take on more responsibility.",
+      "I'm a Software Development student at **Unicorn University** and I also work as a **service technician**. That gives me a strong technical foundation, independence and a responsible approach to work.",
+      "I have hands-on experience **solving problems**, communicating with customers and working in a technical environment where precision, reliability and the ability to react under pressure matter.",
+      "I see my studies as a chance to systematically build my knowledge of programming, logical thinking and modern technologies. I'm most interested in **software development** and connecting theory with real-world use.",
+      "I'm looking for opportunities where I can **keep learning**, grow and gradually take on more responsibility.",
     ],
     skillsTitle: "Skills",
     skills: [
@@ -55,9 +55,7 @@ export const en: Dictionary = {
     ],
   },
   overview: {
-    studying: "Studying",
     basedIn: "Based in",
-    homelabTeaser: "Homelab",
     explodeBuild: "Explode the Raspberry Pi build",
     servicesCount: (n: number) => `${n} ${n === 1 ? "service" : "services"} in Docker`,
     projectsCount: (n: number) => `${n} ${n === 1 ? "project" : "projects"}`,
@@ -177,6 +175,7 @@ export const en: Dictionary = {
         period: "2025 – 2028",
         title: "Software Development (Bachelor's)",
         place: "Unicorn University, Prague",
+        status: "Active study",
       },
       {
         period: "2019 – 2023",
@@ -204,6 +203,15 @@ export const en: Dictionary = {
     title: "Let's connect",
     subtitle: "Send me an email or find me on social media.",
     email: { title: "Email" },
+    form: {
+      name: "Name",
+      email: "Email",
+      message: "Message",
+      submit: "Send message",
+      sending: "Sending…",
+      sent: "Thanks, message sent. I'll get back to you.",
+      error: "Sending failed. Try again, or write to my email directly.",
+    },
     linkedin: { title: "LinkedIn", sub: "Professional profile" },
     github: { title: "GitHub", sub: "Projects & code" },
     instagram: { title: "Instagram", sub: "Personal" },

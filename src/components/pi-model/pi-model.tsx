@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { onIdle } from "@/lib/idle";
+import { REDUCED_MOTION_QUERY } from "@/lib/media";
 import { Pi5Sketch } from "./pi5-sketch";
 import type { PiScene } from "./scene";
 
@@ -43,7 +44,7 @@ export function PiModel({ label }: { label: string }) {
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(applyScroll);
     };
-    const scrollDriven = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const scrollDriven = !window.matchMedia(REDUCED_MOTION_QUERY).matches;
 
     const load = () => {
       import("./scene")

@@ -1,5 +1,7 @@
 # Tomáš Polánek – Portfolio
 
+**Live:** https://tomaspolanek.dev
+
 Personal portfolio built with Next.js 16 (App Router, Cache Components), React 19, TypeScript and Tailwind CSS v4.
 Czech and English versions, a bento layout with a sticky frosted-glass side panel (dark by default, light variant),
 a wireframe 3D model of the homelab build and project cards fed by the GitHub API.

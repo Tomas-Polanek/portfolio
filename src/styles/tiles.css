@@ -376,28 +376,6 @@ a.bn-chip:hover {
 }
 
 /* ============================================================
-   Overview grid areas (the grid itself: .bs-heroGrid in layout.css)
-   ============================================================ */
-.bn-aStudy {
-  grid-area: study;
-}
-.bn-aLoc {
-  grid-area: loc;
-}
-.bn-aAbout {
-  grid-area: about;
-}
-.bn-aSkills {
-  grid-area: skills;
-}
-.bn-aLab {
-  grid-area: lab;
-}
-.bn-aGh {
-  grid-area: gh;
-}
-
-/* ============================================================
    Projects (the grid itself: .bs-projGrid in layout.css)
    ============================================================ */
 .bn-project {
@@ -534,4 +512,21 @@ a.bn-chip:hover {
   .bn-wipDot {
     animation: none;
   }
+}
+
+/* Contact form fields: hairline border, faint tint that follows the theme. */
+.bn-field {
+  width: 100%;
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--fg) 4%, transparent);
+  color: var(--fg);
+  padding: 0.6rem 0.8rem;
+  font: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  outline: none;
+}
+.bn-field:focus-visible {
+  border-color: var(--brand-a);
 }

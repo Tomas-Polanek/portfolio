@@ -1,6 +1,7 @@
 import { s } from "@/components/classes";
 import { GlassLayer } from "@/components/glass-layer";
 import { GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon } from "@/components/icons";
+import { ContactForm } from "@/components/contact-form";
 import type { Dictionary } from "@/content/cs";
 import { site } from "@/content/site";
 
@@ -26,6 +27,7 @@ export function Contact({ t, nav }: { t: Dictionary["contact"]; nav: string }) {
           {t.title}
         </h2>
         <p className={`${s.muted} relative mt-3 text-base sm:text-lg`}>{t.subtitle}</p>
+        <ContactForm t={t.form} />
         <div className="relative mt-auto pt-8">
           <p className={s.eyebrow}>{t.email.title}</p>
           <div className="mt-2.5">

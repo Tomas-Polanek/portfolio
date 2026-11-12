@@ -290,7 +290,6 @@
   grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
     "about"
-    "study"
     "loc"
     "skills"
     "lab"
@@ -303,10 +302,10 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
       "about about"
-      "study gh"
       "loc loc"
       "skills skills"
-      "lab lab";
+      "lab lab"
+      "gh gh";
   }
 }
 
@@ -314,11 +313,27 @@
   .bs-heroGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-template-areas:
-      "about about study"
-      "about about loc"
+      "about about about"
       "skills skills lab"
-      "gh gh lab";
+      "loc gh lab";
   }
+}
+
+/* Tile placement: names must match the grid-template-areas above. */
+.bn-aLoc {
+  grid-area: loc;
+}
+.bn-aAbout {
+  grid-area: about;
+}
+.bn-aSkills {
+  grid-area: skills;
+}
+.bn-aLab {
+  grid-area: lab;
+}
+.bn-aGh {
+  grid-area: gh;
 }
 
 /*

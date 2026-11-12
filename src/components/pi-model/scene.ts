@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { REDUCED_MOTION_QUERY } from "@/lib/media";
 import {
   FAN_AXIS,
   FFC,
@@ -178,7 +179,7 @@ export function createPiScene({ host, open, onReady, ambient = true, turn = 0 }:
   }
 
   // --- state ---------------------------------------------------------------------------------
-  const reducedQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const reducedQuery = window.matchMedia(REDUCED_MOTION_QUERY);
   let reduced = reducedQuery.matches;
   let target = open ? 1 : 0;
   let progress = target;

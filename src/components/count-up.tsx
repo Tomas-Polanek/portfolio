@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { REDUCED_MOTION_QUERY } from "@/lib/media";
 
 const DURATION = 900;
 
@@ -16,7 +17,7 @@ export function CountUp({ texts }: { texts: readonly string[] }) {
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || value <= 0 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!el || value <= 0 || window.matchMedia(REDUCED_MOTION_QUERY).matches) return;
 
     let frame = 0;
     const observer = new IntersectionObserver(
