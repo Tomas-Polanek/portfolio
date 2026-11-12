@@ -54,7 +54,7 @@ export function Education({ t }: { t: Dictionary["education"] }) {
     <section
       id="education"
       aria-labelledby="education-title"
-      className="flex flex-col gap-4 sm:gap-5 xl:col-span-5"
+      className="flex flex-col gap-4 pt-20 sm:gap-5 sm:pt-28"
     >
       <div className={`${s.tile} p-6 sm:p-7`}>
         <GlassLayer />

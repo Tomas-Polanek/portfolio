@@ -4,11 +4,11 @@ import { useEffect } from "react";
 import { FINE_POINTER_QUERY } from "@/lib/media";
 
 /**
- * Feeds the cursor position to the `.bn-tile` under a fine pointer as `--mx` / `--my` (px from the
- * tile's top-left), once per frame; the glow and lit border are drawn in CSS (tiles.css). Renders
- * nothing. Touch devices never subscribe.
+ * Feeds the cursor position to the `.bn-tile` under a fine pointer as `--tx` / `--ty` (-1…1 from the
+ * tile's centre), once per frame; the hover tilt is drawn in CSS (tiles.css). Renders nothing.
+ * Touch devices never subscribe.
  */
-export function TileSpotlight() {
+export function TileTilt() {
   useEffect(() => {
     if (!window.matchMedia(FINE_POINTER_QUERY).matches) return;
 
@@ -21,9 +21,6 @@ export function TileSpotlight() {
       frame = 0;
       if (!tile) return;
       const rect = tile.getBoundingClientRect();
-      tile.style.setProperty("--mx", `${x - rect.left}px`);
-      tile.style.setProperty("--my", `${y - rect.top}px`);
-      // -1…1 from the centre, for the tilt.
       tile.style.setProperty("--tx", (((x - rect.left) / rect.width) * 2 - 1).toFixed(3));
       tile.style.setProperty("--ty", (((y - rect.top) / rect.height) * 2 - 1).toFixed(3));
     };

@@ -2,7 +2,7 @@ import { Backdrop } from "@/components/backdrop";
 import { bs, s } from "@/components/classes";
 import { GitSide } from "@/components/git-side";
 import { PiSide } from "@/components/pi-model/pi-side";
-import { TileSpotlight } from "@/components/tile-spotlight";
+import { TileTilt } from "@/components/tile-tilt";
 import { CompactBar } from "@/components/panel/compact-bar";
 import { SitePanel } from "@/components/panel/site-panel";
 import { Contact } from "@/components/sections/contact";
@@ -29,7 +29,7 @@ export default async function Home() {
   return (
     <div className={s.root} id="top">
       <Backdrop />
-      <TileSpotlight />
+      <TileTilt />
       <GitSide />
       <PiSide />
       <div className={bs.layout}>
@@ -54,10 +54,8 @@ export default async function Home() {
             <Overview t={t} locale={locale} />
             <Projects t={t.projects} nav={t.nav.projects} locale={locale} />
             <Homelab t={t.homelab} nav={t.nav.homelab} servicesCount={t.overview.servicesCount} />
-            <div className="grid gap-4 pt-20 sm:gap-5 sm:pt-28 xl:grid-cols-12">
-              <Education t={t.education} />
-              <Contact t={t.contact} nav={t.nav.contact} />
-            </div>
+            <Education t={t.education} />
+            <Contact t={t.contact} nav={t.nav.contact} />
           </main>
           <SiteFooter t={t.footer} id={END_ID} />
         </div>

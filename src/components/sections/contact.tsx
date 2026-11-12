@@ -13,7 +13,7 @@ export function Contact({ t, nav }: { t: Dictionary["contact"]; nav: string }) {
   ];
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="flex flex-col gap-4 sm:gap-5 xl:col-span-7">
+    <section id="contact" aria-labelledby="contact-title" className="flex flex-col gap-4 pt-20 sm:gap-5 sm:pt-28">
       <div className={`${s.tile} relative flex flex-1 flex-col overflow-hidden p-6 sm:p-9`}>
         <GlassLayer />
         <span className={s.orb} aria-hidden="true" />
