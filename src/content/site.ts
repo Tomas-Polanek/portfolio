@@ -2,7 +2,7 @@
 export const site = {
   name: "Tomáš Polánek",
   url: "https://tomaspolanek.dev",
-  email: "tomaspolanek1@icloud.com",
+  email: "tomaspolanek1@gmail.com",
   /** Web3Forms access key for the contact form. Public by design; mail goes to the address tied to the key. */
   web3formsKey: "fdceeb9e-8cb5-43b9-9c92-5e703278d5dc",
   githubUser: "Tomas-Polanek",
