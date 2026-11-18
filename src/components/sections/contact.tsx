@@ -4,8 +4,9 @@ import { GlassLayer } from "@/components/glass-layer";
 import { GitHubIcon, InstagramIcon, LinkedInIcon, MailIcon } from "@/components/icons";
 import type { Dictionary } from "@/content/cs";
 import { site } from "@/content/site";
+import type { Locale } from "@/lib/locales";
 
-export function Contact({ t, nav }: { t: Dictionary["contact"]; nav: string }) {
+export function Contact({ t, nav, locale }: { t: Dictionary["contact"]; nav: string; locale: Locale }) {
   const socials = [
     { href: site.links.linkedin, ...t.linkedin, Icon: LinkedInIcon },
     { href: site.links.github, ...t.github, Icon: GitHubIcon },
@@ -61,7 +62,7 @@ export function Contact({ t, nav }: { t: Dictionary["contact"]; nav: string }) {
 
         <div className="relative mt-8">
           <h3 className={s.eyebrow}>{t.formTitle}</h3>
-          <ContactForm t={t.form} />
+          <ContactForm t={t.form} locale={locale} />
         </div>
       </div>
       <ul className="grid gap-4 sm:grid-cols-3 sm:gap-5">

@@ -235,9 +235,9 @@ export const cs = {
     checklist: {
       title: "Užitečná první zpráva",
       items: [
-        "Tvůj nápad, problém nebo existující produkt",
-        "Co potřebuješ navrhnout nebo vyvinout",
-        "Tvůj ideální termín nebo pevný deadline",
+        "O jakou pozici nebo spolupráci jde (brigáda, stáž, part-time, projekt)",
+        "Firma nebo tým a čemu se věnuje",
+        "Kontakt a kdy se hodí se spojit",
       ],
       reply: "Odpovídám zpravidla v pracovních dnech.",
     },

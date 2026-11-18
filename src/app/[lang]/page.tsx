@@ -54,7 +54,7 @@ export default async function Home() {
             <Homelab t={t.homelab} nav={t.nav.homelab} servicesCount={t.overview.servicesCount} />
             <div className="grid gap-4 pt-20 sm:gap-5 sm:pt-28 xl:grid-cols-12">
               <Education t={t.education} />
-              <Contact t={t.contact} nav={t.nav.contact} />
+              <Contact t={t.contact} nav={t.nav.contact} locale={locale} />
             </div>
           </main>
           <SiteFooter t={t.footer} id={END_ID} />

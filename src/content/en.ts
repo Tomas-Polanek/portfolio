@@ -216,9 +216,9 @@ export const en: Dictionary = {
     checklist: {
       title: "A useful first message",
       items: [
-        "The idea, problem or product you have",
-        "What you need designed or built",
-        "Your timeline or a fixed deadline",
+        "The role or collaboration (part-time job, internship, project)",
+        "Your company or team and what it does",
+        "How to reach you and when suits you",
       ],
       reply: "I usually reply on working days.",
     },
