@@ -2,13 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { site } from "@/content/site";
 import { getDictionary, getLocale } from "@/lib/i18n";
-import { locales } from "@/lib/locales";
+import { defaultLocale, locales } from "@/lib/locales";
 import { themeBootScript } from "@/lib/theme";
-import { MagicCursor } from "@/components/magic-cursor";
 import { ThemeSync } from "@/components/theme-sync";
 import "../globals.css";
 import "@/styles/tiles.css";
-import "@/styles/magic-cursor.css";
 import "@/styles/layout.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext"] });
@@ -26,8 +24,12 @@ export async function generateMetadata(): Promise<Metadata> {
     description: t.meta.description,
     alternates: {
       canonical: `/${locale}`,
-      languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+      languages: {
+        ...Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+        "x-default": `/${defaultLocale}`,
+      },
     },
+    authors: [{ name: site.name, url: site.url }],
     openGraph: {
       title: t.meta.title,
       description: t.meta.description,
@@ -36,6 +38,25 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: locale === "cs" ? "cs_CZ" : "en_US",
       type: "website",
     },
+    twitter: {
+      card: "summary_large_image",
+      title: t.meta.title,
+      description: t.meta.description,
+    },
+  };
+}
+
+function personJsonLd(description: string, locale: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: site.name,
+    url: `${site.url}/${locale}`,
+    description,
+    email: site.email,
+    address: { "@type": "PostalAddress", addressLocality: "Prague", addressCountry: "CZ" },
+    alumniOf: { "@type": "CollegeOrUniversity", name: "Unicorn University" },
+    sameAs: [site.links.github, site.links.linkedin, site.links.instagram],
   };
 }
 
@@ -44,7 +65,7 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
-  const locale = await getLocale();
+  const [t, locale] = await Promise.all([getDictionary(), getLocale()]);
   return (
     <html
       lang={locale}
@@ -54,9 +75,12 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd(t.meta.description, locale)).replace(/</g, "\\u003c") }}
+        />
       </head>
       <body className="font-sans">
-        <MagicCursor />
         <ThemeSync />
         {children}
       </body>
