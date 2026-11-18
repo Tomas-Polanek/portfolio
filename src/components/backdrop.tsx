@@ -1,7 +1,6 @@
 /**
  * Colour fields behind the glass tiles: three soft blobs over a faint grid. Pure CSS
- * (src/styles/layout.css): each track follows the page scroll, each blob drifts slowly inside it;
- * both animate transform only, so they are composited without repaints.
+ * (src/styles/layout.css), static: fixed to the viewport, no animation.
  */
 export function Backdrop() {
   return (

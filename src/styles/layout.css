@@ -751,14 +751,12 @@ html:not([data-theme="light"]) .bs-blob {
 }
 
 /*
- * Each blob sits in a track: an ellipse box sized in vw/vh around its resting centre. The track
- * follows the page scroll (scroll-driven animation, where supported: the colours travel across the
- * screen as you move through the sections); the blob inside drifts slowly on its own so the
- * backdrop stays alive while idle. Both animate transform only: composited, no repaint.
+ * Each blob sits in a track: an ellipse box sized in vw/vh around its resting centre. Static: the
+ * backdrop is fixed to the viewport and does not animate, so the glass over it only re-blurs while
+ * the tiles themselves move.
  */
 .bs-blobTrack {
   position: absolute;
-  will-change: transform;
 }
 
 .bs-blob {
@@ -766,8 +764,6 @@ html:not([data-theme="light"]) .bs-blob {
   inset: 0;
   border-radius: 50%;
   background: radial-gradient(closest-side, var(--blob), transparent 70%);
-  will-change: transform;
-  animation: var(--drift) ease-in-out infinite alternate;
 }
 
 .bs-blobTrack:nth-child(1) {
@@ -776,8 +772,6 @@ html:not([data-theme="light"]) .bs-blob {
   width: 76vw;
   height: 68vh;
   --blob: rgb(124 58 237 / 0.42);
-  --drift: bs-drift-a 28s;
-  --scroll: bs-scroll-a;
 }
 
 .bs-blobTrack:nth-child(2) {
@@ -786,8 +780,6 @@ html:not([data-theme="light"]) .bs-blob {
   width: 84vw;
   height: 80vh;
   --blob: rgb(37 99 235 / 0.38);
-  --drift: bs-drift-b 34s;
-  --scroll: bs-scroll-b;
 }
 
 .bs-blobTrack:nth-child(3) {
@@ -796,77 +788,6 @@ html:not([data-theme="light"]) .bs-blob {
   width: 72vw;
   height: 64vh;
   --blob: rgb(192 38 211 / 0.3);
-  --drift: bs-drift-c 40s;
-  --scroll: bs-scroll-c;
-}
-
-@supports (animation-timeline: scroll()) {
-  .bs-blobTrack {
-    animation: var(--scroll) linear both;
-    /* After the shorthand, which resets the timeline. */
-    animation-timeline: scroll(root block);
-  }
-}
-
-/* Purple: top left → bottom right. */
-@keyframes bs-scroll-a {
-  to {
-    transform: translate(58vw, 62vh) scale(1.2);
-  }
-}
-
-/* Blue: right → centre → left. */
-@keyframes bs-scroll-b {
-  50% {
-    transform: translate(-40vw, 20vh) scale(0.9);
-  }
-  to {
-    transform: translate(-62vw, -6vh) scale(1.15);
-  }
-}
-
-/* Magenta: bottom left → top right. */
-@keyframes bs-scroll-c {
-  50% {
-    transform: translate(30vw, -30vh);
-  }
-  to {
-    transform: translate(40vw, -64vh) scale(1.2);
-  }
-}
-
-@keyframes bs-drift-a {
-  50% {
-    transform: translate(14vw, 10vh) scale(1.12);
-  }
-  100% {
-    transform: translate(4vw, 24vh) scale(0.94);
-  }
-}
-
-@keyframes bs-drift-b {
-  50% {
-    transform: translate(-18vw, 14vh) scale(0.9);
-  }
-  100% {
-    transform: translate(-8vw, -8vh) scale(1.1);
-  }
-}
-
-@keyframes bs-drift-c {
-  50% {
-    transform: translate(20vw, -16vh) scale(1.1);
-  }
-  100% {
-    transform: translate(30vw, -4vh) scale(0.95);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .bs-blobTrack,
-  .bs-blob {
-    animation: none;
-  }
 }
 
 /* A faint grid behind the colour fields. */
