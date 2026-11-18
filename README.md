@@ -1,12 +1,44 @@
 # Tomáš Polánek – Portfolio
 
-**Live:** https://tomaspolanek.dev
+Personal portfolio of a Software Development student in Prague: projects pulled from GitHub, a self-hosted homelab and a contact form, in Czech and English.
 
-Personal portfolio built with Next.js 16 (App Router, Cache Components), React 19, TypeScript and Tailwind CSS v4.
-Czech and English versions, a bento layout with a sticky frosted-glass side panel (dark by default, light variant),
-a wireframe 3D model of the homelab build and project cards fed by the GitHub API.
+**Live:** [tomaspolanek.dev](https://tomaspolanek.dev)
 
-## Development
+![Portfolio, dark theme](docs/screenshots/hero-dark.webp)
+
+## Features
+
+- **Bento layout** with a sticky frosted-glass side panel, section navigation with reading progress, dark theme by default and a light variant.
+- **Two languages** – `/cs` and `/en`, the root redirects by the saved choice or the browser language.
+- **Projects from GitHub** – curated list plus any repository with the `portfolio` topic; stars, language and last push refresh daily. A daily GitHub Action proposes new projects as a pull request.
+- **Homelab** – a wireframe 3D model of the Raspberry Pi 5 build (three.js) that explodes into layers as you scroll.
+- **Side art on wide screens** – a `git log --graph` of this repository on the left, a large copy of the Pi build on the right.
+- **Contact form** – sent through a Next.js server action and [Resend](https://resend.com), protected by Cloudflare Turnstile.
+- **SEO** – sitemap with hreflang, `robots.txt`, generated Open Graph image per language and `Person` JSON-LD.
+
+## Screenshots
+
+| Dark | Light |
+|---|---|
+| ![Dark theme](docs/screenshots/hero-dark.webp) | ![Light theme](docs/screenshots/hero-light.webp) |
+| ![Projects](docs/screenshots/projects.webp) | ![Homelab](docs/screenshots/homelab.webp) |
+| ![Education and contact](docs/screenshots/contact.webp) | ![Wide screen with side art](docs/screenshots/wide.webp) |
+
+<p align="center"><img src="docs/screenshots/mobile.webp" alt="Mobile layout" width="400"></p>
+
+## Tech stack
+
+| | |
+|---|---|
+| Framework | Next.js 16 (App Router, Cache Components), React 19, TypeScript |
+| Styling | Tailwind CSS v4 and plain CSS (`bn-*` / `bs-*` classes) |
+| 3D | three.js |
+| E-mail | Resend |
+| Data | GitHub REST API, cached daily |
+| Hosting | Vercel |
+| Automation | GitHub Actions + Claude Code (Project watch) |
+
+## Getting started
 
 ```bash
 npm install
@@ -15,15 +47,28 @@ npm run lint
 npm run build
 ```
 
+### Environment variables
+
+Put them in `.env.local` locally and in Vercel → Project → Settings → Environment Variables in production.
+
+| Variable | Required | Purpose |
+|---|---|---|
+| `RESEND_API_KEY` | for the contact form | Resend API key with sending access to `tomaspolanek.dev`. Without it the form shows an error. |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY` | for the contact form | Cloudflare Turnstile site key (public, inlined at build time – redeploy after changing it). Without it the submit button stays disabled. |
+| `TURNSTILE_SECRET_KEY` | for the contact form | Cloudflare Turnstile secret key, checked by the server action. |
+| `GITHUB_TOKEN` | no | Raises the GitHub API limit above 60 requests/hour. |
+
 ## Editing content
 
 | What | Where |
 |---|---|
 | All texts (CZ / EN) | `src/content/cs.ts`, `src/content/en.ts` – the English file must match the Czech structure (TypeScript enforces it) |
+| Page title and description for search engines | `meta` in `src/content/cs.ts` and `src/content/en.ts` |
 | Curated GitHub repos, their order, card icon and tech tags | `src/content/projects.ts` |
 | Project screenshots (opened by the card's "Preview" button) | `public/projects/*.webp` or a `raw.githubusercontent.com/Tomas-Polanek/…` URL, listed in `projectImages` in `src/content/projects.ts` |
-| E-mail, social links, site URL | `src/content/site.ts` |
+| E-mail, contact form sender, social links, site URL | `src/content/site.ts` |
 | Colors (dark / light) | CSS variables at the top of `src/styles/tiles.css`; backdrop colour fields in `.bs-backdrop` (`src/styles/layout.css`) |
+| README screenshots | `docs/screenshots/*.webp` (1600 px wide desktop, 1440 × 900 viewport) |
 
 ### Adding a project
 
@@ -56,10 +101,15 @@ One-time setup: run `claude setup-token` locally and save the printed token as t
 ## How it works
 
 - **Languages** – routes are `/cs` and `/en` (`src/app/[lang]`). `src/proxy.ts` redirects `/` by the saved choice (`lang` cookie, set by the language switch), then the browser's `Accept-Language` (Slovak → Czech), defaulting to English.
-- **GitHub data** – `src/lib/github.ts` fetches stars, language, last push, fork origin and homepage URL per repo, cached for a day (`cacheLife("days")`). A homepage URL set on the GitHub repo shows up as a "Live" button. Set `GITHUB_TOKEN` to avoid the 60 requests/hour anonymous limit.
-- **Contact form** – `src/components/contact-form.tsx` calls the server action `sendContactMessage` (`src/lib/contact-action.ts`), which sends a plain-text e-mail to `site.email` through [Resend](https://resend.com) with the visitor's address as Reply-To. Needs `RESEND_API_KEY` (in `.env.local` locally, in Vercel → Settings → Environment Variables in production) and the domain of `site.contactFrom` verified in Resend.
+- **SEO** – `src/app/[lang]/layout.tsx` sets title, description, canonical, hreflang alternates (with `x-default` → `/en`), Open Graph, Twitter card and `Person` JSON-LD. `src/app/sitemap.ts` and `src/app/robots.ts` generate `/sitemap.xml` and `/robots.txt`; `src/app/[lang]/opengraph-image.tsx` renders the 1200 × 630 share image per language.
+- **GitHub data** – `src/lib/github.ts` fetches stars, language, last push, fork origin and homepage URL per repo, cached for a day (`cacheLife("days")`). A homepage URL set on the GitHub repo shows up as a "Live" button.
+- **Contact form** – `src/components/contact-form.tsx` calls the server action `sendContactMessage` (`src/lib/contact-action.ts`), which validates the fields (limits in `src/lib/contact.ts`, mirrored as `maxLength` in the form), verifies the Cloudflare Turnstile token and sends a plain-text e-mail to `site.email` through Resend with the visitor's address as Reply-To and the page language in the body. The Turnstile widget loads only when the form nears the viewport and shows itself only when Cloudflare wants an interaction. The sender (`site.contactFrom`) must be on a domain verified in Resend. A hidden `botcheck` field catches simple bots. For local testing use Cloudflare's [test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/) (`1x00000000000000000000AA` / `1x0000000000000000000000000000000AA`).
 - **Theme** – an inline script in `src/app/[lang]/layout.tsx` applies the saved theme before first paint; the toggle stores it in `localStorage`.
 - **Layout and styles** – `src/app/[lang]/page.tsx` composes the side panel (`src/components/panel`) and the sections (`src/components/sections`). Styles are plain CSS with prefixed class names (`bn-*` in `src/styles/tiles.css`, `bs-*` in `src/styles/layout.css`), mapped in `src/components/classes.ts`; CSS modules are not used.
 - **Glass** – every tile and the side panel render `GlassLayer` (`src/components/glass-layer.tsx`): a CSS `backdrop-filter` blur over the `.bs-backdrop` colour fields. SVG refraction (liquid-glass-react) was dropped: its displacement filter is recomputed on every frame the backdrop moves under a tile, which made scrolling about 4× slower.
 - **3D model** – `src/components/pi-model` draws the Raspberry Pi 5 + Active Cooler + Geekworm X1001 + Samsung 990 PRO build as a wireframe with [three.js](https://threejs.org). It is loaded lazily, renders only while visible, explodes into layers as its tile scrolls up and on hover, tap or Enter/Space, and falls back to an SVG sketch without WebGL.
 - **Side art (≥ 1880 px)** – the free page margins show a large copy of the build on the right (`pi-side.tsx`: no ambient animation, it renders only on scroll, exploding towards the middle of the page while it turns) and the latest commits of this repository on the left (`src/components/git-side.tsx`, fetched from the GitHub API and cached daily), drawn as a `git log --graph` whose lanes come from the commits' parents (`src/lib/git-graph.ts`), so a branch merged with a merge commit shows as a side lane. Rows light up one by one with a CSS scroll-driven animation.
+
+## License
+
+© Tomáš Polánek. All rights reserved.
