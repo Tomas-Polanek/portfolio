@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useId, useRef } from "react";
-import { raiseMagicCursor } from "@/components/magic-cursor";
 
 /**
  * "Preview" chip that opens the project's screenshot uncropped in a modal dialog, with the app's
@@ -37,10 +36,7 @@ export function ScreenshotDialog({
         className={className}
         aria-haspopup="dialog"
         aria-label={`${label}: ${title}`}
-        onClick={() => {
-          dialogRef.current?.showModal();
-          raiseMagicCursor();
-        }}
+        onClick={() => dialogRef.current?.showModal()}
       >
         <svg
           viewBox="0 0 24 24"
