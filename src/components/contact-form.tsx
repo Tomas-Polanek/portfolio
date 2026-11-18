@@ -3,14 +3,13 @@
 import { useState, type FormEvent } from "react";
 import { s } from "@/components/classes";
 import type { Dictionary } from "@/content/cs";
-import { site } from "@/content/site";
+import { sendContactMessage } from "@/lib/contact-action";
 
 /**
- * Contact form posting straight to Web3Forms (no own backend). Web3Forms delivers the message to
- * the e-mail address tied to site.web3formsKey. The hidden `botcheck` checkbox is its honeypot:
- * bots tend to tick it, and Web3Forms rejects those submissions.
+ * Contact form sent through the sendContactMessage server action (Resend). The hidden `botcheck`
+ * checkbox is a honeypot: bots tend to tick it, and the action drops those submissions.
+ * Submitted via onSubmit rather than `action` so a failed send keeps what the visitor typed.
  */
-const ENDPOINT = "https://api.web3forms.com/submit";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
@@ -22,18 +21,8 @@ export function ContactForm({ t }: { t: Dictionary["contact"]["form"] }) {
     const form = event.currentTarget;
     setStatus("sending");
     try {
-      const response = await fetch(ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          ...Object.fromEntries(new FormData(form)),
-          access_key: site.web3formsKey,
-          subject: "Nová zpráva z portfolia",
-          from_name: site.name,
-        }),
-      });
-      const result = (await response.json()) as { success?: boolean };
-      if (!response.ok || !result.success) throw new Error("Web3Forms rejected the message");
+      const { ok } = await sendContactMessage(new FormData(form));
+      if (!ok) throw new Error("Message not sent");
       form.reset();
       setStatus("sent");
     } catch {
