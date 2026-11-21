@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import { site } from "@/content/site";
 import { getDictionary, getLocale } from "@/lib/i18n";
 import { defaultLocale, locales } from "@/lib/locales";
@@ -83,6 +84,8 @@ export default async function RootLayout({ children }: LayoutProps<"/[lang]">) {
       <body className="font-sans">
         <ThemeSync />
         {children}
+        {/* Cookieless page-view counter; the homelab dashboard reads it through the GoatCounter API. */}
+        <Script data-goatcounter="https://tpolanek.goatcounter.com/count" src="https://gc.zgo.at/count.js" strategy="afterInteractive" />
       </body>
     </html>
   );
