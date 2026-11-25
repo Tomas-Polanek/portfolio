@@ -97,6 +97,11 @@ export const cs = {
         description:
           "Rezervační systém sportovišť, na kterém ve škole pracujeme v týmu: vyhledání sportoviště, výběr termínu, rezervace a hodnocení. Next.js frontend, API gateway a pět mikroslužeb nad PostgreSQL, CI v GitHub Actions s code review přes pull requesty. Moje role: frontend developer, podílím se na analýze, plánování a testování.",
       },
+      filmoteka: {
+        title: "Filmotéka",
+        description:
+          "Osobní deník zhlédnutých filmů a seriálů jako PWA: zhlédnutí s datem, místem, hodnocením a poznámkou, kalendář, seznam „Chci vidět“ a vyhledávání podle názvu, herce či režiséra. Next.js a TypeScript nad Supabase (Postgres s RLS, Edge Functions), data o titulech z TMDB, volitelná synchronizace z Jellyfinu.",
+      },
       "ask-your-pdfs": {
         title: "Ask Your PDFs",
         description:
