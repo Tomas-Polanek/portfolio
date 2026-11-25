@@ -20,6 +20,11 @@ type ProjectEntry = {
  * `projects.items`.
  */
 const list = [
+  {
+    repo: "filmoteka",
+    icon: "code",
+    tags: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "PWA", "TMDB API"],
+  },
   { repo: "ask-your-pdfs", icon: "pdf", tags: ["Python", "RAG", "ChromaDB", "Gemini", "Streamlit"] },
   {
     repo: "Sport-slot",
@@ -46,6 +51,7 @@ export const projects: readonly (ProjectEntry & { repo: ProjectRepo })[] = list;
 
 /** Screenshots in public/projects/, opened from the card's "Preview" button. */
 export const projectImages: Partial<Record<ProjectRepo, string>> = {
+  filmoteka: "https://raw.githubusercontent.com/Tomas-Polanek/filmoteka/main/docs/screenshots/desktop-denik.webp",
   "Sport-slot": "/projects/Sport-slot.webp",
   "The-Fridge-Notebook": "/projects/The-Fridge-Notebook.webp",
   SleepTrack: "/projects/SleepTrack.webp",

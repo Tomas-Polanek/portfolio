@@ -82,6 +82,11 @@ export const en: Dictionary = {
         description:
           "A sports venue booking system we build as a team at university: find a venue, pick a time slot, book it and leave a review. Next.js frontend, an API gateway and five microservices on PostgreSQL, with GitHub Actions CI and code review via pull requests. My role: frontend developer, also involved in analysis, planning and testing.",
       },
+      filmoteka: {
+        title: "Filmotéka",
+        description:
+          "A personal diary of watched movies and series as a PWA: viewings with date, place, rating and note, a calendar, a “Want to watch” list and search by title, actor or director. Next.js and TypeScript on Supabase (Postgres with RLS, Edge Functions), title data from TMDB, optional sync from Jellyfin.",
+      },
       "ask-your-pdfs": {
         title: "Ask Your PDFs",
         description:
